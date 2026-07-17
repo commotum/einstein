@@ -23,7 +23,9 @@ open EPR EPR.Quantum
 /-- A normalized computational-basis state for a finite basis. -/
 def basisState {n : Type*} [Fintype n] [DecidableEq n] (i : n) : PureState n where
   ket := Pi.single i 1
-  normalized := by simp [dotProduct]
+  normalized := by
+    rw [single_one_dotProduct]
+    simp
 
 abbrev AIndex := Fin 2
 abbrev BIndex := Fin 3
@@ -34,9 +36,11 @@ def stateB2 : PureState BIndex := basisState 2
 def productState23 : BipartitePureState AIndex BIndex := stateA0.tensor stateB2
 
 example : reducedA productState23.toDensity = stateA0.toDensity := by
+  change reducedA ((stateA0.tensor stateB2).toDensity) = stateA0.toDensity
   rw [PureState.toDensity_tensor, reducedA_tensor]
 
 example : reducedB productState23.toDensity = stateB2.toDensity := by
+  change reducedB ((stateA0.tensor stateB2).toDensity) = stateB2.toDensity
   rw [PureState.toDensity_tensor, reducedB_tensor]
 
 /-! The asymmetric matrix-unit checks catch swapped trace conventions. -/
@@ -48,12 +52,12 @@ example : traceOutA offDiagonal =
     Matrix.single (1 : BIndex) (2 : BIndex) 1 := by
   ext k l
   fin_cases k <;> fin_cases l <;>
-    norm_num [traceOutA_apply, offDiagonal, Matrix.single_apply]
+    simp [traceOutA_apply, offDiagonal, Matrix.single_apply]
 
 example : traceOutB offDiagonal = 0 := by
   ext i j
   fin_cases i <;> fin_cases j <;>
-    norm_num [traceOutB_apply, offDiagonal, Matrix.single_apply]
+    simp [traceOutB_apply, offDiagonal, Matrix.single_apply]
 
 example : traceOutA (1 : Operator (BipartiteIndex AIndex BIndex)) =
     (2 : ℂ) • (1 : Operator BIndex) := by
@@ -78,31 +82,35 @@ theorem raiseA_action :
   rw [LocalOperatorA.lift_mul_tensorKet]
   congr 1
   funext i
-  fin_cases i <;> simp [raiseA, ketA0, ketA1, Matrix.mulVec, dotProduct]
+  fin_cases i <;>
+    simp [raiseA, ketA0, ketA1, Matrix.mulVec, dotProduct,
+      Matrix.single_apply]
 
 theorem raiseB_action :
     raiseB.lift *ᵥ tensorKet ketA0 ketB0 = tensorKet ketA0 ketB1 := by
   rw [LocalOperatorB.lift_mul_tensorKet]
   congr 1
   funext k
-  fin_cases k <;> simp [raiseB, ketB0, ketB1, Matrix.mulVec, dotProduct]
+  fin_cases k <;>
+    simp [raiseB, ketB0, ketB1, Matrix.mulVec, dotProduct,
+      Matrix.single_apply]
 
 example : raiseA.lift * raiseB.lift = raiseB.lift * raiseA.lift :=
   localA_commute_localB raiseA raiseB
 
 /-! A normalized pure state proved not to be any raw tensor product. -/
 
-def rationalEntangledKet : Ket (BipartiteIndex AIndex AIndex) :=
+noncomputable def rationalEntangledKet : Ket (BipartiteIndex AIndex AIndex) :=
   fun p ↦
     if p = ((0 : AIndex), (0 : AIndex)) then (3 / 5 : ℂ)
     else if p = ((1 : AIndex), (1 : AIndex)) then (4 / 5 : ℂ)
     else 0
 
-def rationalEntangledState : BipartitePureState AIndex AIndex where
+noncomputable def rationalEntangledState : BipartitePureState AIndex AIndex where
   ket := rationalEntangledKet
   normalized := by
     norm_num [dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
-      rationalEntangledKet]
+      rationalEntangledKet, Complex.star_def, map_div₀, map_ofNat]
 
 theorem tensorKet_cross_amplitudes (ψ φ : Ket AIndex) :
     tensorKet ψ φ (0, 0) * tensorKet ψ φ (1, 1) =
@@ -122,19 +130,21 @@ theorem rationalEntangledState_not_product :
   rw [← h00, ← h11, ← h01, ← h10] at hc
   norm_num [rationalEntangledKet] at hc
 
-def rationalMarginal : Operator AIndex :=
+noncomputable def rationalMarginal : Operator AIndex :=
   Matrix.diagonal fun i ↦ if i = 0 then (9 / 25 : ℂ) else (16 / 25 : ℂ)
 
 example : (reducedA rationalEntangledState.toDensity).matrix = rationalMarginal := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [reducedA_matrix, traceOutB_apply, PureState.toDensity_matrix_apply,
-      rationalEntangledState, rationalEntangledKet, rationalMarginal, Matrix.diagonal]
+      rationalEntangledState, rationalEntangledKet, rationalMarginal, Matrix.diagonal,
+      Matrix.vecMulVec_apply, Complex.star_def, map_div₀, map_ofNat]
 
 example : (reducedB rationalEntangledState.toDensity).matrix = rationalMarginal := by
   ext i j
   fin_cases i <;> fin_cases j <;>
     norm_num [reducedB_matrix, traceOutA_apply, PureState.toDensity_matrix_apply,
-      rationalEntangledState, rationalEntangledKet, rationalMarginal, Matrix.diagonal]
+      rationalEntangledState, rationalEntangledKet, rationalMarginal, Matrix.diagonal,
+      Matrix.vecMulVec_apply, Complex.star_def, map_div₀, map_ofNat]
 
 end EPR.Audit.Bipartite
