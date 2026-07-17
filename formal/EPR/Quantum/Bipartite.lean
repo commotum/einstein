@@ -1,7 +1,6 @@
 module
 
 public import EPR.Quantum.Core
-public import Mathlib.Analysis.Matrix.Order
 
 /-!
 # Finite-dimensional bipartite systems
@@ -44,6 +43,22 @@ theorem tensorKet_dot_star (ψ : Ket ι) (φ : Ket κ) :
       (ψ ⬝ᵥ star ψ) * (φ ⬝ᵥ star φ) := by
   simp [dotProduct, tensorKet, Fintype.sum_prod_type, Fintype.sum_mul_sum,
     mul_comm, mul_left_comm, mul_assoc]
+
+/-- A Kronecker-product operator acts factorwise on a tensor-product ket. -/
+theorem kronecker_mulVec_tensorKet (A : Operator ι) (B : Operator κ)
+    (ψ : Ket ι) (φ : Ket κ) :
+    (A ⊗ₖ B) *ᵥ tensorKet ψ φ =
+      tensorKet (A *ᵥ ψ) (B *ᵥ φ) := by
+  ext p
+  rcases p with ⟨i, k⟩
+  change (∑ p : ι × κ, (A i p.1 * B k p.2) * (ψ p.1 * φ p.2)) =
+    (∑ j, A i j * ψ j) * ∑ l, B k l * φ l
+  rw [Fintype.sum_prod_type, Fintype.sum_mul_sum]
+  apply Finset.sum_congr rfl
+  intro j _
+  apply Finset.sum_congr rfl
+  intro l _
+  ring
 
 namespace PureState
 
@@ -301,18 +316,53 @@ omit [DecidableEq ι] in
 theorem LocalOperatorA.lift_mul_tensorKet
     (A : LocalOperatorA ι κ) (ψ : Ket ι) (φ : Ket κ) :
     A.lift *ᵥ tensorKet ψ φ = tensorKet (A.operator *ᵥ ψ) φ := by
-  ext ⟨i, k⟩
-  simp [LocalOperatorA.lift, tensorKet, Matrix.mulVec, dotProduct,
-    Fintype.sum_prod_type, Matrix.one_apply, Finset.sum_mul, mul_assoc]
+  simpa [LocalOperatorA.lift] using
+    kronecker_mulVec_tensorKet A.operator (1 : Operator κ) ψ φ
 
 omit [DecidableEq κ] in
 theorem LocalOperatorB.lift_mul_tensorKet
     (B : LocalOperatorB ι κ) (ψ : Ket ι) (φ : Ket κ) :
     B.lift *ᵥ tensorKet ψ φ = tensorKet ψ (B.operator *ᵥ φ) := by
-  ext ⟨i, k⟩
-  simp [LocalOperatorB.lift, tensorKet, Matrix.mulVec, dotProduct,
-    Fintype.sum_prod_type, Matrix.one_apply, Finset.mul_sum,
-    mul_comm, mul_assoc]
+  simpa [LocalOperatorB.lift] using
+    kronecker_mulVec_tensorKet (1 : Operator ι) B.operator ψ φ
+
+/-- An orthogonal projection explicitly tagged as belonging to subsystem `A`. -/
+structure LocalProjectionA (ι κ : Type*) [Fintype ι] where
+  projection : Projection ι
+
+/-- An orthogonal projection explicitly tagged as belonging to subsystem `B`. -/
+structure LocalProjectionB (ι κ : Type*) [Fintype κ] where
+  projection : Projection κ
+
+namespace LocalProjectionA
+
+/-- Lift an A-tagged projection to the ordered bipartite space. -/
+def lift (P : LocalProjectionA ι κ) : Projection (BipartiteIndex ι κ) where
+  matrix := P.projection.matrix ⊗ₖ (1 : Operator κ)
+  isHermitian := by
+    unfold Matrix.IsHermitian
+    rw [Matrix.conjTranspose_kronecker, P.projection.isHermitian,
+      Matrix.conjTranspose_one]
+  idempotent := by
+    rw [← Matrix.mul_kronecker_mul]
+    simp [P.projection.idempotent]
+
+end LocalProjectionA
+
+namespace LocalProjectionB
+
+/-- Lift a B-tagged projection to the ordered bipartite space. -/
+def lift (P : LocalProjectionB ι κ) : Projection (BipartiteIndex ι κ) where
+  matrix := (1 : Operator ι) ⊗ₖ P.projection.matrix
+  isHermitian := by
+    unfold Matrix.IsHermitian
+    rw [Matrix.conjTranspose_kronecker, Matrix.conjTranspose_one,
+      P.projection.isHermitian]
+  idempotent := by
+    rw [← Matrix.mul_kronecker_mul]
+    simp [P.projection.idempotent]
+
+end LocalProjectionB
 
 /-- A Hermitian observable explicitly tagged as belonging to subsystem `A`. -/
 structure LocalObservableA (ι κ : Type*) where
