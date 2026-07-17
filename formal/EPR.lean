@@ -1,3 +1,3 @@
 module
 
-public import EPR.Quantum.Core
+public import EPR.Quantum.Bipartite

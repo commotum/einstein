@@ -21,9 +21,11 @@
 - A fresh pinned-source search found no partial-trace, reduced-state, or
   density-matrix abstraction in mathlib.
 - The pinned API does supply `Matrix.kronecker`, `Matrix.mul_kronecker_mul`,
-  `Matrix.conjTranspose_kronecker`, `Matrix.trace_kronecker`, finite sum laws,
-  `Matrix.posSemidef_sum`, and the finite complex rank-one decomposition
-  `Matrix.posSemidef_iff_eq_sum_vecMulVec`.
+  `Matrix.conjTranspose_kronecker`, `Matrix.trace_kronecker`,
+  `Matrix.PosSemidef.kronecker`, principal-submatrix positivity, finite sum
+  laws, and `Matrix.posSemidef_sum`. The Kronecker positivity theorem lives in
+  `Mathlib.Analysis.Matrix.Order`, outside the narrower matrix directory first
+  searched.
 - Baseline scans find no `sorry`, `admit`, project `axiom`, `opaque`, or
   `unsafe` declaration in completed Lean sources.
 
@@ -36,8 +38,9 @@
   state-level constructors.
 - Partial trace should be named by the subsystem removed (`traceOutA` and
   `traceOutB`) to avoid the common ambiguity in `partialTraceA/B` conventions.
-- Positivity of partial trace must be proved from the checked rank-one
-  decomposition, not postulated or inferred from trace preservation alone.
+- Writing partial trace as a sum of principal submatrices permits a direct
+  positivity proof using `PosSemidef.submatrix` and `posSemidef_sum`; it must
+  not be postulated or inferred from trace preservation alone.
 - Distinct `LocalOperatorA`, `LocalOperatorB`, `LocalObservableA`, and
   `LocalObservableB` wrapper types are warranted. Separate function names
   alone would not prevent accidental interchange when `ι = κ`, as in the target
@@ -63,10 +66,10 @@ interpretative or measurement-conditioning premise.
   `tensorKet` with explicit A-then-B order.
 - Construct normalized pure product states and positive trace-one density
   product states; prove their matrix relationship.
-- Prove positivity of Kronecker products of finite complex positive
-  semidefinite matrices using the checked rank-one decomposition.
+- Use the pinned `Matrix.PosSemidef.kronecker` theorem for positive
+  Kronecker products rather than duplicating that proof.
 - Define `traceOutA` and `traceOutB` as explicit finite diagonal-index sums.
-- Prove their sum, rank-one, positivity, trace-preservation, Kronecker-product,
+- Prove their entry, sum, positivity, trace-preservation, Kronecker-product,
   and reduced-product-state identities.
 - Define `reducedA` and `reducedB` as invariant-carrying density states.
 - Define separately tagged A-side and B-side local operators and observables,

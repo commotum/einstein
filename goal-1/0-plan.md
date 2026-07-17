@@ -102,8 +102,8 @@ not an ordinary Hilbert-space-vector example.
 - The Stage 3 recheck again found no partial-trace or reduced-state definition
   in the pinned mathlib source. The checked ingredients for a narrow finite
   implementation are `Matrix.kronecker`, its multiplication/conjugate-
-  transpose/trace laws, finite indexed sums, `Matrix.posSemidef_sum`, and
-  `Matrix.posSemidef_iff_eq_sum_vecMulVec`.
+  transpose/trace laws, `Matrix.PosSemidef.kronecker`, principal-submatrix
+  positivity, finite indexed sums, and `Matrix.posSemidef_sum`.
 - Stage 3 will use separately tagged A-side and B-side local operator and
   observable types. This prevents accidental subsystem interchange even when
   the two basis-index types happen to be definitionally equal.
