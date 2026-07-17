@@ -9,6 +9,8 @@
   `goal-1/2-QUANTUM-CORE.md`.
 - Stage `3-BIPARTITE` completed on 2026-07-17; its evidence is recorded in
   `goal-1/3-BIPARTITE.md`.
+- Stage `4-CONDITIONALS` is in progress; its working record is
+  `goal-1/4-CONDITIONALS.md`.
 - The pinned project has reusable finite-dimensional quantum-core and
   bipartite layers. No conditional state, philosophical premise, or target EPR
   proof exists yet.
@@ -117,6 +119,16 @@ not an ordinary Hilbert-space-vector example.
 - The Stage 3 audit uses `Fin 2 × Fin 3` to expose subsystem swaps and proves a
   normalized rational-amplitude two-qubit state has no raw tensor
   factorization; it does not introduce the later Bell steering example.
+- At Stage 4 start, a fresh pinned-source search again found no project-ready
+  quantum measurement, instrument, Lüders-update, selective-state, or
+  conditional-state abstraction. The checked finite ingredients include
+  positive-semidefinite matrix sandwiches, trace cyclicity, positive trace,
+  and the Stage 3 partial traces.
+- Stage 4 will use the projective Lüders branch `PρP`, prove its probability
+  bounds rather than add them as fields to `outcomeProbability`, and require
+  strict positive-probability evidence before normalization. A full
+  projective measurement will separately support a normalized nonselective
+  state; neither API will be identified with an unconditioned reduced state.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -411,6 +423,9 @@ subsystem typing.
 - Focused/full-required builds, scans, and diff check pass.
 
 ### 4-CONDITIONALS
+
+**Status:** In progress on 2026-07-17. See `goal-1/4-CONDITIONALS.md` for the
+current source audit, design constraints, and required evidence.
 
 #### Big Picture Objective
 
