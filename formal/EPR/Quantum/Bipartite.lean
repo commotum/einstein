@@ -33,6 +33,7 @@ abbrev BipartiteState (ι κ : Type*) [Fintype ι] [Fintype κ] :=
 def tensorKet (ψ : Ket ι) (φ : Ket κ) : Ket (BipartiteIndex ι κ) :=
   fun ik ↦ ψ ik.1 * φ ik.2
 
+omit [Fintype ι] [Fintype κ] in
 @[simp]
 theorem tensorKet_apply (ψ : Ket ι) (φ : Ket κ) (i : ι) (k : κ) :
     tensorKet ψ φ (i, k) = ψ i * φ k :=
@@ -73,12 +74,13 @@ theorem tensor_matrix (ρ : DensityState ι) (σ : DensityState κ) :
 
 end DensityState
 
+omit [Fintype ι] [Fintype κ] in
 /-- Outer products commute with the chosen tensor-ket/Kronecker convention. -/
 theorem vecMulVec_tensorKet (ψ : Ket ι) (φ : Ket κ) :
     Matrix.vecMulVec (tensorKet ψ φ) (star (tensorKet ψ φ)) =
       Matrix.vecMulVec ψ (star ψ) ⊗ₖ Matrix.vecMulVec φ (star φ) := by
   ext ⟨i, k⟩ ⟨j, l⟩
-  simp [tensorKet, Matrix.vecMulVec_apply, Matrix.kronecker_apply,
+  simp [tensorKet, Matrix.vecMulVec_apply,
     mul_comm, mul_left_comm, mul_assoc]
 
 namespace PureState
@@ -101,28 +103,39 @@ def traceOutA (M : Operator (BipartiteIndex ι κ)) : Operator κ :=
 def traceOutB (M : Operator (BipartiteIndex ι κ)) : Operator ι :=
   ∑ k : κ, M.submatrix (fun i ↦ (i, k)) (fun i ↦ (i, k))
 
+omit [Fintype κ] in
 @[simp]
 theorem traceOutA_apply (M : Operator (BipartiteIndex ι κ)) (k l : κ) :
     traceOutA M k l = ∑ i : ι, M (i, k) (i, l) := by
-  simp [traceOutA]
+  unfold traceOutA
+  rw [Matrix.sum_apply]
+  rfl
 
+omit [Fintype ι] in
 @[simp]
 theorem traceOutB_apply (M : Operator (BipartiteIndex ι κ)) (i j : ι) :
     traceOutB M i j = ∑ k : κ, M (i, k) (j, k) := by
-  simp [traceOutB]
+  unfold traceOutB
+  rw [Matrix.sum_apply]
+  rfl
 
+omit [Fintype κ] in
 theorem traceOutA_sum {τ : Type*} [Fintype τ]
     (f : τ → Operator (BipartiteIndex ι κ)) :
     traceOutA (∑ t, f t) = ∑ t, traceOutA (f t) := by
   ext k l
-  simp [traceOutA, Finset.sum_comm]
+  simp only [traceOutA_apply, Matrix.sum_apply]
+  rw [Finset.sum_comm]
 
+omit [Fintype ι] in
 theorem traceOutB_sum {τ : Type*} [Fintype τ]
     (f : τ → Operator (BipartiteIndex ι κ)) :
     traceOutB (∑ t, f t) = ∑ t, traceOutB (f t) := by
   ext i j
-  simp [traceOutB, Finset.sum_comm]
+  simp only [traceOutB_apply, Matrix.sum_apply]
+  rw [Finset.sum_comm]
 
+omit [Fintype κ] in
 /-- Tracing out `A` preserves positive semidefiniteness. -/
 theorem traceOutA_posSemidef {M : Operator (BipartiteIndex ι κ)}
     (hM : M.PosSemidef) : (traceOutA M).PosSemidef := by
@@ -130,6 +143,7 @@ theorem traceOutA_posSemidef {M : Operator (BipartiteIndex ι κ)}
     Matrix.posSemidef_sum Finset.univ
       (fun i _ ↦ hM.submatrix (fun k ↦ (i, k)))
 
+omit [Fintype ι] in
 /-- Tracing out `B` preserves positive semidefiniteness. -/
 theorem traceOutB_posSemidef {M : Operator (BipartiteIndex ι κ)}
     (hM : M.PosSemidef) : (traceOutB M).PosSemidef := by
@@ -140,24 +154,33 @@ theorem traceOutB_posSemidef {M : Operator (BipartiteIndex ι κ)}
 /-- Tracing out `A` preserves the total trace. -/
 theorem trace_traceOutA (M : Operator (BipartiteIndex ι κ)) :
     Matrix.trace (traceOutA M) = Matrix.trace M := by
-  simp [Matrix.trace, traceOutA, Fintype.sum_prod_type, Finset.sum_comm]
+  change (∑ k : κ, traceOutA M k k) = ∑ ik : ι × κ, M ik ik
+  rw [Fintype.sum_prod_type]
+  simp only [traceOutA_apply]
+  rw [Finset.sum_comm]
 
 /-- Tracing out `B` preserves the total trace. -/
 theorem trace_traceOutB (M : Operator (BipartiteIndex ι κ)) :
     Matrix.trace (traceOutB M) = Matrix.trace M := by
-  simp [Matrix.trace, traceOutB, Fintype.sum_prod_type, Finset.sum_comm]
+  change (∑ i : ι, traceOutB M i i) = ∑ ik : ι × κ, M ik ik
+  rw [Fintype.sum_prod_type]
+  simp only [traceOutB_apply]
 
+omit [Fintype κ] in
 /-- The partial trace over `A` of a Kronecker product. -/
 theorem traceOutA_kronecker (A : Operator ι) (B : Operator κ) :
     traceOutA (A ⊗ₖ B) = Matrix.trace A • B := by
   ext k l
-  simp [traceOutA, Matrix.trace, Matrix.kronecker_apply, Finset.sum_mul]
+  rw [traceOutA_apply]
+  simp [Matrix.trace, Finset.sum_mul]
 
+omit [Fintype ι] in
 /-- The partial trace over `B` of a Kronecker product. -/
 theorem traceOutB_kronecker (A : Operator ι) (B : Operator κ) :
     traceOutB (A ⊗ₖ B) = Matrix.trace B • A := by
   ext i j
-  simp [traceOutB, Matrix.trace, Matrix.kronecker_apply, Finset.mul_sum, mul_comm]
+  rw [traceOutB_apply]
+  simp [Matrix.trace, Finset.mul_sum, mul_comm]
 
 /-- The normalized reduced state of subsystem `A`. -/
 def reducedA (ρ : BipartiteState ι κ) : DensityState ι where
@@ -239,44 +262,57 @@ end LocalOperatorB
 
 variable [DecidableEq ι] [DecidableEq κ]
 
+omit [DecidableEq ι] in
 theorem LocalOperatorA.lift_mul (A C : LocalOperatorA ι κ) :
     (LocalOperatorA.mk (A.operator * C.operator) : LocalOperatorA ι κ).lift =
       A.lift * C.lift := by
+  change (A.operator * C.operator) ⊗ₖ (1 : Operator κ) =
+    (A.operator ⊗ₖ (1 : Operator κ)) * (C.operator ⊗ₖ (1 : Operator κ))
   rw [← Matrix.mul_kronecker_mul]
-  simp [LocalOperatorA.lift]
+  simp
 
+omit [DecidableEq κ] in
 theorem LocalOperatorB.lift_mul (B C : LocalOperatorB ι κ) :
     (LocalOperatorB.mk (B.operator * C.operator) : LocalOperatorB ι κ).lift =
       B.lift * C.lift := by
+  change (1 : Operator ι) ⊗ₖ (B.operator * C.operator) =
+    ((1 : Operator ι) ⊗ₖ B.operator) * ((1 : Operator ι) ⊗ₖ C.operator)
   rw [← Matrix.mul_kronecker_mul]
-  simp [LocalOperatorB.lift]
+  simp
 
 /-- Operators placed on opposite factors multiply to their Kronecker product. -/
 theorem localA_mul_localB (A : LocalOperatorA ι κ) (B : LocalOperatorB ι κ) :
     A.lift * B.lift = A.operator ⊗ₖ B.operator := by
+  change (A.operator ⊗ₖ (1 : Operator κ)) *
+    ((1 : Operator ι) ⊗ₖ B.operator) = A.operator ⊗ₖ B.operator
   rw [← Matrix.mul_kronecker_mul]
-  simp [LocalOperatorA.lift, LocalOperatorB.lift]
+  simp
 
 /-- Opposite-factor operators commute as an algebraic tensor identity. -/
 theorem localA_commute_localB (A : LocalOperatorA ι κ) (B : LocalOperatorB ι κ) :
     A.lift * B.lift = B.lift * A.lift := by
   rw [localA_mul_localB]
+  change A.operator ⊗ₖ B.operator =
+    ((1 : Operator ι) ⊗ₖ B.operator) * (A.operator ⊗ₖ (1 : Operator κ))
   rw [← Matrix.mul_kronecker_mul]
-  simp [LocalOperatorA.lift, LocalOperatorB.lift]
+  simp
 
+omit [DecidableEq ι] in
 theorem LocalOperatorA.lift_mul_tensorKet
     (A : LocalOperatorA ι κ) (ψ : Ket ι) (φ : Ket κ) :
     A.lift *ᵥ tensorKet ψ φ = tensorKet (A.operator *ᵥ ψ) φ := by
   ext ⟨i, k⟩
   simp [LocalOperatorA.lift, tensorKet, Matrix.mulVec, dotProduct,
-    Fintype.sum_prod_type, Matrix.kronecker_apply, Finset.sum_mul, mul_assoc]
+    Fintype.sum_prod_type, Matrix.one_apply, Finset.sum_mul, mul_assoc]
 
+omit [DecidableEq κ] in
 theorem LocalOperatorB.lift_mul_tensorKet
     (B : LocalOperatorB ι κ) (ψ : Ket ι) (φ : Ket κ) :
     B.lift *ᵥ tensorKet ψ φ = tensorKet ψ (B.operator *ᵥ φ) := by
   ext ⟨i, k⟩
   simp [LocalOperatorB.lift, tensorKet, Matrix.mulVec, dotProduct,
-    Fintype.sum_prod_type, Matrix.kronecker_apply, Finset.mul_sum, mul_assoc]
+    Fintype.sum_prod_type, Matrix.one_apply, Finset.mul_sum,
+    mul_comm, mul_assoc]
 
 /-- A Hermitian observable explicitly tagged as belonging to subsystem `A`. -/
 structure LocalObservableA (ι κ : Type*) where
