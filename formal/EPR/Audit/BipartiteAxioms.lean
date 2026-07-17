@@ -10,6 +10,15 @@ Stage 3 constructions and results. It is not imported by the public `EPR`
 root.
 -/
 
+#check EPR.Quantum.LocalOperatorA
+#check EPR.Quantum.LocalOperatorB
+#check EPR.Quantum.LocalObservableA
+#check EPR.Quantum.LocalObservableB
+#check EPR.Quantum.LocalProjectionA
+#check EPR.Quantum.LocalProjectionB
+#check EPR.Quantum.traceOutALinear
+#check EPR.Quantum.traceOutBLinear
+
 #print axioms EPR.Quantum.PureState.tensor
 #print axioms EPR.Quantum.DensityState.tensor
 #print axioms EPR.Quantum.PureState.toDensity_tensor

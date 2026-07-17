@@ -107,6 +107,16 @@ not an ordinary Hilbert-space-vector example.
 - Stage 3 will use separately tagged A-side and B-side local operator and
   observable types. This prevents accidental subsystem interchange even when
   the two basis-index types happen to be definitionally equal.
+- `EPR.Quantum.Bipartite` now implements ordered bipartite pure/density state
+  aliases, normalized tensor states, tagged local operators/observables/
+  projections, finite partial traces and linear-map wrappers, and normalized
+  reduced states. Its focused verification is still in progress.
+- Partial-trace positivity is derived from principal-submatrix positivity and
+  finite sums, while trace preservation is a separate theorem. Product
+  reduction and local tensor-factor action/commutation identities compile.
+- The Stage 3 audit uses `Fin 2 × Fin 3` to expose subsystem swaps and proves a
+  normalized rational-amplitude two-qubit state has no raw tensor
+  factorization; it does not introduce the later Bell steering example.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 

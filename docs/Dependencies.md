@@ -58,6 +58,48 @@ general theorem that every projective Born probability lies in `[0, 1]` is not
 silently built into the definition and remains available as a later API
 strengthening when the measurement layer needs it.
 
+## Stage 3 checked bipartite layer
+
+`EPR.Quantum.Bipartite` uses the ordered product index `A × B` and provides:
+
+- `BipartitePureState` and `BipartiteState` aliases over the invariant-bearing
+  Stage 2 state structures;
+- `tensorKet`, normalized `PureState.tensor`, positive trace-one
+  `DensityState.tensor`, and compatibility of tensoring with pure-to-density
+  conversion;
+- separately tagged `LocalOperatorA/B`, `LocalObservableA/B`, and
+  `LocalProjectionA/B` types with explicit lifts and no coercion between
+  subsystem tags;
+- algebraic same-side multiplication, opposite-side multiplication and
+  commutation, and factorwise action on tensor-product kets;
+- `traceOutA` and `traceOutB`, named for the factor removed, together with
+  complex-linear-map versions `traceOutALinear` and `traceOutBLinear`; and
+- normalized `reducedA` and `reducedB` density states.
+
+The project-owned partial traces are finite sums of principal submatrices. The
+proof that they preserve positivity uses pinned mathlib's
+`Matrix.PosSemidef.submatrix` and `Matrix.posSemidef_sum`; trace preservation
+is proved separately by rearranging finite sums. Kronecker-product positivity
+uses the existing `Matrix.PosSemidef.kronecker` theorem from
+`Mathlib.Analysis.Matrix.Order`, exposed transitively by the core's pinned
+imports. Product formulas prove
+`traceOutA (A ⊗ₖ B) = trace A • B` and
+`traceOutB (A ⊗ₖ B) = trace B • A`, from which both product-state marginal
+identities follow.
+
+`EPR.Audit.Bipartite` uses a heterogeneous `Fin 2 × Fin 3` system to test
+subsystem order, including an off-diagonal matrix unit whose two partial
+traces differ, two independent local actions, and the dimension factor in the
+partial trace of identity. It also constructs a normalized rational-amplitude
+two-qubit state, proves that no pair of raw kets tensor to it, and checks both
+reduced matrices. The example is deliberately not the later Bell steering
+scenario.
+
+Local operators here are arbitrary algebraic matrices. Their lifts are not
+claimed to be normalized state transformations, trace-preserving channels,
+operational no-signalling maps, or evidence of ontic no-disturbance. Reduced
+states are unconditioned marginals, not selected conditional states.
+
 ## Provisional representation choice
 
 - Use generic finite basis index types `ι`, `κ` with `[Fintype]` and
@@ -67,8 +109,8 @@ strengthening when the measurement layer needs it.
   operator products with `Matrix.kronecker`.
 - Introduce normalized pure states and positive trace-one density states as
   distinct invariant-carrying structures in Stage 2.
-- Define finite partial trace explicitly as an indexed finite sum in Stage 3,
-  then prove its normalization and product laws.
+- Use the Stage 3 finite partial traces, implemented as principal-block sums
+  with proved positivity, trace preservation, and product laws.
 - Begin with projective measurements. General POVMs/instruments are optional
   extensions unless later proof obligations require them.
 - Use subnormalized selective branches internally; normalize only with explicit
