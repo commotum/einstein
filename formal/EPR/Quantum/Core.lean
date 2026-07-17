@@ -15,7 +15,7 @@ completeness.
 
 @[expose] public section
 
-open scoped ComplexOrder
+open scoped ComplexOrder Matrix
 
 namespace EPR.Quantum
 
@@ -106,6 +106,7 @@ structure Observable (ι : Type*) where
 
 namespace Observable
 
+omit [Fintype ι] in
 @[ext]
 theorem ext {A B : Observable ι} (h : A.matrix = B.matrix) : A = B := by
   cases A
@@ -194,7 +195,9 @@ theorem coe_outcomeProbability (ρ : DensityState ι) (P : Projection ι) :
 theorem outcomeProbability_eq_one_of_support
     (ρ : DensityState ι) (P : Projection ι) (h : P.Supports ρ) :
     outcomeProbability ρ P = 1 := by
-  simp [outcomeProbability, bornWeight, h, ρ.trace_one]
+  change P.matrix * ρ.matrix = ρ.matrix at h
+  rw [outcomeProbability, bornWeight, h, ρ.trace_one]
+  simp
 
 namespace PureState
 
@@ -238,6 +241,7 @@ namespace PureState
 theorem toDensity_sharpValue
     {ψ : PureState ι} {A : Observable ι} {a : ℝ}
     (h : ψ.IsEigenstate A a) : ψ.toDensity.SharpValue A a := by
+  change A.matrix *ᵥ ψ.ket = (a : ℂ) • ψ.ket at h
   unfold DensityState.SharpValue
   rw [toDensity_matrix, Matrix.mul_vecMulVec, h, Matrix.smul_vecMulVec]
 
@@ -254,7 +258,7 @@ theorem sharpValue_of_support
     A.matrix * ρ.matrix = A.matrix * (o.projector.matrix * ρ.matrix) := by rw [h]
     _ = (A.matrix * o.projector.matrix) * ρ.matrix := by rw [Matrix.mul_assoc]
     _ = ((o.value : ℂ) • o.projector.matrix) * ρ.matrix := by rw [o.spectral]
-    _ = (o.value : ℂ) • (o.projector.matrix * ρ.matrix) := by rw [smul_mul]
+    _ = (o.value : ℂ) • (o.projector.matrix * ρ.matrix) := by rw [Matrix.smul_mul]
     _ = (o.value : ℂ) • ρ.matrix := by rw [h]
 
 end ProjectiveOutcome
