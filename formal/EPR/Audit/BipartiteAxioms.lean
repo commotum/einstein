@@ -33,9 +33,14 @@ root.
 #print axioms EPR.Quantum.reducedB
 #print axioms EPR.Quantum.reducedA_tensor
 #print axioms EPR.Quantum.reducedB_tensor
+#print axioms EPR.Quantum.LocalOperatorA.lift_mul
+#print axioms EPR.Quantum.LocalOperatorB.lift_mul
+#print axioms EPR.Quantum.localA_mul_localB
 #print axioms EPR.Quantum.localA_commute_localB
 #print axioms EPR.Quantum.LocalOperatorA.lift_mul_tensorKet
 #print axioms EPR.Quantum.LocalOperatorB.lift_mul_tensorKet
 #print axioms EPR.Quantum.LocalProjectionA.lift
 #print axioms EPR.Quantum.LocalProjectionB.lift
+#print axioms EPR.Quantum.LocalObservableA.lift
+#print axioms EPR.Quantum.LocalObservableB.lift
 #print axioms EPR.Audit.Bipartite.rationalEntangledState_not_product

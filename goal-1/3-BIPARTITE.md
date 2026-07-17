@@ -15,9 +15,9 @@
 - `EPR.Quantum.Core` supplies normalized pure states, positive trace-one
   density states, Hermitian observables, projections, Born probability, and
   sharpness, all over generic finite basis-index types.
-- `BipartiteIndex ι κ` is the ordered product `ι × κ`, but no bipartite
-  state API, local operator placement, tensor-state constructor, partial trace,
-  or reduced state currently exists.
+- At Stage 3 start, `BipartiteIndex ι κ` was the ordered product `ι × κ`, but
+  no bipartite state API, local operator placement, tensor-state constructor,
+  partial trace, or reduced state existed.
 - A fresh pinned-source search found no partial-trace, reduced-state, or
   density-matrix abstraction in mathlib.
 - The pinned API does supply `Matrix.kronecker`, `Matrix.mul_kronecker_mul`,
@@ -132,4 +132,87 @@ Expected files:
 
 ## Stage Results
 
-- In progress.
+- **Result:** Complete on 2026-07-17. Stage 4 was not started.
+- The four-page image-only PDF facsimile was inspected directly alongside the
+  local transcription. Eqs. (7)–(8) support the ordered bipartite and
+  alternative-basis infrastructure developed here; selective reduction and
+  the paper's later ontic locality premise remain outside this stage.
+- `EPR.Quantum.Bipartite` now provides generic ordered bipartite pure and
+  density states, normalized pure-state tensor products, positive trace-one
+  density-state tensor products, and compatibility between tensoring and
+  pure-to-density conversion.
+- `traceOutA` and `traceOutB` are explicit finite sums of principal submatrices
+  and are named for the factor removed. Their complex-linear-map wrappers,
+  positivity, trace preservation, Kronecker-product formulas, and normalized
+  `reducedA`/`reducedB` constructions are proved independently. Product-state
+  marginals reduce to the supplied factors.
+- Separately tagged `LocalOperatorA/B`, `LocalProjectionA/B`, and
+  `LocalObservableA/B` types have explicit lifts and no coercion between
+  subsystem tags. Same-side multiplication, the cross product, cross-side
+  commutation, and action on product kets are checked algebraic facts only;
+  the public module explicitly disclaims operational no-signalling and ontic
+  locality/no-disturbance conclusions.
+- `EPR.Audit.Bipartite` uses the heterogeneous index `Fin 2 × Fin 3`. It
+  checks a product state's two marginals, an off-diagonal matrix unit, the
+  dimension factor in the partial trace of identity, distinct local actions,
+  and cross-side commutation. These tests catch subsystem swaps, transposition,
+  and illicit normalization of partial trace.
+- The audit also constructs a normalized rational-amplitude two-qubit pure
+  state, proves that no pair of raw kets tensors to it, and computes both
+  reduced density matrices. This is a genuine non-product sanity check in an
+  audit leaf, not a hidden Bell/reference state in the generic API.
+- Early focused builds exposed four useful pinned-API corrections: finite
+  matrix sums require `Matrix.sum_apply`; indexed sum reordering uses
+  `Finset.sum_comm`, not a nonexistent `Fintype.sum_comm`; tagged local-action
+  proofs benefit from explicit type changes and a generic factorwise action
+  theorem; and the audit's basis-state proof uses `single_one_dotProduct`.
+  Subsequent audit corrections made rational complex data noncomputable and
+  handled numeral star simplification and `vecMulVec` unfolding explicitly.
+  No mathematical claim was weakened to resolve these diagnostics.
+- Focused command
+  `cd formal && lake build EPR.Audit.Bipartite EPR.Audit.BipartiteAxioms EPR`
+  succeeded with 3203 jobs. The public bipartite target also succeeded
+  separately with 2664 jobs.
+- Required full command `cd formal && lake build` succeeded with 2666 jobs.
+- `EPR.Audit.BipartiteAxioms` checks the A/B wrapper and partial-trace linear
+  map signatures and prints the trusted footprint of tensor construction,
+  partial-trace positivity/trace, reduced states, local multiplication/action,
+  projection and observable lifts, and the non-product proof. Every printed
+  declaration reports exactly `propext`, `Classical.choice`, and `Quot.sound`;
+  no project-owned axiom is present.
+- Separate scans for `sorry`/`admit` and declaration-level `axiom`, `opaque`,
+  or `unsafe` returned exit status 1 with no matches. The generic-module scan
+  found no qubit, `Fin 2`, Bell, audit-state, or reference-state dependency and
+  no coercion declaration. The philosophical/continuum shortcut scan found no
+  declaration or shortcut; a broader text scan found only the public module's
+  explicit negative disclaimer about no-signalling and ontic locality.
+- Public-import inspection confirms the narrow chain
+  `EPR -> EPR.Quantum.Bipartite -> EPR.Quantum.Core`; the executable and axiom
+  audits remain outside the public root. Successful builds rule out a cycle.
+- `lake env lean --version` reconfirmed Lean `4.31.0`, commit
+  `68218e876d2a38b1985b8590fff244a83c321783`. The manifest reconfirmed mathlib
+  revision `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`.
+- The relevant-file trailing-whitespace scan returned exit status 1 with no
+  matches, and `git diff --check` succeeded.
+
+## What Was Learned
+
+- A principal-block sum gives a small, reusable finite partial trace whose
+  positivity follows directly from official submatrix and finite-sum theorems.
+- Heterogeneous subsystem dimensions and off-diagonal matrix units are more
+  diagnostic for tensor-order errors than symmetric two-qubit examples alone.
+- Type tags are necessary even when function names indicate the side: when
+  `ι = κ`, untagged matrices would otherwise be interchangeable.
+- Algebraic tensor-factor commutation, operational no-signalling, and ontic
+  no-disturbance are three distinct claims and belong in different stages.
+- A pure-state entanglement sanity check must exclude every tensor
+  factorization; inequality with one product state would not suffice.
+
+## Plan Update
+
+- `0-plan.md` records the completed bipartite API, audits, and expected
+  foundational axiom footprint.
+- `4-CONDITIONALS` is now the first incomplete stage. It must introduce
+  selective branch probabilities and normalization evidence without
+  conflating conditional states with the unconditioned marginals proved here;
+  no Stage 4 implementation is included in this stage.
