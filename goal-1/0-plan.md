@@ -3,9 +3,12 @@
 ## Status
 
 - Scaffold created on 2026-07-17.
-- No stage has started.
-- No Lean project, declaration, substantive implementation, or proof has been
-  created by this scaffold.
+- Stage `1-FOUNDATIONS` completed on 2026-07-17; its evidence is recorded in
+  `goal-1/1-FOUNDATIONS.md`.
+- Stage `2-QUANTUM-CORE` is the first incomplete stage and has not started.
+- A pinned minimal Lean project and representation probes now exist. No
+  substantive quantum definition, philosophical premise, or target proof has
+  been implemented yet.
 - The local primary source is
   `einstein-1935/einstein-1935.md`, transcribed from the accompanying PDF.
 
@@ -65,12 +68,22 @@ not an ordinary Hilbert-space-vector example.
 ### Repository facts
 
 - The repository currently contains the paper as Markdown and PDF, a generic
-  Lean build plan, and Python project metadata.
-- No `lean-toolchain`, `lakefile.lean`, `lake-manifest.json`, or Lean source
-  file existed when this scaffold was created.
-- The `scaffold-goal` task permits exactly this folder's `0-plan.md`,
-  `0-loop.md`, and `0-prompt.md`; therefore a Lean setup belongs to Stage 1 and
-  was not created during scaffolding.
+  Lean build plan, Python project metadata, the Stage 1 source audit, and a
+  Lean project rooted at `formal/`.
+- Lean is pinned to `v4.31.0`; mathlib is pinned to commit
+  `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f` (tag `v4.31.0`). The generated
+  manifest pins every transitive dependency.
+- `EPR.Foundations` exposes only raw basis-indexed complex ket and operator
+  aliases. It does not claim normalization, positivity, measurement semantics,
+  locality, or physical reality.
+- `EPR.Audit.ApiProbe` compile-checks Hermitian matrices, complex positive
+  semidefiniteness, trace, Kronecker identities, rank-one positivity through
+  the `RCLike` API, and algebraic tensor products.
+- A pinned-source declaration search found no ready-made density-matrix,
+  quantum-measurement, POVM/Kraus, or partial-trace abstraction. Later stages
+  must provide narrow project-owned definitions and recheck before doing so.
+- Generated `.lake/` caches and dependency checkouts are ignored; the
+  toolchain, Lake configuration, and manifest are the reproducible sources.
 
 ### Paper map and preliminary audit
 
@@ -281,6 +294,9 @@ The original objective is achieved only when all of the following hold:
 
 ### 1-FOUNDATIONS
 
+**Status:** Complete on 2026-07-17. See `goal-1/1-FOUNDATIONS.md` for commands,
+failures encountered, and verification evidence.
+
 #### Big Picture Objective
 
 Establish a minimal, pinned, validated Lean project and select representations
@@ -308,6 +324,8 @@ based on the actual mathlib surface rather than assumptions.
 - The stage file records focused and full build output plus `git diff --check`.
 
 ### 2-QUANTUM-CORE
+
+**Status:** Not started; first incomplete stage.
 
 #### Big Picture Objective
 

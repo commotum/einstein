@@ -17,6 +17,7 @@ The Lean project is rooted at `formal/` and pins Lean and mathlib exactly.
 ```text
 cd formal
 lake update
+lake exe cache get
 lake build EPR.Audit.ApiProbe
 lake build
 ```

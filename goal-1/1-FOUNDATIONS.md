@@ -52,6 +52,7 @@ based on the actual mathlib surface rather than assumptions.
 Expected files:
 
 - `formal/lean-toolchain`
+- `formal/.gitignore`
 - `formal/lakefile.toml`
 - `formal/lake-manifest.json`
 - `formal/EPR.lean`
@@ -90,4 +91,62 @@ Expected files:
 
 ## Stage Results
 
-- In progress.
+- **Result:** Complete on 2026-07-17. Stage 2 was not started.
+- `lake update` created `formal/lake-manifest.json`, checked out mathlib at
+  `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`, and pinned all transitive
+  packages.
+- `lake env lean --version` reported Lean `4.31.0`, commit
+  `68218e876d2a38b1985b8590fff244a83c321783`.
+- `git -C .lake/packages/mathlib rev-parse HEAD` reported the configured
+  mathlib commit, and `git describe --tags --exact-match` reported `v4.31.0`.
+- The first focused build correctly failed because the narrow matrix imports
+  did not expose complex notation. Adding the explicit complex import and a
+  public module section fixed the import boundary.
+- The second focused build exposed that the generic
+  `posSemidef_vecMulVec_self_star` theorem asks for `StarOrderedRing ℂ`, which
+  is unavailable. The final probe instead uses the appropriate `RCLike`
+  theorem `Matrix.posSemidef_iff_eq_sum_vecMulVec` under `ComplexOrder` and
+  proves rank-one complex positivity without adding an axiom.
+- `lake exe cache get` restored the official pinned mathlib build cache after a
+  deliberately clean project check.
+- Final focused command
+  `cd formal && lake build EPR.Audit.ApiProbe` succeeded with 2663 jobs. Its
+  output confirmed every declaration listed in `docs/Dependencies.md`.
+- Final full command `cd formal && lake build` succeeded with 2029 jobs and
+  built the public `EPR` root.
+- The proof-escape scan
+  `rg -n "\\b(sorry|admit|axiom|unsafe)\\b" formal/EPR formal/EPR.lean`
+  returned exit status 1 with no matches.
+- The project-specific philosophical/continuum shortcut scan returned exit
+  status 1 with no matches in Lean sources.
+- A declaration search for density-matrix, partial-trace, POVM, Kraus,
+  quantum-state, and quantum-measurement definitions in the pinned mathlib
+  source returned exit status 1 with no matches. This supports only the stated
+  API-availability decision, not a mathematical claim.
+- The trailing-whitespace scan over all Stage 1 files returned exit status 1
+  with no matches.
+- `jq` validation of `formal/lake-manifest.json` returned `true` for the exact
+  mathlib revision.
+- `git diff --check` succeeded.
+- `formal/.lake/` is excluded by `formal/.gitignore`; generated caches and
+  dependency checkouts are not project source.
+
+## What Was Learned
+
+- Basis-indexed matrices are supported well enough to proceed with the finite
+  core while retaining explicit subsystem order through product indices.
+- Complex positivity requires the scoped `ComplexOrder` API and, for rank-one
+  decompositions, the `RCLike` inner-product characterization rather than the
+  more general scalar lemma.
+- A project-owned density-state structure and partial trace remain real proof
+  obligations for Stages 2 and 3.
+- The plan's separation between mathematical, operational, and interpretative
+  layers remains viable and unchanged.
+
+## Plan Update
+
+- `0-plan.md` now records the exact pins, checked API surface, representation
+  decision, ignored build artifacts, and Stage 1 completion.
+- `2-QUANTUM-CORE` is the first incomplete stage. It should begin by defining
+  normalization-bearing pure states and positive trace-one density matrices;
+  no Stage 2 implementation was included here.
