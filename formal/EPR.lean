@@ -1,3 +1,3 @@
 module
 
-public import EPR.Quantum.Bipartite
+public import EPR.Quantum.Conditional
