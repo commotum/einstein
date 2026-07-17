@@ -5,7 +5,8 @@
 - Scaffold created on 2026-07-17.
 - Stage `1-FOUNDATIONS` completed on 2026-07-17; its evidence is recorded in
   `goal-1/1-FOUNDATIONS.md`.
-- Stage `2-QUANTUM-CORE` is the first incomplete stage and has not started.
+- Stage `2-QUANTUM-CORE` is in progress; its working record is
+  `goal-1/2-QUANTUM-CORE.md`.
 - A pinned minimal Lean project and representation probes now exist. No
   substantive quantum definition, philosophical premise, or target proof has
   been implemented yet.
@@ -325,7 +326,7 @@ based on the actual mathlib surface rather than assumptions.
 
 ### 2-QUANTUM-CORE
 
-**Status:** Not started; first incomplete stage.
+**Status:** In progress on 2026-07-17.
 
 #### Big Picture Objective
 

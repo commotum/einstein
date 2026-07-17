@@ -1,3 +1,3 @@
 module
 
-public import EPR.Foundations
+public import EPR.Quantum.Core
