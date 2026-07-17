@@ -16,6 +16,8 @@ root.
 #print axioms EPR.Quantum.kronecker_mulVec_tensorKet
 #print axioms EPR.Quantum.traceOutA_posSemidef
 #print axioms EPR.Quantum.traceOutB_posSemidef
+#print axioms EPR.Quantum.traceOutALinear
+#print axioms EPR.Quantum.traceOutBLinear
 #print axioms EPR.Quantum.trace_traceOutA
 #print axioms EPR.Quantum.trace_traceOutB
 #print axioms EPR.Quantum.reducedA

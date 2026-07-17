@@ -151,6 +151,34 @@ theorem traceOutB_sum {τ : Type*} [Fintype τ]
   rw [Finset.sum_comm]
 
 omit [Fintype κ] in
+/-- Tracing out `A` as a complex-linear map on finite matrices. -/
+def traceOutALinear :
+    Operator (BipartiteIndex ι κ) →ₗ[ℂ] Operator κ where
+  toFun := traceOutA
+  map_add' M N := by
+    ext k l
+    simp [traceOutA_apply, Finset.sum_add_distrib]
+  map_smul' c M := by
+    change traceOutA (c • M) = c • traceOutA M
+    ext k l
+    simp only [traceOutA_apply, Matrix.smul_apply, smul_eq_mul]
+    rw [Finset.mul_sum]
+
+omit [Fintype ι] in
+/-- Tracing out `B` as a complex-linear map on finite matrices. -/
+def traceOutBLinear :
+    Operator (BipartiteIndex ι κ) →ₗ[ℂ] Operator ι where
+  toFun := traceOutB
+  map_add' M N := by
+    ext i j
+    simp [traceOutB_apply, Finset.sum_add_distrib]
+  map_smul' c M := by
+    change traceOutB (c • M) = c • traceOutB M
+    ext i j
+    simp only [traceOutB_apply, Matrix.smul_apply, smul_eq_mul]
+    rw [Finset.mul_sum]
+
+omit [Fintype κ] in
 /-- Tracing out `A` preserves positive semidefiniteness. -/
 theorem traceOutA_posSemidef {M : Operator (BipartiteIndex ι κ)}
     (hM : M.PosSemidef) : (traceOutA M).PosSemidef := by
