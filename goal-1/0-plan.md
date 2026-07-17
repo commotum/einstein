@@ -7,9 +7,11 @@
   `goal-1/1-FOUNDATIONS.md`.
 - Stage `2-QUANTUM-CORE` completed on 2026-07-17; its evidence is recorded in
   `goal-1/2-QUANTUM-CORE.md`.
-- The pinned project now has a reusable finite-dimensional quantum core. No
-  bipartite operation, conditional state, philosophical premise, or target EPR
-  proof has been implemented yet.
+- Stage `3-BIPARTITE` is in progress; its working record is
+  `goal-1/3-BIPARTITE.md`.
+- The pinned project has a reusable finite-dimensional quantum core. No
+  completed bipartite layer, conditional state, philosophical premise, or
+  target EPR proof exists yet.
 - The local primary source is
   `einstein-1935/einstein-1935.md`, transcribed from the accompanying PDF.
 
@@ -97,6 +99,14 @@ not an ordinary Hilbert-space-vector example.
 - A pinned-source declaration search found no ready-made density-matrix,
   quantum-measurement, POVM/Kraus, or partial-trace abstraction. Later stages
   must provide narrow project-owned definitions and recheck before doing so.
+- The Stage 3 recheck again found no partial-trace or reduced-state definition
+  in the pinned mathlib source. The checked ingredients for a narrow finite
+  implementation are `Matrix.kronecker`, its multiplication/conjugate-
+  transpose/trace laws, finite indexed sums, `Matrix.posSemidef_sum`, and
+  `Matrix.posSemidef_iff_eq_sum_vecMulVec`.
+- Stage 3 will use separately tagged A-side and B-side local operator and
+  observable types. This prevents accidental subsystem interchange even when
+  the two basis-index types happen to be definitionally equal.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -366,6 +376,9 @@ and subsystem vocabulary needed by later stages.
 - Focused build, relevant consumer build, hole/axiom scan, and diff check pass.
 
 ### 3-BIPARTITE
+
+**Status:** In progress on 2026-07-17. See `goal-1/3-BIPARTITE.md` for the
+current design, checked API facts, and required evidence.
 
 #### Big Picture Objective
 
