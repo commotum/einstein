@@ -27,6 +27,37 @@ definitions named for density matrices, quantum states/measurements, POVMs,
 Kraus maps, or partial trace. Absence is a search result, not a mathematical
 theorem; later stages must recheck before adding infrastructure.
 
+## Stage 2 checked core
+
+`EPR.Quantum.Core` now provides project-owned, invariant-carrying structures
+for normalized pure states, positive trace-one density states, Hermitian
+observables, orthogonal projections, and nonzero spectral outcomes.  It also
+provides Born weights/probabilities, projector support, pure eigenstates,
+density-state sharp values, and joint sharpness.
+
+The following facts are compile-checked rather than postulated:
+
+- normalized pure states and trace-one density states have nonzero data;
+- a normalized pure state produces a positive trace-one rank-one density
+  state;
+- Born weights of orthogonal projections in density states are real;
+- projector support implies outcome probability one;
+- a pure eigenstate produces a sharp rank-one density state;
+- support in a spectral outcome produces the corresponding sharp value; and
+- a density state cannot have two distinct sharp values for one observable.
+
+`EPR.Audit.QuantumCore` checks these declarations on two distinct qubit basis
+states and a full-space identity outcome.  Because both states lie in the same
+outcome projector, this also checks that the API does not assume rank-one or
+nondegenerate outcomes. `EPR.Audit.QuantumCoreAxioms` records that the main
+Stage 2 declarations depend only on `propext`, `Classical.choice`, and
+`Quot.sound`, the standard Lean/mathlib footprint.
+
+The current core proves the probability-one case needed for sharpness.  A
+general theorem that every projective Born probability lies in `[0, 1]` is not
+silently built into the definition and remains available as a later API
+strengthening when the measurement layer needs it.
+
 ## Provisional representation choice
 
 - Use generic finite basis index types `ι`, `κ` with `[Fintype]` and

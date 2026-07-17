@@ -99,4 +99,87 @@ Expected files:
 
 ## Stage Results
 
-- In progress.
+- **Result:** Complete on 2026-07-17. Stage 3 was not started.
+- The four-page image-only PDF facsimile was inspected directly after
+  `pdfinfo` confirmed its page count and `pdftotext` confirmed that it has no
+  text layer. Rendered pages 777–780 visually match the local transcription at
+  the Stage 2 source loci: the probability-one criterion, Eqs. (1)–(6), the
+  noncommutation claim, and the later separation/locality argument. No paper
+  correction or Stage 2 scope decision changed.
+- `EPR.Quantum.Core` defines `PureState` with finite-basis normalization and
+  `DensityState` with positive semidefiniteness and trace one. Checked
+  `ne_zero` theorems prevent zero ket or zero matrix data from satisfying the
+  physical-state APIs.
+- `PureState.toDensity` constructs a positive trace-one rank-one density state.
+  The proof uses the pinned `RCLike` positive-semidefinite decomposition rather
+  than a project axiom.
+- `Observable`, `Projection`, and `ProjectiveOutcome` separate Hermiticity,
+  idempotence, nonzero outcome support, and the spectral equation. No rank-one
+  condition is imposed.
+- `bornWeight` retains the complex trace expression and
+  `outcomeProbability` takes its real part. `star_bornWeight` and
+  `coe_outcomeProbability` prove the expression is real;
+  `outcomeProbability_eq_one_of_support` proves the normalization case used by
+  sharpness. General probability bounds are not assumed or hidden in fields.
+- Pure eigenstates, projector support, density sharp values, and joint
+  sharpness are separate predicates. Proved implications connect pure
+  eigenstates and spectral support to sharp values, while
+  `sharpValue_unique` excludes two distinct values for one observable.
+- `EPR.Audit.QuantumCore` constructs normalized `|0⟩` and `|1⟩` qubit
+  states and proves they are distinct. It checks both nonzero invariants,
+  identity-observable eigenstate equations, support, probability one,
+  sharpness through both generic routes, and sharp-value uniqueness.
+- The audit's identity projector supports both distinct basis states. This is
+  a checked degenerate-outcome example and confirms that the API does not
+  silently impose a one-dimensional eigenspace.
+- The first audit build failed because the pinned API exposes `dotProduct`
+  unnamespaced rather than as `Matrix.dotProduct`. Replacing the stale name and
+  making the audit module's import public for its public declarations fixed
+  the diagnostic without changing the mathematical core.
+- Focused command
+  `cd formal && lake build EPR.Quantum.Core EPR.Audit.QuantumCore EPR.Audit.QuantumCoreAxioms EPR`
+  succeeded with 2667 jobs.
+- Required full command `cd formal && lake build` succeeded with 2665 jobs.
+- `EPR.Audit.QuantumCoreAxioms` printed the axiom dependencies of the principal
+  Stage 2 definitions and theorems. Every audited declaration reported exactly
+  `propext`, `Classical.choice`, and `Quot.sound`; no project-specific axiom was
+  present.
+- The proof-escape scan
+  `rg -n "\\b(sorry|admit|axiom|unsafe)\\b" formal/EPR formal/EPR.lean`
+  found only the word `axiom` in explanatory comments in
+  `EPR.Audit.QuantumCoreAxioms`; it found no declaration or proof escape.
+- The philosophical/continuum shortcut scan over the Stage 2 core and smoke
+  audit found only the core module's explicit disclaimer that it makes no
+  claim about physical reality or locality.
+- The declaration-only scan for lines beginning with `axiom`, `opaque`, or
+  `unsafe` returned exit status 1 with no matches. The separate `sorry|admit`
+  scan likewise returned exit status 1 with no matches.
+- Public-import inspection showed the intended narrow chain
+  `EPR -> EPR.Quantum.Core -> EPR.Foundations`; both audit modules remain
+  outside the public root, and the successful build rules out an import cycle.
+- `lake env lean --version` reconfirmed Lean `4.31.0`, commit
+  `68218e876d2a38b1985b8590fff244a83c321783`. `jq` reconfirmed the exact
+  mathlib manifest revision
+  `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`.
+- The trailing-whitespace scan over every Stage 2 source and documentation file
+  returned exit status 1 with no matches. `git diff --check` succeeded.
+
+## What Was Learned
+
+- Basis-indexed matrices support the required invariant-carrying state and
+  sharpness layer without introducing a general quantum-information framework.
+- Positivity already supplies Hermiticity for density states, so no duplicate
+  field is needed.
+- Probability one, projector support, eigenstate status, and sharpness can stay
+  distinct while still supporting short generic implications.
+- Degenerate outcomes fit the selected representation without special cases.
+- The standard finite-matrix proofs carry the expected classical/mathlib axiom
+  footprint and no project-owned trusted assumption.
+
+## Plan Update
+
+- `0-plan.md` records the completed core API, checked theorem set, degenerate
+  smoke example, and standard axiom footprint.
+- `3-BIPARTITE` is now the first incomplete stage. It must re-audit the pinned
+  Kronecker and finite-sum APIs before introducing subsystem operations or
+  partial trace; no Stage 3 implementation is included here.

@@ -5,11 +5,11 @@
 - Scaffold created on 2026-07-17.
 - Stage `1-FOUNDATIONS` completed on 2026-07-17; its evidence is recorded in
   `goal-1/1-FOUNDATIONS.md`.
-- Stage `2-QUANTUM-CORE` is in progress; its working record is
+- Stage `2-QUANTUM-CORE` completed on 2026-07-17; its evidence is recorded in
   `goal-1/2-QUANTUM-CORE.md`.
-- A pinned minimal Lean project and representation probes now exist. No
-  substantive quantum definition, philosophical premise, or target proof has
-  been implemented yet.
+- The pinned project now has a reusable finite-dimensional quantum core. No
+  bipartite operation, conditional state, philosophical premise, or target EPR
+  proof has been implemented yet.
 - The local primary source is
   `einstein-1935/einstein-1935.md`, transcribed from the accompanying PDF.
 
@@ -80,6 +80,20 @@ not an ordinary Hilbert-space-vector example.
 - `EPR.Audit.ApiProbe` compile-checks Hermitian matrices, complex positive
   semidefiniteness, trace, Kronecker identities, rank-one positivity through
   the `RCLike` API, and algebraic tensor products.
+- `EPR.Quantum.Core` defines normalized pure states, positive trace-one density
+  states, observables, possibly-degenerate projective outcomes, Born
+  probability, support, eigenstates, sharp values, and joint sharpness.
+- Checked generic lemmas exclude zero state data, construct rank-one density
+  states, prove Born weights real, derive probability one from projector
+  support, transfer pure eigenstates and spectral support to sharp values, and
+  prove uniqueness of a sharp value for one observable.
+- The Stage 2 smoke audit uses two distinct qubit basis states in the same
+  full-space outcome, confirming that the outcome API does not assume
+  nondegeneracy. Its axiom audit reports only `propext`, `Classical.choice`, and
+  `Quot.sound`.
+- General `[0, 1]` bounds for every projective Born probability are not encoded
+  as fields or assumed. Stage 2 proves the probability-one support case needed
+  by its sharpness API; later measurement work may add general bounds if used.
 - A pinned-source declaration search found no ready-made density-matrix,
   quantum-measurement, POVM/Kraus, or partial-trace abstraction. Later stages
   must provide narrow project-owned definitions and recheck before doing so.
@@ -326,7 +340,8 @@ based on the actual mathlib surface rather than assumptions.
 
 ### 2-QUANTUM-CORE
 
-**Status:** In progress on 2026-07-17.
+**Status:** Complete on 2026-07-17. See `goal-1/2-QUANTUM-CORE.md` for concrete
+qubit checks, build commands, source scans, and axiom-audit evidence.
 
 #### Big Picture Objective
 
