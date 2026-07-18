@@ -1,3 +1,3 @@
 module
 
-public import EPR.Examples.BellSteering
+public import EPR.Examples.PauliIncompatibility
