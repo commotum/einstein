@@ -26,9 +26,9 @@
 - Pinned mathlib supplies Schwartz functions, derivatives and polynomial
   multipliers, tempered distributions and deltas, Fourier transforms,
   `fourier_delta_zero`, affine Schwartz precomposition, and Schwartz
-  integration. Temporary warning-as-error probes compile for all planned core
-  declarations, including an affine-line distribution and its exact
-  relative-position relation.
+  integration. Final warning-as-error builds compile the implemented inverse-
+  Fourier identity, plane-wave obstructions, common-domain commutator, affine-
+  line distribution, and both algebraic correlation relations.
 - The pinned tree does not supply a ready concrete self-adjoint position/
   momentum pair, spectral PVM calculus, or continuous projective-conditioning
   semantics. The existing finite `PureState`, `DensityState`, and
@@ -40,18 +40,17 @@
 - A rigorous generalized-state treatment is feasible and proportionate for a
   stable fragment; Stage 9 need not settle the entire rigged-Hilbert-space or
   spectral-measure program to record meaningful checked results.
-- The analytic leaf must remain independent of the finite quantum and EPR
-  logic modules. It may be buildable directly without being imported by the
-  thin public `EPR` root during this stage.
-- Plane waves will be ordinary complex-valued functions only for pointwise and
-  integrability statements. They will never be wrapped as normalized project
+- The analytic leaf remains independent of the finite quantum and EPR logic
+  modules. It builds directly without being imported by the thin public `EPR`
+  root during this stage.
+- Plane waves are ordinary complex-valued functions only for pointwise and
+  integrability statements. They are never wrapped as normalized project
   states.
-- Delta and affine-line correlations will live in tempered distributions.
+- Delta and affine-line correlations live in tempered distributions.
   Their displayed integrals are distributional pairings, not pointwise or
   Bochner `L²` integrals.
-- Position and momentum will act on `𝓢(ℝ, ℂ)`, making the common invariant
-  domain explicit. No everywhere-defined bounded-operator claim on `L²` will
-  be made.
+- Position and momentum act on `𝓢(ℝ, ℂ)`, making the common invariant domain
+  explicit. No everywhere-defined bounded-operator claim on `L²` is made.
 - Both affine-line correlation relations are within scope and now have checked
   direct proofs. The paper-specific raw scaled Fourier-integral identity,
   self-adjoint closures/spectra, topological-support/non-`L²` classification of
