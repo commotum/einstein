@@ -21,8 +21,11 @@
   `goal-1/7-NO-SIGNALLING.md`.
 - Stage `8-EPR-LOGIC` completed on 2026-07-17; its abstract logic, Bell/Pauli
   instantiation, premise-separation diagnostics, and verification evidence are
-  recorded in `goal-1/8-EPR-LOGIC.md`. Stage `9-CONTINUUM` is the first
-  incomplete stage.
+  recorded in `goal-1/8-EPR-LOGIC.md`.
+- Stage `9-CONTINUUM` completed on 2026-07-17; its generalized-state,
+  common-domain, normalization-obstruction, dependency-boundary, and trust-
+  audit evidence are recorded in `goal-1/9-CONTINUUM.md`. Stage `10-AUDIT` is
+  the first incomplete stage.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
   checked projective-conditioning, generic steering, concrete Bell/Pauli
   example, checked incompatibility/no-signalling layers, and a conditional EPR
@@ -42,11 +45,12 @@ structure field, or theorem hypothesis.
 
 The finite-dimensional two-qubit `|Φ⁺⟩` steering example, exact Pauli `X`/`Z`
 incompatibility obstruction, directional operational no-signalling theorem,
-and conditional EPR logic reconstruction are now complete. The next target is
-to give the paper's original position-momentum construction a rigorous status.
-That construction is an analytic or distributional extension, not an ordinary
-Hilbert-space-vector example and not a dependency of the completed finite
-argument.
+conditional EPR logic reconstruction, and generalized-state audit of the
+paper's original position-momentum construction are now complete. The
+continuum construction is an analytic/distributional extension, not an
+ordinary Hilbert-space-vector example and not a dependency of the completed
+finite argument. Stage 10 next audits the whole library's public API, source
+traceability, correction record, and trust boundary; that stage has not begun.
 
 ## Non-Negotiable Constraints and No-Cheating Rules
 
@@ -299,6 +303,22 @@ argument.
   state/domain audit plus precise remaining obligations, kept independent of
   the finite core; it is not a normalized-state or exact-reality-criterion
   instantiation.
+- `EPR.Continuum.Idealized` now implements the Stage 9 generalized-state leaf:
+  non-`L²` and nonintegrability results for plane waves, Eq. (6)'s explicitly
+  unnormalized interval weight, generalized `+p` and shifted `-p` momentum
+  modes, the delta position relation, the affine-line EPR correlation and both
+  of its algebraic correlation equations, and Eq. (18) on the common Schwartz
+  domain. It imports only pinned mathlib distribution infrastructure.
+- `EPR.Audit.Continuum` supplies concrete sign, scale, non-`L²`, correlation,
+  and commutator sentinels. `EPR.Audit.ContinuumAxioms` checks 50 declarations
+  and prints axioms for 35 substantive results; every print has only
+  `[propext, Classical.choice, Quot.sound]` and no project-specific axiom.
+- The explicit warning-as-error Stage 9 build of the public root, continuum
+  implementation, diagnostic leaf, and axiom leaf succeeds with 3616 jobs;
+  the default public-root build still succeeds with 3210 jobs. Import,
+  forbidden-declaration, proof-hole, finite-tree-regression, and whitespace
+  checks pass. The detailed evidence and remaining analytic obligations are in
+  `goal-1/9-CONTINUUM.md`.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -331,10 +351,10 @@ argument.
   `h δ(x₁ - x₂ + x₀)` under the paper's Fourier convention. This supports the
   intended perfect relative-position correlation but also confirms that the
   state is distributional and non-normalizable.
-- These identities have warning-as-error Lean probes in pinned mathlib. Stage 9
-  will move only the stable, evidence-backed fragment into the project and
-  will not treat the generalized objects as finite `PureState` or
-  `DensityState` values.
+- These identities now have warning-as-error Lean implementations and private
+  diagnostics in the pinned project. Stage 9 moved only the stable, evidence-
+  backed fragment into the independent continuum leaf and did not treat the
+  generalized objects as finite `PureState` or `DensityState` values.
 
 ## Explicit Assumption and Argument Outline
 
@@ -809,9 +829,10 @@ Reconstruct the EPR inference as a transparent conditional logical theorem.
 
 ### 9-CONTINUUM
 
-**Status:** In progress on 2026-07-17. The source audit and pinned warning-as-
-error probes support a separate tempered-distribution/Schwartz-space leaf; the
-finite EPR theorem remains independent.
+**Status:** Complete on 2026-07-17. The source audit, implementation,
+diagnostics, axiom audit, dependency scans, and warning-as-error builds are
+recorded in `goal-1/9-CONTINUUM.md`. The tempered-distribution/Schwartz-space
+leaf remains separate from the finite EPR theorem.
 
 #### Big Picture Objective
 
@@ -874,19 +895,22 @@ audit for the whole project.
 - Remaining issues are explicit next work and do not undermine claims marked
   complete.
 
-## Major Uncertainties to Resolve During the Goal
+## Resolved and Remaining Uncertainties
 
-- The weakest precise formal definitions of completeness and theory
-  counterpart that recover EPR's inference without building predictability
-  into completeness by fiat.
-- The correct modal/context indexing for alternative measurements and “the
-  same reality.”
-- Whether a rigorous continuous-variable extension is proportionate to
-  available mathlib infrastructure; this cannot be decided before checked API
-  probes.
-- Whether exact probability-one premises are physically robust enough for an
-  approximant treatment, or need an explicitly different approximate reality
-  criterion.
+- Stage 8 resolved the formal completeness and modal/context questions for the
+  completed result by separating theory counterparts from the representation
+  bridge and by explicitly indexing prior/post realities and alternative
+  contexts.
+- Stage 9 resolved the feasibility question: pinned mathlib supports a rigorous
+  generalized-state and common-Schwartz-domain fragment, but not the spectral
+  and continuous-conditioning layer needed for an exact Born-probability EPR
+  instantiation.
+- A future normalized-approximant treatment still must decide whether to use
+  an explicitly approximate/limiting reality criterion; it may not silently
+  reuse the completed exact probability-one premise.
+- Stage 10 must decide, as a public-API audit question, whether the independent
+  continuum leaf should be re-exported from `EPR`. No such decision has yet
+  been made.
 
-These are planned proof/design obligations, not licenses to silently choose the
-easiest formulation.
+The remaining items are explicit future proof/design obligations, not licenses
+to silently choose the easiest formulation.

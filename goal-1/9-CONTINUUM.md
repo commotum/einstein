@@ -2,8 +2,9 @@
 
 ## Current Facts
 
-- Stage 9 is the first incomplete stage in `goal-1/0-plan.md`; Stages 1--8 and
-  their evidence records are preserved, and Stage 10 has not begun.
+- At Stage 9 start, it was the first incomplete stage in `goal-1/0-plan.md`;
+  Stages 1--8 and their evidence records were preserved, and Stage 10 had not
+  begun.
 - The Stage 9 start worktree is clean at autosave commit `087f622`.
 - From `formal/`, baseline `lake build EPR` and default `lake build` both succeed
   with 3210 jobs. Initial proof-hole and declaration-level project-axiom scans
@@ -57,8 +58,8 @@
   the affine-line distribution, and conditional measurement semantics remain
   precise future obligations.
 - Normalized Gaussian or box regularizations would change exact correlations
-  into finite-resolution/high-probability claims. Stage 9 will document that
-  boundary rather than silently use the exact EPR reality criterion on an
+  into finite-resolution/high-probability claims. Stage 9 documents that
+  boundary rather than silently using the exact EPR reality criterion on an
   approximation.
 
 ## Big Picture Objective
