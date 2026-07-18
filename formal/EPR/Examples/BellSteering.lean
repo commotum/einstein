@@ -1,6 +1,6 @@
 module
 
-public import EPR.Quantum.Conditional
+public import EPR.Quantum.Steering
 import Mathlib.Tactic
 
 /-!
@@ -60,6 +60,28 @@ theorem invSqrtTwo_sq : invSqrtTwo * invSqrtTwo = (1 / 2 : ℂ) := by
   rw [invSqrtTwo, ← Complex.ofReal_mul, invSqrtTwoReal_sq]
   norm_num
 
+@[simp]
+theorem invSqrtTwo_mul_star :
+    invSqrtTwo * star invSqrtTwo = (1 / 2 : ℂ) := by
+  rw [star_invSqrtTwo, invSqrtTwo_sq]
+
+@[simp]
+theorem starRingEnd_invSqrtTwo :
+    (starRingEnd ℂ) invSqrtTwo = invSqrtTwo := by
+  simpa only [starRingEnd_apply] using star_invSqrtTwo
+
+@[simp]
+theorem invSqrtTwo_re : invSqrtTwo.re = Real.sqrt 2 / 2 := by
+  simp [invSqrtTwo, invSqrtTwoReal]
+
+@[simp]
+theorem invSqrtTwo_im : invSqrtTwo.im = 0 := by
+  simp [invSqrtTwo]
+
+theorem invSqrtTwoReal_pos : 0 < invSqrtTwoReal := by
+  unfold invSqrtTwoReal
+  positivity
+
 theorem invSqrtTwo_ne_zero : invSqrtTwo ≠ 0 := by
   intro h
   have hsq := invSqrtTwo_sq
@@ -84,24 +106,15 @@ def zState (w : Outcome) : PureState QubitIndex where
 
 /-- Pauli-X eigenket. Outcome `0` is `|+⟩`; outcome `1` is `|-⟩`. -/
 def xKet (w : Outcome) : QubitKet :=
-  fun i ↦ if i = 0 then invSqrtTwo
-    else if w = 0 then invSqrtTwo else -invSqrtTwo
+  fun i ↦ if w = 0 ∨ i = 0 then invSqrtTwo else -invSqrtTwo
 
 /-- Normalized Pauli-X eigenstate. -/
 def xState (w : Outcome) : PureState QubitIndex where
   ket := xKet w
   normalized := by
-    have hstar : (starRingEnd ℂ) invSqrtTwo = invSqrtTwo := by
-      simpa only [starRingEnd_apply] using star_invSqrtTwo
-    fin_cases w
-    · change invSqrtTwo * (starRingEnd ℂ) invSqrtTwo +
-        invSqrtTwo * (starRingEnd ℂ) invSqrtTwo = 1
-      rw [hstar, invSqrtTwo_sq]
-      norm_num
-    · change invSqrtTwo * (starRingEnd ℂ) invSqrtTwo +
-        (-invSqrtTwo) * (starRingEnd ℂ) (-invSqrtTwo) = 1
-      rw [map_neg, hstar, neg_mul_neg, invSqrtTwo_sq]
-      norm_num
+    fin_cases w <;>
+      norm_num [xKet, dotProduct, Fin.sum_univ_two,
+        starRingEnd_invSqrtTwo, invSqrtTwo_sq]
 
 /-- The rank-one orthogonal projection associated with a qubit pure state. -/
 def stateProjection (psi : PureState QubitIndex) : Projection QubitIndex where
@@ -240,6 +253,105 @@ def pauliXMeasurement : ProjectiveMeasurement Outcome QubitIndex where
       norm_num [xProjection, stateProjection, xState, xKet,
         PureState.toDensity_matrix_apply, Matrix.vecMulVec_apply,
         invSqrtTwo_sq]
+
+/-! ## The ordered Bell state and its two expansions -/
+
+/-- `|Φ⁺⟩` in the ordered basis `A × B`: equal positive amplitudes on
+`(0,0)` and `(1,1)`, and zero cross amplitudes. -/
+def bellPhiPlusKet : TwoQubitKet :=
+  fun p ↦ if p = (0, 0) ∨ p = (1, 1) then invSqrtTwo else 0
+
+/-- The normalized Bell state `|Φ⁺⟩`. -/
+def bellPhiPlus : BipartitePureState QubitIndex QubitIndex where
+  ket := bellPhiPlusKet
+  normalized := by
+    norm_num [bellPhiPlusKet, dotProduct, Fintype.sum_prod_type,
+      Fin.sum_univ_two, starRingEnd_invSqrtTwo, invSqrtTwo_sq]
+
+/-- Exact `A × B` component convention for `|Φ⁺⟩`. -/
+theorem bellPhiPlus_basis_convention :
+    bellPhiPlus.ket (0, 0) = invSqrtTwo ∧
+      bellPhiPlus.ket (1, 1) = invSqrtTwo ∧
+      bellPhiPlus.ket (0, 1) = 0 ∧
+      bellPhiPlus.ket (1, 0) = 0 := by
+  norm_num [bellPhiPlus, bellPhiPlusKet]
+
+/-- Computational-basis form corresponding to one finite expansion of the
+joint state. -/
+theorem bellPhiPlus_z_expansion :
+    bellPhiPlus.ket =
+      invSqrtTwo • tensorKet (zState 0).ket (zState 0).ket +
+      invSqrtTwo • tensorKet (zState 1).ket (zState 1).ket := by
+  funext p
+  rcases p with ⟨i, j⟩
+  fin_cases i <;> fin_cases j <;>
+    norm_num [bellPhiPlus, bellPhiPlusKet, tensorKet, zState, zKet]
+
+/-- Pauli-X-basis form
+`|Φ⁺⟩ = (|++⟩ + |--⟩) / √2`, corresponding to the alternative
+finite expansion. -/
+theorem bellPhiPlus_x_expansion :
+    bellPhiPlus.ket =
+      invSqrtTwo • tensorKet (xState 0).ket (xState 0).ket +
+      invSqrtTwo • tensorKet (xState 1).ket (xState 1).ket := by
+  funext p
+  rcases p with ⟨i, j⟩
+  fin_cases i <;> fin_cases j <;>
+    norm_num [bellPhiPlus, bellPhiPlusKet, tensorKet, xState, xKet,
+      invSqrtTwo_sq]
+  all_goals ring
+
+/-- A tensor-product ket obeys the cross-amplitude identity. -/
+theorem tensorKet_cross_amplitudes (psi phi : QubitKet) :
+    tensorKet psi phi (0, 0) * tensorKet psi phi (1, 1) =
+      tensorKet psi phi (0, 1) * tensorKet psi phi (1, 0) := by
+  simp [tensorKet]
+  ring
+
+/-- The checked Bell ket has no raw tensor factorization. -/
+theorem bellPhiPlus_not_product :
+    ¬ ∃ psi phi : QubitKet, bellPhiPlusKet = tensorKet psi phi := by
+  rintro ⟨psi, phi, h⟩
+  have hc := tensorKet_cross_amplitudes psi phi
+  have h00 := congrFun h ((0 : QubitIndex), (0 : QubitIndex))
+  have h11 := congrFun h ((1 : QubitIndex), (1 : QubitIndex))
+  have h01 := congrFun h ((0 : QubitIndex), (1 : QubitIndex))
+  have h10 := congrFun h ((1 : QubitIndex), (0 : QubitIndex))
+  rw [← h00, ← h11, ← h01, ← h10] at hc
+  norm_num [bellPhiPlusKet, invSqrtTwo_sq] at hc
+
+/-! ## Uniform setting/outcome data -/
+
+/-- Select the checked measurement associated with a Pauli setting. -/
+def settingMeasurement : Setting → ProjectiveMeasurement Outcome QubitIndex
+  | .z => pauliZMeasurement
+  | .x => pauliXMeasurement
+
+/-- Select the target observable associated with a Pauli setting. -/
+def settingObservable : Setting → Observable QubitIndex
+  | .z => pauliZ
+  | .x => pauliX
+
+/-- Select the matching target spectral outcome. -/
+def settingOutcome :
+    (s : Setting) → Outcome → ProjectiveOutcome (settingObservable s)
+  | .z, w => pauliZOutcome w
+  | .x, w => pauliXOutcome w
+
+/-- Select the matching normalized target eigenstate. -/
+def settingState : Setting → Outcome → PureState QubitIndex
+  | .z, w => zState w
+  | .x, w => xState w
+
+/-- The source projection tagged as acting on subsystem A. -/
+def localAProjection (s : Setting) (w : Outcome) :
+    LocalProjectionA QubitIndex QubitIndex where
+  projection := (settingMeasurement s).projector w
+
+/-- The matching projection tagged as acting on subsystem B. -/
+def localBProjection (s : Setting) (w : Outcome) :
+    LocalProjectionB QubitIndex QubitIndex where
+  projection := (settingOutcome s w).projector
 
 end
 
