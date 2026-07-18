@@ -227,6 +227,25 @@ distributional extension, not an ordinary Hilbert-space-vector example.
   distinct from that marginal, and the A→B direction on `Fin 2 × Fin 3`.
   The complete signature/axiom leaf reports no axioms beyond `propext`,
   `Classical.choice`, and `Quot.sound` for substantive declarations.
+- At Stage 8 start the worktree is clean. `lake build
+  EPR.Examples.PauliIncompatibility` and full `lake build` succeed with 3204
+  and 3208 jobs, respectively; proof-hole and declaration-level project-axiom
+  scans have no matches.
+- The four-page facsimile was reinspected directly at printed pages 777--780.
+  Page 777 states completeness as the requirement that every element of
+  physical reality have a theory counterpart and gives certainty without
+  disturbance only as a sufficient reality criterion. Page 778 adds the
+  separate completeness-to-predictability step. Pages 779--780 identify
+  remote alternatives with the same reality, infer one reality assignment in
+  each alternative context, aggregate them as simultaneous reality, and then
+  conclude incompleteness. Each of those interpretative moves must remain a
+  separately rejectable premise.
+- No `PhysicalSituation`, `ElementOfReality`, `SimultaneouslyReal`,
+  `TheoryCounterpart`, `CompleteFor`, `RealityCriterion`,
+  `NoOnticDisturbance`, `CounterfactualStability`, or EPR-incompleteness API
+  exists in the current project or pinned mathlib tree. Stage 8 therefore adds
+  a lightweight project-owned logical interface rather than treating any
+  philosophical predicate as inherited physics.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -671,6 +690,9 @@ stronger locality/no-real-change premise.
 
 ### 8-EPR-LOGIC
 
+**Status:** In progress on 2026-07-17. See `goal-1/8-EPR-LOGIC.md` for the
+source boundary, initial API design, commands, and accumulating evidence.
+
 #### Big Picture Objective
 
 Reconstruct the EPR inference as a transparent conditional logical theorem.
@@ -687,6 +709,12 @@ Reconstruct the EPR inference as a transparent conditional logical theorem.
   premises with the Bell steering and incompatibility results.
 - Ensure alternate readings can reject individual premises without making the
   definitions inconsistent.
+- Keep the pure logical vocabulary independent of the quantum implementation.
+  Put the Bell adapter in a separate example module that consumes the checked
+  `PerfectConditionalPrediction` witnesses and Pauli no-joint-sharp theorem.
+- Keep the operational no-signalling branch separately imported: the EPR
+  theorem must require `NoOnticDisturbance` explicitly and must neither import
+  nor invoke operational marginal equality as its proof.
 
 #### Completion Requirements
 
