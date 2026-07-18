@@ -236,8 +236,8 @@ and its density is jointly sharp for both. The combined theorem
 `fin3_noncommuting_with_common_sharp_state` prevents the public API or later
 proofs from substituting bare noncommutation for the stronger state-space
 obstruction. The public `EPR` root ends at
-`EPR.Examples.PauliIncompatibility`; the diagnostic audit remains outside that
-import chain.
+`EPR.Examples.PauliIncompatibility`; both `EPR.Audit.Incompatibility` and
+`EPR.Audit.IncompatibilityAxioms` remain outside that import chain.
 
 This layer proves no measurement-disturbance, marginal-invariance,
 no-signalling, locality, physical-reality, simultaneous-reality,
@@ -271,7 +271,7 @@ calculations executable and aligns subsystem order with matrix Kronecker
 indices. Abstract Hilbert tensor products remain available for later bridges,
 but are not required for the first verified example.
 
-## Planned module layering
+## Current and planned module layering
 
 ```text
 EPR.Foundations

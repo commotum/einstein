@@ -13,12 +13,14 @@
   evidence are recorded in `goal-1/4-CONDITIONALS.md`.
 - Stage `5-STEERING` completed on 2026-07-17; its implementation and exhaustive
   four-branch audit evidence are recorded in `goal-1/5-STEERING.md`.
-- Stage `6-INCOMPATIBILITY` is in progress; its source audit, exact obstruction
-  design, and verification plan are recorded in
-  `goal-1/6-INCOMPATIBILITY.md`.
+- Stage `6-INCOMPATIBILITY` completed on 2026-07-17; its implementation,
+  counterexample, and verification evidence are recorded in
+  `goal-1/6-INCOMPATIBILITY.md`. Stage `7-NO-SIGNALLING` is the first
+  incomplete stage.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
-  checked projective-conditioning, generic steering, and concrete Bell/Pauli
-  example layers. No philosophical premise or target EPR proof exists yet.
+  checked projective-conditioning, generic steering, concrete Bell/Pauli
+  example, and checked incompatibility layers. No philosophical premise or
+  target EPR proof exists yet.
 - The local primary source is
   `einstein-1935/einstein-1935.md`, transcribed from the accompanying PDF.
 
@@ -31,13 +33,14 @@ The library must verify the quantum-mechanical calculations it formalizes and
 must expose every philosophical or locality premise as an explicit definition,
 structure field, or theorem hypothesis.
 
-The first constructive target is now complete as a finite-dimensional
-two-qubit `|Φ⁺⟩` steering example with Pauli `X` and `Z`. The next
-mathematical target is the exact incompatibility obstruction for those
-observables. The EPR reality and completeness criteria will be represented
-abstractly, and the incompleteness conclusion will be a conditional theorem.
-The paper's original position-momentum construction is a later analytic or
-distributional extension, not an ordinary Hilbert-space-vector example.
+The finite-dimensional two-qubit `|Φ⁺⟩` steering example and the exact Pauli
+`X`/`Z` incompatibility obstruction are now complete. The next mathematical
+target is operational no-signalling for the finite model, kept separate from
+ontic no-disturbance. The EPR reality and completeness criteria will be
+represented abstractly, and the incompleteness conclusion will be a
+conditional theorem. The paper's original position-momentum construction is a
+later analytic or distributional extension, not an ordinary Hilbert-space-
+vector example.
 
 ## Non-Negotiable Constraints and No-Cheating Rules
 
@@ -176,14 +179,20 @@ distributional extension, not an ordinary Hilbert-space-vector example.
 - The original facsimile was reinspected directly at page 778. Its general
   statement that noncommuting operators preclude simultaneous precise
   knowledge is stronger than is valid for arbitrary finite-dimensional
-  observables. Stage 6 will separately check matrix noncommutation and the
+  observables. Stage 6 therefore separately checks matrix noncommutation and the
   stronger no-common-eigenvector/no-joint-sharp-state obstruction for the
   selected Pauli pair.
 - Pinned Lean/mathlib already supplies the algebraic predicate `Commute`; the
   project supplies `PureState.IsEigenstate`, `DensityState.SharpValue`, and
-  `DensityState.JointlySharp`. No checked project theorem yet connects a
-  jointly sharp mixed state to a common nonzero eigenvector, and no Pauli
-  incompatibility result exists.
+  `DensityState.JointlySharp`. `EPR.Quantum.Incompatibility` now connects a
+  jointly sharp density state to a common nonzero matrix column and derives
+  the mixed-state exclusion from no common nonzero eigenvector.
+- `EPR.Examples.PauliIncompatibility` proves Pauli `X`/`Z` noncommutation, no
+  common nonzero eigenvector for arbitrary real candidate values, and no
+  jointly sharp pure or mixed density state. `EPR.Audit.Incompatibility`
+  checks an explicit Hermitian `Fin 3` counterexample to the invalid generic
+  inference from noncommutation alone; its separate axiom leaf reports only
+  the standard Lean/mathlib footprint for substantive declarations.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -195,7 +204,7 @@ distributional extension, not an ordinary Hilbert-space-vector example.
 | Sec. 1, reality criterion | Certainty of prediction without disturbance is sufficient for an element of reality. | Explicit premise, not a theorem of quantum mechanics. Split certainty, disturbance, and reality into separate predicates. |
 | Eqs. (1)–(5) | Eigenstate-eigenvalue reasoning for momentum and position. | Plane wave in Eq. (2) is not normalized in `L²(ℝ)`. Preserve only as a generalized-state calculation or replace with finite-dimensional sharpness. |
 | Eq. (6) | A plane wave gives a uniform position “probability.” | As written, the state is unnormalizable and the displayed quantity is not a normalized probability distribution on `ℝ`. Record as an idealized relative density, not an ordinary Born probability. |
-| Sec. 1 after Eq. (6) | Noncommuting observables cannot both be precisely known. | Too broad for arbitrary finite-dimensional operators: noncommuting operators may share some eigenvectors. Use a pair with no common sharp state, or state the precise hypotheses under which the conclusion holds. |
+| Sec. 1 after Eq. (6) | Noncommuting observables cannot both be precisely known. | Stage 6 separates noncommutation, common nonzero eigenvectors, and jointly sharp density states; proves the stronger exclusion for Pauli `X`/`Z`; and checks a `Fin 3` noncommuting/common-sharp counterexample to the paper's unrestricted wording. |
 | Eqs. (7)–(8) | A bipartite state has different expansions; a selected outcome has an associated conditional state of system II. | Stages 4–5 complete the generic finite Lüders/relative-state API, positive-probability normalization, and the concrete four-branch Bell/Pauli steering analogue. Lüders degeneracy and the nonselective state are explicit modern modeling additions. |
 | Sec. 2 after Eq. (8) | Operations on I cause no real change in II once interaction ends. | Strong locality/ontic no-disturbance premise. It is not merely absence of a Hamiltonian interaction and is not implied by operational no-signalling. |
 | “two different wave functions … same reality” | Alternative measurements on I steer II to different relative states while II's underlying reality is fixed. | Requires a framework relating operational conditional states, measurement choice, outcomes, and an underlying reality/ontic state. Treat as a conditional interpretative bridge. |
@@ -271,8 +280,9 @@ identified with item 4.
   every positive-probability branch.
 - Its checked selective conditional/relative states remain distinct from the
   unconditioned reduced state.
-- Prove that Pauli `X` and `Z` have no common nonzero eigenvector/common sharp
-  density state and separately prove that they do not commute.
+- Stage 6 proves that Pauli `X` and `Z` have no common nonzero
+  eigenvector/common sharp density state and separately proves that they do
+  not commute.
 - Instantiate an abstract EPR scenario with the verified steering results, then
   prove only a conditional incompleteness theorem under named philosophical
   premises.
@@ -288,14 +298,16 @@ identified with item 4.
   `CompleteFor`, `RealityCriterion`, `CounterfactualStability`.
 - Established example/results layer: `bellPhiPlus`,
   `bellPhiPlus_perfectPrediction`, and `bellPhiPlusSteeringScenario`.
-- Planned Stage 6/7 results: `pauliXZ_not_commute`,
-  `pauliXZ_not_jointlySharp`, and `local_measurement_noSignalling`.
+- Established Stage 6 results: `pauliXZ_noncommutes`,
+  `pauliXZ_noCommonEigenvector`, `pauliXZ_noJointSharpState`, and
+  `pauliXZ_not_jointlySharp`. `local_measurement_noSignalling` remains a
+  provisional Stage 7 name.
 - Logic layer: `reality_of_perfect_prediction`,
   `simultaneous_reality_of_alternative_predictions`,
   `not_complete_of_no_joint_sharp_representation`, and a top-level
   `epr_incompleteness` theorem whose hypotheses reveal the full dependency.
 
-Names already established in Stages 1–5 follow the checked pinned APIs. Later
+Names already established in Stages 1–6 follow the checked pinned APIs. Later
 names and representations must continue to follow compiled infrastructure
 rather than forcing this sketch onto unsuitable abstractions.
 
@@ -348,8 +360,9 @@ verified example and the abstract logic.
   probability proof. The API never divides silently by zero.
 - **Sharpness (resolved for the finite setting):** probability-one spectral
   outcomes are related to support/eigenstates without assuming preferred
-  nondegenerate bases. Stage 6 must still prove the chosen pair has no common
-  sharp state.
+  nondegenerate bases. Stage 6 separately proves that the chosen Pauli pair
+  has no common nonzero eigenvector and no jointly sharp density state,
+  including mixed states.
 - **Modal indexing:** determine whether worlds, preparations, measurement
   contexts, and times are explicit indices. The minimal abstraction must still
   make “same reality” and alternative choices well typed.
@@ -542,9 +555,10 @@ Verify a finite-dimensional EPR steering example completely.
 
 ### 6-INCOMPATIBILITY
 
-**Status:** In progress on 2026-07-17. See
-`goal-1/6-INCOMPATIBILITY.md` for the source boundary, generic bridge design,
-concrete Pauli obligations, counterexample requirement, and verification plan.
+**Status:** Complete on 2026-07-17. See
+`goal-1/6-INCOMPATIBILITY.md` for the source boundary, generic bridge, concrete
+Pauli results, `Fin 3` counterexample, failures, scans, builds, and axiom
+evidence.
 
 #### Big Picture Objective
 
