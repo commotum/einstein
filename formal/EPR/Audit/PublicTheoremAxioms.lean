@@ -8,8 +8,9 @@ import EPR
 The stage-specific axiom leaves already print 132 of the 203 theorem
 declarations in public modules. This opt-in leaf prints the remaining 71, so
 the aggregate Stage 10 target has declaration-complete public theorem
-coverage. It also prints the two generic steering structures whose fields
-carry the nonvacuous prediction interface.
+coverage. Its other three prints are the concrete `Setting` inductive and the
+two generic steering structures whose fields carry the nonvacuous prediction
+interface.
 
 This module imports only the public `EPR` root and is not re-exported by it.
 -/
@@ -99,7 +100,7 @@ namespace EPR.Audit.PublicTheoremAxioms
 #print axioms EPR.Examples.BellSteering.oppositeOutcome_involutive
 #print axioms EPR.Examples.BellSteering.settingOutcome_value
 
-/-! ## Generic steering structures -/
+/-! ## Setting type and generic steering structures -/
 
 #print axioms EPR.Examples.BellSteering.Setting
 #print axioms EPR.Quantum.PerfectConditionalPrediction

@@ -16,23 +16,25 @@
   aggregation, the final reductio, the objection, and the open possibility of
   another complete theory. Final row-by-row declaration verification is still
   required.
-- Baseline warning-as-error `lake build EPR EPR.Continuum.Idealized` succeeds
-  with 3614 jobs. Default `lake build` succeeds with 3210 jobs because
-  `defaultTargets = ["EPR"]` and the current root does not import continuum.
-- `EPR.lean` currently imports only `EPR.Examples.BellNoSignalling` and
-  `EPR.Examples.BellEPR`; it has no module documentation. Every public leaf
-  inspected has a module docstring, and no public module imports `EPR.Audit`.
-- The README remains a setup-era document: it says the project is being
-  developed and the main incompleteness result is eventual, and it does not
-  inventory the completed API, limitations, or final audit command.
-- Eight stage-specific axiom leaves contain 245 `#check` commands and 283
-  `#print axioms` commands in total. Their recorded outputs use no project-
-  specific axioms, but there is no aggregate whole-library audit target or
-  public-root surface sentinel.
-- `EPR.Audit.EPRLogic` provides checked rejection models for each major
-  interpretative bridge and an operational-no-signalling/ontic-change model.
-  It does not yet give one consolidated positive model witnessing that the
-  premise interfaces can also be instantiated coherently.
+- At the Stage 10 baseline, warning-as-error
+  `lake build EPR EPR.Continuum.Idealized` succeeds with 3614 jobs. Default
+  `lake build` succeeds with 3210 jobs because `defaultTargets = ["EPR"]` and
+  the root does not yet import continuum.
+- At that baseline, `EPR.lean` imports only
+  `EPR.Examples.BellNoSignalling` and `EPR.Examples.BellEPR`; it has no module
+  documentation. Every public leaf inspected has a module docstring, and no
+  public module imports `EPR.Audit`.
+- At that baseline, the README is a setup-era document: it says the project is
+  being developed and the main incompleteness result is eventual, and it does
+  not inventory the completed API, limitations, or final audit command.
+- At that baseline, eight stage-specific axiom leaves contain 245 `#check`
+  commands and 283 `#print axioms` commands in total. Their recorded outputs
+  use no project-specific axioms, but there is no aggregate whole-library audit
+  target or public-root surface sentinel.
+- At that baseline, `EPR.Audit.EPRLogic` provides checked rejection models for
+  each major interpretative bridge and an operational-no-signalling/ontic-
+  change model. It does not yet give one consolidated positive model witnessing
+  that the premise interfaces can also be instantiated coherently.
 - Initial scans find no `sorry`, `admit`, `sorryAx`, project `axiom`, `opaque`,
   `unsafe`, `partial def`, `implemented_by`, or public audit import. Git diff
   and whitespace checks are clean.

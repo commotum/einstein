@@ -5,7 +5,7 @@ public import EPR.Audit.Continuum
 /-!
 # Continuous-variable signature and axiom audit
 
-This private diagnostic leaf checks the full Stage 9 surface and prints the
+This opt-in diagnostic leaf checks the full Stage 9 surface and prints the
 axioms of every substantive mathematical and sentinel theorem. It is not part
 of the public `EPR` import chain.
 -/

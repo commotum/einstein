@@ -1,6 +1,6 @@
 <!--
 Transcription of the supplied four-page scan of Physical Review 47 (1935), pp. 777-780.
-Original page images are stored in the relative images/ directory.
+The supplied facsimile is `einstein-1935.pdf` in this directory.
 -->
 
 # Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?
@@ -191,12 +191,12 @@ While we have thus shown that the wave function does not provide a complete desc
 
 ---
 
-## Facsimile page images
+## Facsimile pages
 
-- [Page 777](images/page-777.png)
-- [Page 778](images/page-778.png)
-- [Page 779](images/page-779.png)
-- [Page 780](images/page-780.png)
+- [Printed page 777 (PDF page 1)](einstein-1935.pdf#page=1)
+- [Printed page 778 (PDF page 2)](einstein-1935.pdf#page=2)
+- [Printed page 779 (PDF page 3)](einstein-1935.pdf#page=3)
+- [Printed page 780 (PDF page 4)](einstein-1935.pdf#page=4)
 
 <details>
 <summary>Material from the preceding article visible at the top of page 777</summary>

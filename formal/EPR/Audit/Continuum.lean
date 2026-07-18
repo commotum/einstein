@@ -6,7 +6,7 @@ public import Mathlib.Tactic
 /-!
 # Continuous-variable diagnostics
 
-This private leaf checks the normalization obstruction, both momentum signs,
+This opt-in diagnostic leaf checks the normalization obstruction, both momentum signs,
 the generalized position relations, and the Schwartz-domain commutator. It is
 not imported by the public `EPR` root.
 -/

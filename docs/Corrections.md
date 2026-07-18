@@ -145,6 +145,8 @@ yet been formalized.
   `(Q₂-Q₁)Ψ = x₀Ψ`, while `eprCorrelation_jointMomentumSum` proves
   `(P₁+P₂)Ψ = 0`. The raw oscillatory `p`-integral-to-`hδ` equality remains an
   explicit scaled partial-Fourier/change-of-variables obligation. Likewise,
+  the checked affine-line relations do not establish nonzeroness, topological
+  support, or non-`L²` representability of that distribution. Separately,
   `delta_position_eigenrelation` proves only the generic delta multiplier
   relation: no declaration proves Eq. (15)'s coefficient expansion or the
   translated/scaled Eq. (16) coefficient-extraction and eigenvalue chain.

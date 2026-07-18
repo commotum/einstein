@@ -474,7 +474,10 @@ The opt-in diagnostic surface is split by purpose:
 - The eight stage-specific `*Axioms` leaves retain their detailed declaration
   checks. `EPR.Audit.PublicTheoremAxioms` adds the complementary public theorem
   declarations not already printed by those leaves, so the combined audit
-  prints all 203 public theorem declarations in the 14 public source files.
+  prints all 203 public theorem declarations in the 14 public source files. Its
+  74 commands are those 71 complementary theorems plus `Setting`,
+  `PerfectConditionalPrediction`, and `SteeringScenario` as interface
+  declarations.
 - `EPR.Audit.FinalAxioms` imports the public surface probe, the complementary
   theorem audit, both non-axiom diagnostic modules (`ApiProbe` and
   `QuantumCore`), and all eight stage-specific axiom leaves. It is the one
