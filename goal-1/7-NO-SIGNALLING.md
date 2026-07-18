@@ -173,4 +173,181 @@ Expected files:
 
 ## Stage Results
 
-- In progress.
+**Status:** Complete on 2026-07-17.
+
+### Implemented generic operational layer
+
+- `EPR.Quantum.NoSignalling` imports only `EPR.Quantum.Conditional` and keeps
+  the direction A→B explicit. `ProjectiveMeasurement.localAProjection` tags
+  one source projector on A, and
+  `ProjectiveMeasurement.sum_localAProjection_lift` proves the lifted family
+  still resolves the identity on `A × B`.
+- `localANonselectiveState ρ M` is a positive trace-one bipartite state whose
+  matrix is exactly
+  `∑ w, (P_w ⊗ I) ρ (P_w ⊗ I)`. The construction sums raw subnormalized
+  branches, so their trace/Born weights are retained. No normalized selected
+  conditional state appears in the definition or main proof.
+- `traceOutA_localA_mul_cycle` proves cyclicity for one operator acting only on
+  A. `traceOutA_ludersBranchMatrix_localA` combines that identity with
+  projector idempotence to turn each traced `PρP` branch into `ρP`.
+  Linearity of the partial trace and source-PVM completeness then give the main
+  theorem `localA_nonselective_noSignalling`.
+- `OperationalNoSignallingAtoB ρ M` is definitionally the exact equality
+  `reducedB (localANonselectiveState ρ M) = reducedB ρ`.
+  `localA_nonselective_outcomeProbability` derives invariance for an arbitrary
+  `Q : Projection κ`, while `localA_nonselective_reducedB_independent` and
+  `localA_nonselective_outcomeProbability_independent` compare any two
+  complete A-side measurements, even with different outcome-label types.
+- Exact signatures require only `[Fintype ω]`, `[Fintype ι]`, `[Fintype κ]`,
+  `[DecidableEq ι]`, and `[DecidableEq κ]` where used. There is no
+  `[Nonempty κ]` or `[DecidableEq ω]` leak; the two algebraic partial-trace
+  helpers omit `[DecidableEq ι]` because their proofs do not require it.
+
+### Implemented Bell specialization and diagnostics
+
+- `EPR.Examples.BellNoSignalling` imports the generic module and the existing
+  Bell steering example. `bellPhiPlusAfterLocalMeasurement` is the
+  outcome-forgotten joint state for either Pauli source setting.
+- `bellPhiPlus_operationalNoSignalling` and
+  `bellPhiPlus_reducedB_invariant` cover every setting.
+  `bellPhiPlus_sourceSetting_independent` compares any two settings directly;
+  `bellPhiPlus_targetStatistic_invariant` and
+  `bellPhiPlus_targetStatistic_sourceSetting_independent` cover every Pauli B
+  target setting and outcome.
+- `bellPhiPlus_selected_z_outcomes_differ` and
+  `bellPhiPlus_selected_settings_differ` separately prove that selected
+  positive-probability B states vary by outcome and by source setting.
+  `bellPhiPlus_selected_changes_with_noSignalling` packages one such selected
+  difference with operational no-signalling for both Z and X source
+  measurements.
+- `EPR.Audit.NoSignalling` computes the original Bell B marginal as `½I`. It
+  also checks that the joint `|00⟩⟨11|` entry changes from `1/2` to `0` after
+  the outcome-forgotten Z measurement, proving that the joint state really
+  changes even though the B marginal does not.
+- The audit proves that both post-Z and post-X B marginals equal `½I`, that a
+  selected Z-positive B state differs from the unconditioned marginal by its
+  `(0,0)` entry (`1` versus `1/2`), and packages joint change, selected change,
+  and marginal invariance in
+  `bellPhiPlus_joint_changes_selected_changes_marginal_does_not`.
+- `rectangular_AtoB_noSignalling` instantiates the theorem on
+  `Fin 2 × Fin 3`, so replacing `reducedB` with `reducedA` cannot typecheck.
+  `rectangular_AtoB_all_statistics` quantifies over an arbitrary
+  `Projection (Fin 3)`, independently checking the target-side and
+  arbitrary-statistic scope.
+- The public root now imports both `EPR.Examples.PauliIncompatibility` and
+  `EPR.Examples.BellNoSignalling`, preserving all prior public stages without
+  routing either Stage 7 audit into the consumer chain.
+
+### Source and documentation result
+
+- Direct inspection of printed pages 779–780 confirms that the paper asserts
+  an ontic “no real change”/“does not disturb ... in any way” premise. It does
+  not calculate the outcome-forgotten local Lüders state or invariant remote
+  marginal. Stage 7 therefore records its checked theorem as a separate modern
+  finite operational result rather than evidence for the paper's stronger
+  premise.
+- `docs/PaperMap.md` now has a separate modern operational row and a finite
+  no-signalling section. The page-779 no-real-change row remains planned for
+  Stage 8.
+- Correction C-004 in `docs/Corrections.md` now marks the operational half
+  checked in Stage 7 while retaining ontic no-disturbance as a Stage 8
+  obligation. `docs/Dependencies.md` records the exact generic/concrete
+  surface, raw-versus-selected distinction, projective-Lüders scope, public
+  root branches, audit leaves, and corrected generic-to-example layering.
+- Nothing in Stage 7 proves absence of interaction, spacetime or causal
+  separation, communication impossibility for arbitrary protocols, arbitrary
+  CPTP-channel invariance, ontic sameness, locality, physical reality,
+  counterfactual aggregation, completeness, or incompleteness. Stage 8 remains
+  responsible for every interpretative premise; Stage 9 remains responsible
+  for the continuum example.
+
+### Verification evidence
+
+- Baseline before Stage 7 edits: `lake build
+  EPR.Examples.PauliIncompatibility` succeeded with 3204 jobs and full
+  `lake build` succeeded with 3206 jobs. Initial proof-hole and project-
+  declaration scans had no matches.
+- Focused warning-as-error builds succeeded with 2666 jobs for
+  `EPR.Quantum.NoSignalling`, 3204 for
+  `EPR.Examples.BellNoSignalling`, 3205 for `EPR.Audit.NoSignalling`, 3206 for
+  `EPR.Audit.NoSignallingAxioms`, and 3208 for the public `EPR` root.
+- The final combined warning-as-error build of the public root, both Stage 7
+  public modules, and both diagnostic leaves succeeded with 3210 jobs. The
+  required final full `lake build` succeeded with 3208 jobs.
+- The Stage 7 axiom leaf checks and axiom-prints all 36 public declarations:
+  11 generic, 10 Bell, and 15 diagnostic declarations. The two rectangular
+  type abbreviations use no axioms. Every substantive declaration reports
+  exactly `[propext, Classical.choice, Quot.sound]`.
+- Signature output confirms the exact finite typeclass surface, raw
+  nonselective-state matrix, post-marginal-equals-original orientation,
+  arbitrary B projection, different source outcome-label types, both Bell
+  settings, selected-state inequalities, and rectangular A→B direction.
+- Proof-hole, declaration, coercion, generic-boundary, selected-API-use, and
+  public-audit-import scans return status 1 with no matches. The later-stage
+  scan finds only negative module disclaimers; no interpretative or continuum
+  declaration exists. Import and theorem-body inspection return the intended
+  one-way generic/example/diagnostic dependencies and raw-branch proof path.
+- The final toolchain recheck reports Lean `4.31.0`, commit
+  `68218e876d2a38b1985b8590fff244a83c321783`; Lake and the manifest still pin
+  mathlib `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`.
+- Trailing-whitespace, Markdown-table, exact-name, stale-status/name,
+  working-tree diff, and autosave-commit diff checks pass. Stage 8 is the first
+  incomplete stage; no Stage 8 declaration was introduced.
+
+Final commands run from `formal/` unless a path explicitly starts with `../`:
+
+```bash
+lake build -KwarningAsError=true EPR.Quantum.NoSignalling
+lake build -KwarningAsError=true EPR.Examples.BellNoSignalling
+lake build -KwarningAsError=true EPR.Audit.NoSignalling
+lake build -KwarningAsError=true EPR.Audit.NoSignallingAxioms
+lake build -KwarningAsError=true EPR
+lake build -KwarningAsError=true EPR EPR.Quantum.NoSignalling EPR.Examples.BellNoSignalling EPR.Audit.NoSignalling EPR.Audit.NoSignallingAxioms
+lake build
+lake env lean --version
+rg -n '\b(sorry|admit|sorryAx)\b' EPR EPR.lean
+rg -n '^[[:space:]]*(axiom|opaque|unsafe|partial[[:space:]]+def)[[:space:]]|implemented_by' EPR EPR.lean
+rg -n '(instance.*Coe|CoeTC|CoeFun|\bcoe\b)' EPR/Quantum/NoSignalling.lean EPR/Examples/BellNoSignalling.lean
+rg -ni 'Fin[[:space:]]+[23]|qubit|bell|pauli|phi|amplitude|steer|ElementOfReality|NoOnticDisturbance|CompleteFor|SimultaneouslyReal|plane[ -]wave|Dirac|delta|L²|position|momentum' EPR/Quantum/NoSignalling.lean
+rg -n 'localAConditionalBState|conditionalState|SubnormalizedState\.normalize' EPR/Quantum/NoSignalling.lean
+rg -n 'EPR\.Audit' EPR.lean EPR/Quantum EPR/Examples
+rg -ni 'ElementOfReality|NoOnticDisturbance|CompleteFor|SimultaneouslyReal|CounterfactualStability|epr_incompleteness|plane[ -]wave|Dirac|delta|L²|position|momentum|QuantumChannel|CPTP|Kraus' EPR/Quantum/NoSignalling.lean EPR/Examples/BellNoSignalling.lean EPR/Audit/NoSignalling.lean
+rg -n '^(public )?import ' EPR.lean EPR/Quantum/NoSignalling.lean EPR/Examples/BellNoSignalling.lean EPR/Audit/NoSignalling.lean EPR/Audit/NoSignallingAxioms.lean
+sed -n '55,185p' EPR/Quantum/NoSignalling.lean
+rg -n 'bellPhiPlus_joint_offDiagonal|bellPhiPlus_z_nonselective_joint_offDiagonal|bellPhiPlus_z_nonselective_joint_ne_input|bellPhiPlus_z_nonselective_reducedB_matrix|bellPhiPlus_x_nonselective_reducedB_matrix|bellPhiPlus_selected_z0_ne_unconditionedB|rectangular_AtoB_noSignalling|rectangular_AtoB_all_statistics|bellPhiPlus_joint_changes_selected_changes_marginal_does_not' EPR/Audit/NoSignalling.lean EPR/Audit/NoSignallingAxioms.lean
+rg -n '[[:blank:]]+$' EPR.lean EPR/Quantum/NoSignalling.lean EPR/Examples/BellNoSignalling.lean EPR/Audit/NoSignalling.lean EPR/Audit/NoSignallingAxioms.lean ../goal-1/0-plan.md ../goal-1/7-NO-SIGNALLING.md ../docs/Corrections.md ../docs/Dependencies.md ../docs/PaperMap.md
+rg -n --glob '!7-NO-SIGNALLING.md' '7-NO-SIGNALLING.*[Ii]n progress|Stage 7 is checking|Stage 7 is in progress|Operational no-signalling remains Stage 7|No checked theorem yet constructs|local_measurement_noSignalling|root.*ends at.*PauliIncompatibility' ../goal-1 ../docs
+rg -n 'fabf563a7c95a166b8d7b6efca11c8b4dc9d911f|leanprover/lean4:v4.31.0' lake-manifest.json lakefile.toml lean-toolchain
+git diff --check
+git log --check --oneline a4784e3..HEAD
+```
+
+The no-match scans return status 1 as expected. The import scan returns the
+two public-root branches, generic `Conditional -> NoSignalling`, concrete
+`NoSignalling + BellSteering -> BellNoSignalling`, and one-way audit imports.
+The implementation slice shows the raw branch sum and the proof dependency on
+partial-trace cyclicity, idempotence, linearity, and completeness. The audit
+inventory, pin, and version scans return every expected declaration and exact
+revision. Both Git checks return status 0.
+
+### Failures encountered and corrections made
+
+- A first design lifted the A measurement into a full joint
+  `ProjectiveMeasurement`. Preserving its `nonzero` field requires
+  `[Nonempty κ]`, because the identity matrix on an empty B index is zero.
+  Defining the checked local nonselective state directly from the complete raw
+  branch sum avoids that artificial public requirement while preserving the
+  exact operation and proof.
+- The first generic module build succeeded but emitted a flexible-tactic
+  linter warning in the partial-trace cyclicity proof. Replacing the broad
+  `simp`/`conv` step with an explicit double-sum calculation and
+  `Finset.sum_comm` made the focused build warning-free.
+- The first combined Bell theorem attempted to use the proof constant
+  `bellPhiPlus_selected_settings_differ` where a proposition was required.
+  Restating its exact selected-state inequality in the conjunction and using
+  that theorem as the proof term fixed the type mismatch without weakening
+  the result.
+- The master plan's earlier phrase “trace-preserving local operation” could be
+  read as an unproved arbitrary-channel theorem. The final plan and docs name
+  the checked complete projective Lüders scope, while recording general
+  channels as outside Stage 7 rather than silently narrowing or overclaiming.

@@ -16,9 +16,10 @@
 - Stage `6-INCOMPATIBILITY` completed on 2026-07-17; its implementation,
   counterexample, and verification evidence are recorded in
   `goal-1/6-INCOMPATIBILITY.md`.
-- Stage `7-NO-SIGNALLING` is in progress; its source boundary, exact finite
-  operational claim, and verification plan are recorded in
-  `goal-1/7-NO-SIGNALLING.md`.
+- Stage `7-NO-SIGNALLING` completed on 2026-07-17; its implementation,
+  operational/ontic boundary, and verification evidence are recorded in
+  `goal-1/7-NO-SIGNALLING.md`. Stage `8-EPR-LOGIC` is the first incomplete
+  stage.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
   checked projective-conditioning, generic steering, concrete Bell/Pauli
   example, and checked incompatibility layers. No philosophical premise or
@@ -35,14 +36,13 @@ The library must verify the quantum-mechanical calculations it formalizes and
 must expose every philosophical or locality premise as an explicit definition,
 structure field, or theorem hypothesis.
 
-The finite-dimensional two-qubit `|Φ⁺⟩` steering example and the exact Pauli
-`X`/`Z` incompatibility obstruction are now complete. The next mathematical
-target is operational no-signalling for the finite model, kept separate from
-ontic no-disturbance. The EPR reality and completeness criteria will be
-represented abstractly, and the incompleteness conclusion will be a
-conditional theorem. The paper's original position-momentum construction is a
-later analytic or distributional extension, not an ordinary Hilbert-space-
-vector example.
+The finite-dimensional two-qubit `|Φ⁺⟩` steering example, exact Pauli `X`/`Z`
+incompatibility obstruction, and directional operational no-signalling theorem
+are now complete. The next target is the abstract EPR logic layer: represent
+reality, ontic no-disturbance, context aggregation, and completeness as
+explicit premises, then derive only a conditional incompleteness conclusion.
+The paper's original position-momentum construction is a later analytic or
+distributional extension, not an ordinary Hilbert-space-vector example.
 
 ## Non-Negotiable Constraints and No-Cheating Rules
 
@@ -206,13 +206,27 @@ vector example.
 - `EPR.Quantum.Conditional` already supplies complete projective measurements
   and their same-space nonselective Lüders state, while
   `EPR.Quantum.Bipartite` supplies finite partial traces and normalized reduced
-  states. No checked theorem yet constructs the local A-side nonselective
-  update or proves its B marginal invariant.
+  states. At Stage 7 start no checked theorem constructed the local A-side
+  nonselective update or proved its B marginal invariant.
 - A fresh pinned-source search found general C*-algebra completely positive
   maps but no ready quantum-channel, Kraus-family, trace-preserving-channel,
   partial-trace, or no-signalling abstraction. Stage 7 therefore targets the
   complete local projective Lüders operation already supported by the project,
   without claiming an arbitrary-channel theorem.
+- `EPR.Quantum.NoSignalling` now constructs `localANonselectiveState` from raw
+  lifted Lüders branches and defines `OperationalNoSignallingAtoB` as exact
+  reduced-B equality. `localA_nonselective_noSignalling` proves it generically;
+  arbitrary B-projective statistics and comparisons between any two complete
+  A measurements are derived as corollaries.
+- `EPR.Examples.BellNoSignalling` instantiates both Pauli settings, compares
+  their unconditioned B marginals/statistics, and separately proves selected
+  conditional states differ by outcome and setting. Its combined theorem
+  packages the selected-state change with both operational invariances.
+- `EPR.Audit.NoSignalling` checks a changed Bell joint matrix entry, the exact
+  maximally mixed B marginal before and after both settings, a selected state
+  distinct from that marginal, and the A→B direction on `Fin 2 × Fin 3`.
+  The complete signature/axiom leaf reports no axioms beyond `propext`,
+  `Classical.choice`, and `Quot.sound` for substantive declarations.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -226,6 +240,7 @@ vector example.
 | Eq. (6) | A plane wave gives a uniform position “probability.” | As written, the state is unnormalizable and the displayed quantity is not a normalized probability distribution on `ℝ`. Record as an idealized relative density, not an ordinary Born probability. |
 | Sec. 1 after Eq. (6) | Noncommuting observables cannot both be precisely known. | Stage 6 separates noncommutation, common nonzero eigenvectors, and jointly sharp density states; proves the stronger exclusion for Pauli `X`/`Z`; and checks a `Fin 3` noncommuting/common-sharp counterexample to the paper's unrestricted wording. |
 | Eqs. (7)–(8) | A bipartite state has different expansions; a selected outcome has an associated conditional state of system II. | Stages 4–5 complete the generic finite Lüders/relative-state API, positive-probability normalization, and the concrete four-branch Bell/Pauli steering analogue. Lüders degeneracy and the nonselective state are explicit modern modeling additions. |
+| Modern finite operational result | Discarding the outcome of a complete projective Lüders measurement on A leaves B's unconditioned marginal and all projective Born statistics unchanged. | Stage 7 proves this directionally and generically, compares both Bell/Pauli settings, and separately checks that selected conditional states and the joint state can change. This is not attributed to the paper as an ontic theorem. |
 | Sec. 2 after Eq. (8) | Operations on I cause no real change in II once interaction ends. | Strong locality/ontic no-disturbance premise. It is not merely absence of a Hamiltonian interaction and is not implied by operational no-signalling. |
 | “two different wave functions … same reality” | Alternative measurements on I steer II to different relative states while II's underlying reality is fixed. | Requires a framework relating operational conditional states, measurement choice, outcomes, and an underlying reality/ontic state. Treat as a conditional interpretative bridge. |
 | Eqs. (9)–(18) | Perfect position/momentum correlations and noncommutation. | Eq. (9) is distributional (proportional to a delta constraint), not a normalizable bipartite `L²` vector; plane waves and deltas are generalized eigenvectors. A rigorous version needs a rigged Hilbert space, distributions/spectral measures, or normalized approximants plus limit/error bounds. |
@@ -285,12 +300,12 @@ modal or counterfactual steps. Tentative ingredients are:
     which conjunction of premises is inconsistent; it does not establish the
     philosophical premises independently.
 
-Operational no-signalling will be separately defined and proved for the
+Operational no-signalling is separately defined and proved for the
 finite-dimensional quantum model as invariance of B's unconditioned marginal
 under a complete local projective Lüders measurement on A when the outcome is
-discarded. This checked operation is trace preserving; the stage will not
-silently generalize it to arbitrary channels. The result will neither imply
-nor be identified with item 4.
+discarded. This checked operation is trace preserving and is not silently
+generalized to arbitrary channels. The result neither implies nor is
+identified with item 4.
 
 ## Tentative Formalization Direction
 
@@ -314,8 +329,9 @@ nor be identified with item 4.
 - Mathematical layer: established `BipartiteState`, `ProjectiveMeasurement`,
   `conditionalState`, `localAConditionalBState`, `SharpValue`, and
   `JointlySharp`, plus established `PerfectConditionalPrediction` and
-  `SteeringScenario`; Stage 7 is checking `OperationalNoSignallingAtoB`, a
-  local A-side nonselective state, and its reduced-B/statistical invariance.
+  `SteeringScenario`, `localANonselectiveState`, and
+  `OperationalNoSignallingAtoB`, with generic reduced-B and projective-
+  statistic invariance.
 - Interpretative layer: `PhysicalSituation`, `ElementOfReality`,
   `NoOnticDisturbance`, `SimultaneouslyReal`, `TheoryCounterpart`,
   `CompleteFor`, `RealityCriterion`, `CounterfactualStability`.
@@ -323,15 +339,17 @@ nor be identified with item 4.
   `bellPhiPlus_perfectPrediction`, and `bellPhiPlusSteeringScenario`.
 - Established Stage 6 results: `pauliXZ_noncommutes`,
   `pauliXZ_noCommonEigenvector`, `pauliXZ_noJointSharpState`, and
-  `pauliXZ_not_jointlySharp`. Candidate Stage 7 names are
-  `localANonselectiveState`, `localA_nonselective_noSignalling`, and a Bell
-  setting-independence specialization; compiled APIs remain authoritative.
+  `pauliXZ_not_jointlySharp`. Established Stage 7 results include
+  `localA_nonselective_noSignalling`,
+  `localA_nonselective_outcomeProbability`,
+  `bellPhiPlus_operationalNoSignalling`, and
+  `bellPhiPlus_sourceSetting_independent`.
 - Logic layer: `reality_of_perfect_prediction`,
   `simultaneous_reality_of_alternative_predictions`,
   `not_complete_of_no_joint_sharp_representation`, and a top-level
   `epr_incompleteness` theorem whose hypotheses reveal the full dependency.
 
-Names already established in Stages 1–6 follow the checked pinned APIs. Later
+Names already established in Stages 1–7 follow the checked pinned APIs. Later
 names and representations must continue to follow compiled infrastructure
 rather than forcing this sketch onto unsuitable abstractions.
 
@@ -387,6 +405,11 @@ verified example and the abstract logic.
   nondegenerate bases. Stage 6 separately proves that the chosen Pauli pair
   has no common nonzero eigenvector and no jointly sharp density state,
   including mixed states.
+- **Operational no-signalling (resolved for the finite example):** Stage 7
+  sums raw local projective Lüders branches and proves directional A→B
+  reduced-state equality, arbitrary B-projective-statistic invariance, and
+  source-setting independence. It does not claim arbitrary-channel or ontic
+  invariance.
 - **Modal indexing:** determine whether worlds, preparations, measurement
   contexts, and times are explicit indices. The minimal abstraction must still
   make “same reality” and alternative choices well typed.
@@ -609,9 +632,10 @@ observables.
 
 ### 7-NO-SIGNALLING
 
-**Status:** In progress on 2026-07-17. See
+**Status:** Complete on 2026-07-17. See
 `goal-1/7-NO-SIGNALLING.md` for the source distinction, checked model scope,
-generic proof design, Bell obligations, and verification plan.
+generic proof, Bell results, executable diagnostics, failures, scans, builds,
+and axiom evidence.
 
 #### Big Picture Objective
 
