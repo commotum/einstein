@@ -18,12 +18,16 @@
   `goal-1/6-INCOMPATIBILITY.md`.
 - Stage `7-NO-SIGNALLING` completed on 2026-07-17; its implementation,
   operational/ontic boundary, and verification evidence are recorded in
-  `goal-1/7-NO-SIGNALLING.md`. Stage `8-EPR-LOGIC` is the first incomplete
-  stage.
+  `goal-1/7-NO-SIGNALLING.md`.
+- Stage `8-EPR-LOGIC` completed on 2026-07-17; its abstract logic, Bell/Pauli
+  instantiation, premise-separation diagnostics, and verification evidence are
+  recorded in `goal-1/8-EPR-LOGIC.md`. Stage `9-CONTINUUM` is the first
+  incomplete stage.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
   checked projective-conditioning, generic steering, concrete Bell/Pauli
-  example, and checked incompatibility layers. No philosophical premise or
-  target EPR proof exists yet.
+  example, checked incompatibility/no-signalling layers, and a conditional EPR
+  incompleteness theorem. Every philosophical premise remains an explicit,
+  independently rejectable hypothesis.
 - The local primary source is
   `einstein-1935/einstein-1935.md`, transcribed from the accompanying PDF.
 
@@ -37,12 +41,12 @@ must expose every philosophical or locality premise as an explicit definition,
 structure field, or theorem hypothesis.
 
 The finite-dimensional two-qubit `|Φ⁺⟩` steering example, exact Pauli `X`/`Z`
-incompatibility obstruction, and directional operational no-signalling theorem
-are now complete. The next target is the abstract EPR logic layer: represent
-reality, ontic no-disturbance, context aggregation, and completeness as
-explicit premises, then derive only a conditional incompleteness conclusion.
-The paper's original position-momentum construction is a later analytic or
-distributional extension, not an ordinary Hilbert-space-vector example.
+incompatibility obstruction, directional operational no-signalling theorem,
+and conditional EPR logic reconstruction are now complete. The next target is
+to give the paper's original position-momentum construction a rigorous status.
+That construction is an analytic or distributional extension, not an ordinary
+Hilbert-space-vector example and not a dependency of the completed finite
+argument.
 
 ## Non-Negotiable Constraints and No-Cheating Rules
 
@@ -733,8 +737,9 @@ stronger locality/no-real-change premise.
 
 ### 8-EPR-LOGIC
 
-**Status:** In progress on 2026-07-17. See `goal-1/8-EPR-LOGIC.md` for the
-source boundary, initial API design, commands, and accumulating evidence.
+**Status:** Complete on 2026-07-17. See `goal-1/8-EPR-LOGIC.md` for the source
+boundary, exact theorem signatures, premise-separation diagnostics, failures,
+builds, scans, and axiom evidence.
 
 #### Big Picture Objective
 

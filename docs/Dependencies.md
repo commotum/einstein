@@ -289,17 +289,107 @@ checks the same B marginal after the X setting, distinguishes a selected state
 from that unconditioned marginal, and uses `Fin 2 × Fin 3` to sentinel the
 A-to-B direction. `EPR.Audit.NoSignallingAxioms` checks the full signature and
 axiom surface. Neither audit leaf is imported by the public `EPR` root. The
-root directly imports the two public example branches
-`EPR.Examples.PauliIncompatibility` and
-`EPR.Examples.BellNoSignalling`.
+public root now directly imports `EPR.Examples.BellNoSignalling` and
+`EPR.Examples.BellEPR`; the latter re-exports the Pauli incompatibility branch
+through its own import.
 
 This is a directional A-to-B result for complete projective Lüders
 measurements, not a theorem about arbitrary channels, communication protocols,
 spacetime separation, absence of interaction, or ontic locality. It does not
 assert an actual outcome and does not turn a selected conditional state into an
-unconditioned marginal. The paper's page-779 claim that absence of interaction
-means no real change in system II remains an explicit Stage 8 premise, not a
-consequence of `OperationalNoSignallingAtoB`.
+unconditioned marginal. The paper's printed-p. 779 claim that absence of
+interaction means no real change in system II is represented in Stage 8 only
+as an explicit premise, not a consequence of `OperationalNoSignallingAtoB`.
+
+## Stage 8 checked conditional EPR logic layer
+
+`EPR.Logic.EPR` imports only `Mathlib.Logic.Basic`. It is a lightweight,
+theory-neutral logical layer and neither defines nor imports operational
+no-signalling. Its declarations deliberately separate the following roles:
+
+- `PhysicalSituation` stores a context and potentially different
+  `priorReality` and `postReality` values. `AlternativeContexts` says only that
+  contexts differ. `SamePriorReality` and `SamePostReality` are separate
+  equality predicates, while `NoOnticDisturbance` says one situation's post
+  reality equals its prior reality.
+- `EPRInterpretation` supplies seven semantic relations. Their exposed
+  wrappers are `OutcomeObtained`, `CertainPrediction`, `ElementOfReality`,
+  `PossessesValue`, `SimultaneouslyReal`, `TheoryCounterpart`, and
+  `JointlyRepresents`; none is definitionally identified with another.
+- `RealityCriterion` takes `OutcomeObtained`, `CertainPrediction`, and
+  `NoOnticDisturbance` as three antecedents and concludes only
+  `ElementOfReality`. `RealityValueBridge` takes those facts and the resulting
+  element to conclude the value-specific `PossessesValue` judgment.
+- `CounterfactualStability` is the separate aggregation premise. It requires
+  `AlternativeContexts`, `SamePostReality`, two context-specific elements, and
+  two context-specific possessed values before yielding `SimultaneouslyReal`.
+- `CompleteFor` means only that every context-indexed element of the supplied
+  reality has a `TheoryCounterpart` in the supplied description.
+  `CompletenessRepresentationBridge` separately turns simultaneous reality
+  and both counterparts into the exact-value judgment `JointlyRepresents`.
+
+The abstract theorem dependency is explicit. First,
+`samePostReality_of_noOnticDisturbance` transports `SamePriorReality` through
+ontic stability in both alternatives to `SamePostReality`.
+`reality_of_perfect_prediction` and `possessed_value_of_perfect_prediction`
+apply the two supplied reality/value implications.
+`simultaneous_reality_of_alternative_predictions` then uses the same-post
+transport and `CounterfactualStability`. Separately,
+`theoryCounterpart_of_complete` exposes the bare completeness consequence;
+`joint_representation_of_complete` additionally requires
+`CompletenessRepresentationBridge`; and
+`not_complete_of_no_joint_representation` consumes a mathematical
+`¬ JointlyRepresents` fact. `epr_incompleteness` composes precisely those steps
+and concludes only `¬ CompleteFor I theory s.postReality` for the selected
+interpretation, description, and modeled reality.
+
+`EPR.Examples.BellEPR` directly imports `EPR.Logic.EPR` and
+`EPR.Examples.PauliIncompatibility`; it does not import
+`EPR.Quantum.NoSignalling` or `EPR.Examples.BellNoSignalling`. Its adapter has
+the following checked dependency surface:
+
+- `BellContext` records a possible source setting/outcome branch.
+  `BellPerfectPrediction` is the `PerfectConditionalPrediction` supplied by
+  `bellPhiPlusSteeringScenario`, and
+  `bellPhiPlus_perfectPrediction_fromScenario` obtains it from the bundled
+  all-settings/all-outcomes certificate.
+- `bellCertainPrediction` preserves the explicit target setting and value;
+  `bellEPRInterpretation` fixes only this checked certainty relation and
+  `bellJointlyRepresents`, leaving the ontic relations supplied by
+  `BellInterpretiveSemantics`.
+- `bellPhiPlusPhysicalSituation` stores explicit prior/post realities.
+  `bell_z_x_alternative` proves only that the Z and X contexts differ, while
+  `bell_z_x_samePrior` is merely a convenience theorem for alternatives built
+  with the same supplied prior.
+- `bellPhiPlus_noJointRepresentation_zx` unfolds `bellJointlyRepresents` to
+  simultaneous exact Pauli Z/X sharpness and invokes
+  `pauliXZ_noJointSharpState`; bare `pauliXZ_noncommutes` is not used.
+- `bellPhiPlus_epr_incompleteness` is conditional and outcome-generic: the
+  selected `zOutcome` and `xOutcome` are arbitrary. It consumes the bundled
+  four-branch steering scenario through `bellPhiPlus_certainPrediction`, takes
+  separate Z/X prior and post realities plus an explicit `SamePriorReality`
+  hypothesis, and requires both `OutcomeObtained` hypotheses, both
+  `NoOnticDisturbance` hypotheses, `RealityCriterion`, `RealityValueBridge`,
+  `CounterfactualStability`, and `CompletenessRepresentationBridge`. It derives
+  the Pauli contradiction through `bellPhiPlus_noJointRepresentation_zx` and
+  concludes relative incompleteness of the supplied density description for
+  the Z-side prior reality.
+
+The public/audit boundary is exact. `formal/EPR.lean` directly imports only
+`EPR.Examples.BellNoSignalling` and `EPR.Examples.BellEPR`, so the operational
+and conditional-interpretative results are both public but neither is a premise
+of the other. `EPR.Audit.EPRLogic` imports those two public example modules and
+`Mathlib.Tactic`; no public module imports this audit leaf. Its proposition-
+valued sentinels independently reject actuality, the reality criterion, the
+value bridge, counterfactual aggregation, and the completeness representation
+bridge. In particular,
+`operational_noSignalling_with_ontic_change` proves the conjunction
+`OperationalNoSignallingAtoB bellPhiPlus.toDensity pauliZMeasurement ∧
+¬ NoOnticDisturbance onticallyChangedBellSituation`, so the checked operational
+theorem coexists with explicit toy ontic change. `EPR.Audit.EPRLogicAxioms`
+imports only `EPR.Audit.EPRLogic`, checks every Stage 8 public and diagnostic
+declaration, and prints their axiom dependencies. It too remains outside the
+public `EPR` import chain.
 
 ## Checked representation choice
 
@@ -325,15 +415,22 @@ consequence of `OperationalNoSignallingAtoB`.
 - Package conditional certainty with strict source-branch positivity and keep
   each correlation/anticorrelation convention in an explicit response map.
 - Keep matrix noncommutation, common-eigenvector exclusion, and joint-sharp
-  density-state exclusion as separate notions; use the last one in the later
-  completeness bridge.
+  density-state exclusion as separate notions; use the last one in the
+  completeness contradiction.
+- Keep an obtained outcome, a certainty certificate, an element of reality,
+  and possession of the predicted value as four separate judgments.
+- Keep ontic no-disturbance separate from operational no-signalling, and keep
+  same-prior/same-post transport separate from counterfactual aggregation.
+- Let `CompleteFor` supply only theory counterparts; require an explicit
+  `CompletenessRepresentationBridge` before concluding exact joint
+  representation.
 
 This basis-level choice is intentional for the finite core. It keeps Bell-state
 calculations executable and aligns subsystem order with matrix Kronecker
 indices. Abstract Hilbert tensor products remain available for later bridges,
 but are not required for the first verified example.
 
-## Current and planned module layering
+## Current checked module layering
 
 ```text
 EPR.Foundations
@@ -355,18 +452,23 @@ EPR.Quantum.Conditional
 EPR.Quantum.NoSignalling + EPR.Examples.BellSteering
   -> EPR.Examples.BellNoSignalling
 
-EPR.Examples.PauliIncompatibility + EPR.Examples.BellNoSignalling
+Mathlib.Logic.Basic
+  -> EPR.Logic.EPR
+
+EPR.Logic.EPR + EPR.Examples.PauliIncompatibility
+  -> EPR.Examples.BellEPR
+
+EPR.Examples.BellNoSignalling + EPR.Examples.BellEPR
   -> EPR (public root)
 
-EPR.Interpretation.Core
-  -> EPR.Logic.Incompleteness
+EPR.Examples.BellEPR + EPR.Examples.BellNoSignalling + Mathlib.Tactic
+  -> EPR.Audit.EPRLogic
+       -> EPR.Audit.EPRLogicAxioms
 
-verified quantum example + interpretative hypotheses
-  -> EPR.Theorems.EPR
-
-EPR.Continuum.* and EPR.Audit.* remain diagnostic leaves.
+All EPR.Audit.* modules remain diagnostic leaves outside the public root.
 ```
 
-Interpretative modules should depend only on lightweight logical vocabulary.
-They must not import operational no-signalling as though it established ontic
-locality.
+The import graph therefore enforces the semantic boundary: the lightweight
+logic cannot use operational no-signalling to prove ontic locality, and the
+Bell conditional theorem reaches its certainty and incompatibility inputs
+without importing the operational branch.
