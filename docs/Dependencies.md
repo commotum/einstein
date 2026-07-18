@@ -197,6 +197,53 @@ counterfactual aggregation, completeness, or incompleteness. They are also not
 a discretization or normalized realization of the distributional state in
 Eq. (9).
 
+## Stage 6 checked incompatibility layer
+
+`EPR.Quantum.Incompatibility` imports only the finite quantum core and defines
+the generic mathematical distinctions needed by the final quantum exclusion:
+
+- `Observable.Commutes` and `Observable.Noncommutes` concern matrix
+  multiplication only;
+- `Observable.IsEigenvector`, `Observable.HasCommonEigenvector`, and
+  `Observable.NoCommonEigenvector` explicitly require a nonzero raw common
+  eigenvector where appropriate;
+- `Observable.HasJointSharpState` and `Observable.NoJointSharpState` quantify
+  over normalized density states, including mixed states; and
+- `Observable.hasCommonEigenvector_of_jointlySharp` extracts a common nonzero
+  eigenvector from a nonzero column of a particular trace-one jointly sharp
+  density matrix, while
+  `Observable.not_jointlySharp_of_noCommonEigenvector` gives the pointwise
+  exclusion for an arbitrary density state. The existential wrappers are
+  `Observable.hasCommonEigenvector_of_hasJointSharpState` and
+  `Observable.noJointSharpState_of_noCommonEigenvector`.
+
+`EPR.Examples.PauliIncompatibility` reuses the exact Pauli observables from the
+Bell example and proves the three concrete facts separately:
+
+- `pauliXZ_noncommutes` checks matrix-product inequality;
+- `pauliXZ_commonEigenvector_eq_zero` handles arbitrary raw qubit kets and
+  arbitrary real candidate eigenvalues, from which
+  `pauliXZ_noCommonEigenvector` follows; and
+- `pauliXZ_noJointSharpState` excludes every pure or mixed density state by
+  the generic column bridge, while `pauliXZ_not_jointlySharp` exposes the
+  state-quantified form used by later logic.
+
+`EPR.Audit.Incompatibility` checks the Pauli product order and arbitrary-state
+exclusion, then constructs explicit Hermitian observables `fin3A` and `fin3B`.
+They do not commute, yet `fin3SharedState` is a common normalized eigenstate
+and its density is jointly sharp for both. The combined theorem
+`fin3_noncommuting_with_common_sharp_state` prevents the public API or later
+proofs from substituting bare noncommutation for the stronger state-space
+obstruction. The public `EPR` root ends at
+`EPR.Examples.PauliIncompatibility`; the diagnostic audit remains outside that
+import chain.
+
+This layer proves no measurement-disturbance, marginal-invariance,
+no-signalling, locality, physical-reality, simultaneous-reality,
+counterfactual, completeness, or incompleteness claim. Its finite Pauli
+product calculation is not a formalization of the unbounded position-momentum
+commutator in Eq. (18).
+
 ## Checked representation choice
 
 - Use generic finite basis index types `ι`, `κ` with `[Fintype]` and
@@ -214,6 +261,9 @@ Eq. (9).
   strictly positive outcome-probability evidence.
 - Package conditional certainty with strict source-branch positivity and keep
   each correlation/anticorrelation convention in an explicit response map.
+- Keep matrix noncommutation, common-eigenvector exclusion, and joint-sharp
+  density-state exclusion as separate notions; use the last one in the later
+  completeness bridge.
 
 This basis-level choice is intentional for the finite core. It keeps Bell-state
 calculations executable and aligns subsystem order with matrix Kronecker
@@ -225,11 +275,16 @@ but are not required for the first verified example.
 ```text
 EPR.Foundations
   -> EPR.Quantum.Core
-  -> EPR.Quantum.Bipartite
-  -> EPR.Quantum.Conditional
-  -> EPR.Quantum.Steering
-  -> EPR.Examples.BellSteering
-       -> EPR.Quantum.Incompatibility
+       -> EPR.Quantum.Bipartite
+            -> EPR.Quantum.Conditional
+                 -> EPR.Quantum.Steering
+                      -> EPR.Examples.BellSteering
+
+EPR.Quantum.Core
+  -> EPR.Quantum.Incompatibility
+
+EPR.Quantum.Incompatibility + EPR.Examples.BellSteering
+  -> EPR.Examples.PauliIncompatibility
 
 EPR.Quantum.Conditional + EPR.Examples.BellSteering
   -> EPR.Quantum.NoSignalling

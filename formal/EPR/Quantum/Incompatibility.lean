@@ -130,23 +130,38 @@ end DensityState
 
 namespace Observable
 
-/-- A density state sharp for both observables has a common nonzero raw
+/-- One density state sharp for both observables supplies a common nonzero raw
 eigenvector. The witness is a nonzero column of its trace-one matrix. -/
-theorem hasCommonEigenvector_of_hasJointSharpState
-    {A B : Observable ι} (h : A.HasJointSharpState B) :
+theorem hasCommonEigenvector_of_jointlySharp
+    {A B : Observable ι} (ρ : DensityState ι)
+    (h : ρ.JointlySharp A B) :
     A.HasCommonEigenvector B := by
-  rcases h with ⟨ρ, a, b, ha, hb⟩
+  rcases h with ⟨a, b, ha, hb⟩
   obtain ⟨j, hj⟩ := ρ.exists_col_ne_zero
   exact ⟨ρ.matrix.col j, hj, a, b,
     ρ.col_isEigenvector_of_sharpValue ha j,
     ρ.col_isEigenvector_of_sharpValue hb j⟩
+
+/-- Existential form of the jointly-sharp-to-common-eigenvector bridge. -/
+theorem hasCommonEigenvector_of_hasJointSharpState
+    {A B : Observable ι} (h : A.HasJointSharpState B) :
+    A.HasCommonEigenvector B := by
+  rcases h with ⟨ρ, hρ⟩
+  exact hasCommonEigenvector_of_jointlySharp ρ hρ
+
+/-- If there is no common nonzero eigenvector, an arbitrary density state is
+not jointly sharp for both observables. -/
+theorem not_jointlySharp_of_noCommonEigenvector
+    {A B : Observable ι} (h : A.NoCommonEigenvector B)
+    (ρ : DensityState ι) : ¬ ρ.JointlySharp A B :=
+  fun hsharp ↦ h (hasCommonEigenvector_of_jointlySharp ρ hsharp)
 
 /-- Excluding every common nonzero eigenvector excludes every jointly sharp
 density state, including mixed states. -/
 theorem noJointSharpState_of_noCommonEigenvector
     {A B : Observable ι} (h : A.NoCommonEigenvector B) :
     A.NoJointSharpState B :=
-  fun hsharp ↦ h (hasCommonEigenvector_of_hasJointSharpState hsharp)
+  fun ⟨ρ, hsharp⟩ ↦ not_jointlySharp_of_noCommonEigenvector h ρ hsharp
 
 end Observable
 

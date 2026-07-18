@@ -91,8 +91,8 @@ theorem pauliXZ_noJointSharpState :
 
 /-- State-quantified form of the Pauli joint-sharpness exclusion. -/
 theorem pauliXZ_not_jointlySharp (ρ : DensityState QubitIndex) :
-    ¬ ρ.JointlySharp pauliX pauliZ := by
-  intro h
-  exact pauliXZ_noJointSharpState ⟨ρ, h⟩
+    ¬ ρ.JointlySharp pauliX pauliZ :=
+  Observable.not_jointlySharp_of_noCommonEigenvector
+    pauliXZ_noCommonEigenvector ρ
 
 end EPR.Examples.PauliIncompatibility

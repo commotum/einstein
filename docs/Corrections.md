@@ -27,12 +27,20 @@ yet been formalized.
 
 - **Paper:** Noncommuting operators are described as precluding simultaneous
   precise knowledge.
-- **Correction:** In dimensions greater than two, two noncommuting operators
-  can share an eigenvector. The required obstruction is no common sharp state
-  for the selected pair, not bare noncommutation.
-- **Formal consequence:** Prove both properties separately for Pauli `X` and
-  `Z`; use no-common-sharp-state in the final contradiction.
-- **Status:** Documented; Stage 6 obligation.
+- **Correction:** Even finite-dimensional Hermitian observables can fail to
+  commute while sharing a nonzero eigenvector and a jointly sharp density
+  state. The required quantum-state obstruction is no jointly sharp state for
+  the selected pair, not bare noncommutation.
+- **Formal consequence:** Keep `Noncommutes`, `HasCommonEigenvector`, and
+  `HasJointSharpState` separate. For Pauli `X` and `Z`, establish
+  noncommutation separately, prove no common nonzero eigenvector, derive
+  `NoJointSharpState` through the checked mixed-state bridge, and use that last
+  property in the final EPR bridge.
+- **Status:** Checked in Stage 6. `pauliXZ_noncommutes`,
+  `pauliXZ_noCommonEigenvector`, and `pauliXZ_noJointSharpState` establish the
+  concrete Pauli facts. The Hermitian `Fin 3` witness
+  `fin3_noncommuting_with_common_sharp_state` checks that noncommutation can
+  coexist with both a common eigenvector and a jointly sharp rank-one density.
 
 ## C-004: Absence of interaction versus ontic no-disturbance
 

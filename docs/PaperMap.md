@@ -9,7 +9,7 @@ distinguishes checked declarations from later obligations.
 | Section 1, completeness condition | Every element of physical reality has a counterpart in a complete theory. | A relative `CompleteFor` predicate plus a separately named theory-counterpart/readout bridge. | Planned for `8-EPR-LOGIC`. |
 | Section 1, reality criterion | Certainty of prediction without disturbance is sufficient for an element of reality. | Separate `PerfectlyPredicts`, `NoOnticDisturbance`, and `ElementOfReality` predicates; criterion supplied as a hypothesis. | Planned for `8-EPR-LOGIC`. |
 | Eqs. (1)–(6) | Eigenstate reasoning illustrated by a momentum plane wave and a uniform position distribution. | Finite-dimensional sharpness first; continuous example audited separately because the plane wave is not normalized in `L²(ℝ)`. | Finite normalized-state, eigenstate, Born-probability, and sharpness vocabulary completed in `EPR.Quantum.Core`; the plane-wave correction remains a `9-CONTINUUM` obligation. |
-| General claim after Eq. (6) | Noncommuting quantities cannot have simultaneous precise values. | Define noncommutation and no-common-sharp-state separately; prove the stronger property for Pauli `X` and `Z`. | Planned for `6-INCOMPATIBILITY`. |
+| General claim after Eq. (6) | Noncommuting quantities cannot have simultaneous precise values. | Separate matrix noncommutation, existence of a common nonzero eigenvector, and existence of a jointly sharp density state. Use the last property for the quantum-state exclusion, not bare noncommutation. | `EPR.Quantum.Incompatibility` provides the generic distinctions and mixed-state bridge; `EPR.Examples.PauliIncompatibility` proves all three Pauli `X`/`Z` results. `EPR.Audit.Incompatibility` checks a noncommuting Hermitian `Fin 3` pair that nevertheless has a common eigenvector and jointly sharp state. |
 | Eqs. (7)–(8) | Alternative measurements on system I select different relative states of system II. | Represent the selected coefficient by a raw subnormalized relative branch, then normalize only for positive probability. Keep this selective state distinct from the unconditioned marginal and from a full nonselective measurement. | The generic finite conditioning API is complete in `EPR.Quantum.Conditional`; `EPR.Quantum.Steering` packages nonvacuous conditional certainty, and `EPR.Examples.BellSteering` checks both Pauli settings and all four `bellPhiPlus` branches. |
 | Paragraph after Eq. (8) | No real change occurs in II after an operation on separated I. | Explicit ontic premise, not a mathematical consequence of absent interaction or no-signalling. | Planned for `8-EPR-LOGIC`. |
 | “two different wave functions … same reality” | Different conditional wave functions may describe the same underlying reality of II. | Explicit context/world indexing and counterfactual-stability bridge. | Planned for `8-EPR-LOGIC`. |
@@ -49,12 +49,45 @@ opposite-outcome probability zero, and the corresponding sharp Pauli value.
 `bellPhiPlusSteeringScenario` packages all four possible branches; it does not
 assert that any outcome actually occurred.
 
+## Finite incompatibility correction
+
+The finite incompatibility layer distinguishes three propositions. For
+observables `A` and `B`, `A.Noncommutes B` is only matrix-product inequality;
+`A.HasCommonEigenvector B` requires one nonzero raw ket satisfying both real
+eigenvalue equations; and `A.HasJointSharpState B` requires one normalized
+pure or mixed density state that is sharp for both. These notions are not
+definitionally or logically identified.
+
+`DensityState.exists_col_ne_zero` and
+`DensityState.col_isEigenvector_of_sharpValue` show that a trace-one density
+matrix sharp for an observable has eigenvector columns. Consequently,
+`Observable.hasCommonEigenvector_of_jointlySharp` extracts a common nonzero
+eigenvector from a particular jointly sharp density state, and
+`Observable.not_jointlySharp_of_noCommonEigenvector` supplies its pointwise
+exclusion. `Observable.hasCommonEigenvector_of_hasJointSharpState` and
+`Observable.noJointSharpState_of_noCommonEigenvector` are the corresponding
+existential wrappers.
+
+For the concrete qubit pair, `pauliXZ_noncommutes` proves matrix
+noncommutation, `pauliXZ_noCommonEigenvector` excludes every nonzero common
+ket for arbitrary real candidate eigenvalues, and
+`pauliXZ_noJointSharpState` excludes every pure or mixed jointly sharp density
+state. The state-quantified theorem is `pauliXZ_not_jointlySharp`.
+
+Bare noncommutation cannot replace that stronger result. The checked `Fin 3`
+observables `fin3A` and `fin3B` are Hermitian and noncommuting, but the
+normalized state `fin3SharedState` is a common eigenstate and its rank-one
+density is jointly sharp for both. This is packaged by
+`fin3_noncommuting_with_common_sharp_state`. Stage 6 does not prove the
+paper's further instrument-dependent statement that measuring one observable
+must disturb knowledge of the other, and it draws no conclusion about
+simultaneous physical reality.
+
 This construction is a normalized finite role analogue of the alternative-
 expansion and conditional-certainty steps. It neither digitizes nor
 approximates Eq. (9), does not identify Pauli `X` or `Z` with the paper's
 position or momentum operators, and does not reproduce the `-p` momentum
 relation, the `x + x₀` position offset, or the unbounded-operator commutator in
-Eq. (18). Those analytic claims remain Stage 9 obligations. Noncommutation and
-no-common-sharp-state results remain Stage 6; operational no-signalling remains
-Stage 7; locality, same-reality, counterfactual, and completeness claims remain
-Stage 8.
+Eq. (18). Those analytic claims remain Stage 9 obligations. Operational
+no-signalling remains Stage 7; locality, same-reality, counterfactual, and
+completeness claims remain Stage 8.
