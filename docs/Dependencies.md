@@ -375,10 +375,11 @@ the following checked dependency surface:
   concludes relative incompleteness of the supplied density description for
   the Z-side prior reality.
 
-The public/audit boundary is exact. `formal/EPR.lean` directly imports only
-`EPR.Examples.BellNoSignalling` and `EPR.Examples.BellEPR`, so the operational
-and conditional-interpretative results are both public but neither is a premise
-of the other. `EPR.Audit.EPRLogic` imports those two public example modules and
+The public/audit boundary is exact. `formal/EPR.lean` imports
+`EPR.Examples.BellNoSignalling`, `EPR.Examples.BellEPR`, and the independent
+`EPR.Continuum.Idealized` leaf, so the operational, conditional-interpretative,
+and analytic results are public while none is a premise of another.
+`EPR.Audit.EPRLogic` imports the two finite public example modules and
 `Mathlib.Tactic`; no public module imports this audit leaf. Its proposition-
 valued sentinels independently reject actuality, the reality criterion, the
 value bridge, counterfactual aggregation, and the completeness representation
@@ -431,8 +432,9 @@ sign sentinels, a delta position value, the affine-line action, the scaled
 relative-position relation, the total-momentum-zero relation, and a concrete
 commutator scale.
 `EPR.Audit.ContinuumAxioms` checks the complete Stage 9 surface. Both audit
-modules remain private, and the analytic module is intentionally not imported
-by the finite public root pending the Stage 10 API audit.
+modules remain opt-in diagnostics. Stage 10 re-exports the analytic module
+from the `EPR` umbrella, but no finite quantum, example, or logic module imports
+it, and it imports no project finite or interpretative module.
 
 The pinned tree also contains generic `LinearPMap` infrastructure and dense
 Schwartz-to-`L²` embeddings, but it has no packaged concrete self-adjoint
@@ -455,6 +457,42 @@ Gaussian Fourier/integrability results could support a later normalized
 regularization, but no bundled Gaussian Schwartz map or ready `L²` EPR error
 bound was found; any such regularization would produce approximate rather than
 exact branch semantics.
+
+## Stage 10 public API and whole-library trust audit
+
+`EPR` is the stable umbrella import. It documents and re-exports three
+independent completed branches: finite operational no-signalling, the
+conditional Bell/Pauli incompleteness argument, and the idealized continuum
+operator calculations. Narrow leaf imports remain supported for users who do
+not want the analytic dependency. No public module imports `EPR.Audit`.
+
+The opt-in diagnostic surface is split by purpose:
+
+- `EPR.Audit.PublicAPI` imports only `EPR` and checks representative structures,
+  definitions, and main theorems from every public layer. It is the sentinel
+  that the advertised umbrella surface is actually reachable.
+- The eight stage-specific `*Axioms` leaves retain their detailed declaration
+  checks. `EPR.Audit.PublicTheoremAxioms` adds the complementary public theorem
+  declarations not already printed by those leaves, so the combined audit
+  prints all 203 public theorem declarations in the 14 public source files.
+- `EPR.Audit.FinalAxioms` imports the public surface probe, the complementary
+  theorem audit, both non-axiom diagnostic modules (`ApiProbe` and
+  `QuantumCore`), and all eight stage-specific axiom leaves. It is the one
+  warning-as-error target for the full diagnostic and trusted-axiom boundary.
+
+The proposition-valued `EPR.Audit.EPRLogic` models now cover both sides of the
+interpretative boundary. `acceptingInterpretation` witnesses that all semantic
+relations can be instantiated coherently, and
+`toy_epr_incompleteness_via_explicit_premises` exercises the abstract theorem
+with every premise supplied explicitly. Independent models still reject
+actuality, the reality criterion, the value bridge, counterfactual aggregation,
+and the completeness representation bridge. These examples establish logical
+satisfiability or rejectability only; they make no claim about nature.
+
+Every printed public theorem and principal diagnostic result has only Lean or
+mathlib's standard trusted footprint (`propext`, `Classical.choice`, and/or
+`Quot.sound`, with some declarations axiom-free). No project axiom is added by
+the aggregate audit, and audit modules remain outside the public import chain.
 
 ## Checked representation choice
 
@@ -528,21 +566,31 @@ Mathlib.Logic.Basic
 EPR.Logic.EPR + EPR.Examples.PauliIncompatibility
   -> EPR.Examples.BellEPR
 
-EPR.Examples.BellNoSignalling + EPR.Examples.BellEPR
-  -> EPR (public root)
-
 Mathlib.Analysis.Distribution.TemperedDistribution
   -> EPR.Continuum.Idealized
        -> EPR.Audit.Continuum
             -> EPR.Audit.ContinuumAxioms
 
+EPR.Examples.BellNoSignalling + EPR.Examples.BellEPR
+  + EPR.Continuum.Idealized
+  -> EPR (public root)
+
 EPR.Examples.BellEPR + EPR.Examples.BellNoSignalling + Mathlib.Tactic
   -> EPR.Audit.EPRLogic
        -> EPR.Audit.EPRLogicAxioms
 
-All `EPR.Audit.*` modules remain diagnostic leaves outside the public root.
-The continuum branch is also independent and is not re-exported by `EPR`
-during Stage 9; Stage 10 owns the final thin-public-API decision.
+EPR
+  -> EPR.Audit.PublicAPI
+  -> EPR.Audit.PublicTheoremAxioms
+
+EPR.Audit.PublicAPI + EPR.Audit.PublicTheoremAxioms
+  + EPR.Audit.ApiProbe + EPR.Audit.QuantumCore
+  + all eight stage-specific axiom leaves
+  -> EPR.Audit.FinalAxioms
+
+All `EPR.Audit.*` modules remain opt-in diagnostic leaves outside the public
+root. Re-exporting the continuum leaf from the umbrella does not introduce a
+finite-to-continuum or continuum-to-finite dependency.
 ```
 
 The import graph therefore enforces the semantic boundary: the lightweight

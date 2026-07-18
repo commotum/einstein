@@ -39,7 +39,10 @@ yet been formalized.
 - **Correction:** Even finite-dimensional Hermitian observables can fail to
   commute while sharing a nonzero eigenvector and a jointly sharp density
   state. The required quantum-state obstruction is no jointly sharp state for
-  the selected pair, not bare noncommutation.
+  the selected pair, not bare noncommutation. The nearby claim that measuring
+  one quantity necessarily disturbs the state also depends on a specified
+  measurement instrument and operator domain; it is not a theorem of
+  noncommutation alone.
 - **Formal consequence:** Keep `Noncommutes`, `HasCommonEigenvector`, and
   `HasJointSharpState` separate. For Pauli `X` and `Z`, establish
   noncommutation separately, prove no common nonzero eigenvector, derive
@@ -52,14 +55,18 @@ yet been formalized.
   coexist with both a common eigenvector and a jointly sharp rank-one density.
   Stage 8's `bellPhiPlus_noJointRepresentation_zx` invokes
   `pauliXZ_noJointSharpState`, rather than `pauliXZ_noncommutes`, for the final
-  Bell/Pauli contradiction.
+  Bell/Pauli contradiction. No universal measurement-disturbance theorem is
+  claimed by this project.
 
 ## C-004: Absence of interaction versus ontic no-disturbance
 
 - **Paper:** Once the systems cease interacting, the paper identifies this
   with no real change in II caused by operations on I.
 - **Correction:** No current interaction, operational no-signalling, and
-  invariance of an underlying physical reality are distinct statements.
+  invariance of an underlying physical reality are distinct statements. The
+  project does not model the paper's antecedent that the interaction has
+  ceased: it has no time, Hamiltonian, interaction, or spacetime-separation
+  relation.
 - **Formal consequence:** For a complete local projective Lüders measurement,
   sum the raw outcome-weighted branches and compare B's unconditioned reduced
   state, not a selected conditional state. Take ontic no-disturbance only as an
@@ -69,7 +76,8 @@ yet been formalized.
   invariance generically, and `bellPhiPlus_operationalNoSignalling` checks both
   Bell/Pauli source settings. Stage 8 represents ontic stability separately as
   `NoOnticDisturbance`; it remains a hypothesis, not a theorem derived from
-  either operational result. The audit theorem
+  either operational result or from an encoded separation condition. The
+  audit theorem
   `operational_noSignalling_with_ontic_change` conjoins the checked Bell
   operational theorem with `¬ NoOnticDisturbance` for an explicitly changed
   toy Boolean reality, demonstrating logical coexistence rather than making an
@@ -136,8 +144,11 @@ yet been formalized.
   `eprCorrelation_relativePosition` proves
   `(Q₂-Q₁)Ψ = x₀Ψ`, while `eprCorrelation_jointMomentumSum` proves
   `(P₁+P₂)Ψ = 0`. The raw oscillatory `p`-integral-to-`hδ` equality remains an
-  explicit scaled partial-Fourier/change-of-variables obligation. Continuous
-  conditional-measurement semantics separately require a self-adjoint/
+  explicit scaled partial-Fourier/change-of-variables obligation. Likewise,
+  `delta_position_eigenrelation` proves only the generic delta multiplier
+  relation: no declaration proves Eq. (15)'s coefficient expansion or the
+  translated/scaled Eq. (16) coefficient-extraction and eigenvalue chain.
+  Continuous conditional-measurement semantics separately require a self-adjoint/
   spectral-PVM and measurable-conditioning layer absent from pinned mathlib.
 
 ## C-008: Commutator domain
@@ -160,12 +171,17 @@ yet been formalized.
   explicit normalization factor.
 - **Correction:** For a normalized joint state expanded against an orthonormal
   basis on system I, the squared norm of a selected coefficient is its outcome
-  probability and need not equal one.
+  probability and need not equal one. The library's finite PVM/Lüders model is
+  a modern role analogue, not a literal transcription of the paper's
+  continuous nondegenerate eigenfunction notation; a degenerate projector can
+  select a subspace rather than a unique coefficient vector.
 - **Formal consequence:** Retain the coefficient as a raw subnormalized
   relative branch, require strictly positive branch probability, and only then
   form the normalized conditional state.
 - **Status:** Checked generically in Stage 4 and concretely for all four
-  probability-`1/2` Bell/Pauli branches in Stage 5.
+  probability-`1/2` Bell/Pauli branches in Stage 5. The generic API permits
+  degenerate projectors and normalizes the selected density branch only after
+  a proof of strictly positive probability.
 
 ## C-010: Conditional certainty is not actuality or value possession
 
@@ -176,6 +192,8 @@ yet been formalized.
 - **Correction:** A positive-probability branch with target conditional
   probability one does not assert that the source outcome occurred, that an
   element of reality exists, or that the target possesses the predicted value.
+  Because the paper's reality criterion is sufficient only, failure of a
+  certainty/eigenstate test also cannot establish `¬ ElementOfReality`.
 - **Formal consequence:** Keep `OutcomeObtained`, `CertainPrediction`,
   `ElementOfReality`, and `PossessesValue` distinct. `RealityCriterion`
   supplies only the element-of-reality implication from actuality, certainty,
@@ -186,7 +204,8 @@ yet been formalized.
   `bellPhiPlusSteeringScenario`, while `bellCertainPrediction` still asserts no
   actuality. The audit theorems `certainty_does_not_assert_outcome`,
   `bell_prediction_does_not_assert_actuality`, `realityCriterion_rejectable`,
-  and `realityValueBridge_rejectable` witness the separations.
+  and `realityValueBridge_rejectable` witness the separations. No converse or
+  negative reality criterion is present.
 
 ## C-011: Generalized exact correlation is not a Born-probability branch
 
@@ -208,3 +227,50 @@ yet been formalized.
   conditioning, or reality declaration. The missing spectral and conditional
   infrastructure is recorded in `docs/Dependencies.md` and
   `goal-1/9-CONTINUUM.md` rather than postulated.
+
+## C-012: A joint state determines unconditioned subsystem states
+
+- **Paper:** Printed p. 779 says that after the systems interact and separate,
+  the joint wave function can be calculated but the state of either subsystem
+  cannot be calculated until a later measurement and reduction.
+- **Correction:** In the modern density-operator model, a known joint state
+  determines both unconditioned reduced states by partial trace. A particular
+  selected conditional state additionally requires a measurement choice, an
+  outcome, and positive branch probability.
+- **Formal consequence:** Keep `reducedA` and `reducedB` distinct from
+  `localAConditionalBState`; do not make a source outcome a prerequisite for an
+  unconditioned marginal.
+- **Status:** Checked generically in Stage 3 and Stage 4. The project takes the
+  post-interaction bipartite state as input and does not formalize Schrödinger
+  preparation dynamics, interaction cessation, or wave-function collapse.
+
+## C-013: The Bell/Pauli model is a finite role analogue
+
+- **Paper:** Eqs. (7)–(17) use continuous position and momentum eigenfunction
+  expansions and generalized coefficient wave functions.
+- **Correction:** The reusable Bell/Pauli example is not a discretization
+  theorem for those equations. It supplies the same logical roles—alternative
+  local settings, positive branches, probability-one remote predictions, and
+  incompatible target observables—in a normalized finite model.
+- **Formal consequence:** Do not infer the source's continuous expansions from
+  `bellPhiPlus_z_expansion`, `bellPhiPlus_x_expansion`, or the Bell steering
+  theorems. Keep the finite and continuum dependency branches independent.
+- **Status:** The two concrete vector identities and all four finite branches
+  are checked in Stage 5. The continuous coefficient-extraction obligations
+  remain open in Stage 9 and are listed in C-007 and C-011.
+
+## C-014: Wave functions and density states have different identity rules
+
+- **Paper:** A wave function is treated as the state and different conditional
+  wave functions are compared as descriptions of one physical reality.
+- **Correction:** A normalized pure vector is only a representative up to
+  global phase, while density operators also represent mixed and reduced
+  states. Equality of vector representatives, equality of density operators,
+  and identity of an underlying ontic reality are different judgments.
+- **Formal consequence:** Use `PureState.toDensity` for phase-insensitive
+  finite predictions and keep `SamePriorReality`/`SamePostReality` in the
+  interpretative layer rather than identifying them with quantum-state
+  equality.
+- **Status:** The finite quantum API is density-based for probabilities,
+  reductions, conditioning, and sharpness. The ontic equalities remain
+  explicit Stage 8 premises; no wave-function ontology is asserted.
