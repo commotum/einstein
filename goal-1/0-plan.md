@@ -11,7 +11,8 @@
   `goal-1/3-BIPARTITE.md`.
 - Stage `4-CONDITIONALS` completed on 2026-07-17; its implementation and audit
   evidence are recorded in `goal-1/4-CONDITIONALS.md`.
-- Stage `5-STEERING` is the first incomplete stage.
+- Stage `5-STEERING` is in progress; its working record is
+  `goal-1/5-STEERING.md`.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
   and checked projective-conditioning layers. No Bell/Pauli steering package,
   philosophical premise, or target EPR proof exists yet.
@@ -142,6 +143,22 @@ not an ordinary Hilbert-space-vector example.
   Bell/Pauli scenario.
 - Stage 4's axiom audit reports only `propext`, `Classical.choice`, and
   `Quot.sound` for the checked generic declarations and executable witnesses.
+- At Stage 5 start, the worktree is clean; `lake build
+  EPR.Quantum.Conditional` and full `lake build` succeed with 2665 and 2667
+  jobs. Proof-hole and declaration-level project-axiom scans have no matches.
+- The image-only source facsimile was reinspected directly at pages 779–780.
+  Page 779 distinguishes the two expansions in Eqs. (7)–(8) and their selected
+  coefficient wave functions; page 780 states the later probability-one
+  predictions. The intervening “no real change” and “same reality” claims are
+  interpretative premises and are outside the steering example.
+- A pinned mathlib search found no Pauli-matrix, Bell-state, or quantum
+  steering abstraction. Stage 5 will therefore add explicit example-owned
+  qubit data over the checked generic APIs rather than alter their semantics.
+- The selected finite convention is provisionally
+  `|Φ⁺⟩ = (|00⟩ + |11⟩)/√2`, subsystem order `A × B`, Pauli `Z`
+  outcomes `|0⟩/|1⟩` with values `+1/-1`, and Pauli `X` outcomes
+  `|+⟩/|-⟩` with values `+1/-1`. Every one of the four A-side branches must
+  be checked independently or by an exhaustive quantified theorem.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -468,6 +485,9 @@ them distinct from nonselective post-measurement and reduced states.
 - Focused builds, edge-case tests, scans, and diff check pass.
 
 ### 5-STEERING
+
+**Status:** In progress on 2026-07-17. See `goal-1/5-STEERING.md` for the
+source audit, conventions, proof obligations, and verification plan.
 
 #### Big Picture Objective
 
