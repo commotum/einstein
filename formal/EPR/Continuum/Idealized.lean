@@ -281,6 +281,67 @@ theorem affineLineDelta_apply (x₀ : ℝ) (f : 𝓢(ℝ × ℝ, ℂ)) :
   funext t
   simp [affineLineEmbedding, diagonalEmbedding]
 
+/-- The integral of a unit directional derivative of a Schwartz function on
+the real line vanishes. The proof reads this integral as the Fourier transform
+at frequency zero. -/
+theorem integral_lineDeriv_schwartz_eq_zero (g : 𝓢(ℝ, ℂ)) :
+    ∫ t : ℝ, (∂_{(1 : ℝ)} g) t = 0 := by
+  have h := congrArg (fun q : 𝓢(ℝ, ℂ) => q 0)
+    (SchwartzMap.fourier_lineDerivOp_eq g (1 : ℝ))
+  rw [SchwartzMap.fourier_coe, Real.fourier_eq'] at h
+  have hgrowth : Function.HasTemperateGrowth
+      (fun x : ℝ => inner ℝ x (1 : ℝ)) := by
+    fun_prop
+  rw [smul_apply, SchwartzMap.smulLeftCLM_apply_apply hgrowth] at h
+  simpa using h
+
+/-- Differentiating a test function after restriction to the affine EPR line
+is the diagonal directional derivative of the original test function. -/
+theorem affineLineRestriction_lineDeriv (x₀ : ℝ)
+    (f : 𝓢(ℝ × ℝ, ℂ)) (t : ℝ) :
+    (∂_{(1 : ℝ)} (affineLineRestriction x₀ f)) t =
+      (∂_{((1 : ℝ), (1 : ℝ))} f) (t, t + x₀) := by
+  rw [SchwartzMap.lineDerivOp_apply, SchwartzMap.lineDerivOp_apply]
+  rw [(affineLineRestriction x₀ f).differentiableAt.lineDeriv_eq_fderiv,
+    f.differentiableAt.lineDeriv_eq_fderiv]
+  change deriv (affineLineRestriction x₀ f : ℝ → ℂ) t =
+    fderiv ℝ (f : (ℝ × ℝ) → ℂ) (t, t + x₀) (1, 1)
+  have hembed : HasDerivAt (fun s : ℝ => (s, s + x₀))
+      ((1 : ℝ), (1 : ℝ)) t :=
+    (hasDerivAt_id t).prodMk ((hasDerivAt_id t).add_const x₀)
+  have hcomp := (f.hasFDerivAt (t, t + x₀)).comp_hasDerivAt t hembed
+  have hfun : (affineLineRestriction x₀ f : ℝ → ℂ) =
+      fun s : ℝ => f (affineLineEmbedding x₀ s) := by
+    rfl
+  rw [hfun]
+  simpa [Function.comp_def, affineLineEmbedding, diagonalEmbedding] using
+    hcomp.deriv
+
+/-- The affine-line delta is invariant along its tangent direction. This is
+the distributional derivative relation underlying exact total-momentum zero. -/
+theorem affineLineDelta_diagonalDerivative (x₀ : ℝ) :
+    ∂_{((1 : ℝ), (1 : ℝ))} (affineLineDelta x₀) = 0 := by
+  ext f
+  rw [TemperedDistribution.lineDerivOp_apply_apply]
+  change affineLineDelta x₀ (-∂_{((1 : ℝ), (1 : ℝ))} f) = 0
+  rw [affineLineDelta_apply]
+  simp only [neg_apply, integral_neg]
+  have hi :
+      (∫ t : ℝ, (∂_{((1 : ℝ), (1 : ℝ))} f) (t, t + x₀)) = 0 := by
+    rw [← integral_lineDeriv_schwartz_eq_zero
+      (affineLineRestriction x₀ f)]
+    congr 1
+    funext t
+    exact (affineLineRestriction_lineDeriv x₀ f t).symm
+  rw [hi, neg_zero]
+
+/-- `P₁ + P₂` on two-variable tempered distributions, expressed as the
+paper-scaled derivative in the diagonal direction. -/
+def jointMomentumSum (h : ℝ) :
+    𝓢'(ℝ × ℝ, ℂ) →L[ℂ] 𝓢'(ℝ × ℝ, ℂ) :=
+  ((h : ℂ) / (2 * Real.pi * Complex.I)) •
+    LineDeriv.lineDerivOpCLM ℂ (𝓢'(ℝ × ℝ, ℂ)) ((1 : ℝ), (1 : ℝ))
+
 /-- The relative-position coordinate `x₂ - x₁` as a continuous real-linear
 map into `ℂ`. -/
 def relativePosition : ℝ × ℝ →L[ℝ] ℂ :=
@@ -340,6 +401,14 @@ theorem eprCorrelation_relativePosition (h x₀ : ℝ) :
   rw [eprCorrelation, map_smul, affineLineDelta_relativePosition]
   simp only [smul_smul]
   rw [mul_comm]
+
+/-- The paper-scaled affine-line correlation has exact total momentum zero:
+`(P₁ + P₂) Ψ = 0` as a tempered-distribution equality. -/
+theorem eprCorrelation_jointMomentumSum (h x₀ : ℝ) :
+    jointMomentumSum h (eprCorrelation h x₀) = 0 := by
+  rw [jointMomentumSum, smul_apply, eprCorrelation, map_smul,
+    LineDeriv.lineDerivOpCLM_apply, affineLineDelta_diagonalDerivative,
+    smul_zero, smul_zero]
 
 end
 
