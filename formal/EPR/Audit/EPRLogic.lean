@@ -154,14 +154,14 @@ that its source outcome was actually obtained. -/
 theorem bell_prediction_does_not_assert_actuality :
     BellPerfectPrediction .z 0 ∧
       ¬ OutcomeObtained (bellEPRInterpretation noOutcomeBellSemantics)
-        (bellPhysicalSituation .z 0 () ()) := by
+        (bellPhiPlusPhysicalSituation .z 0 () ()) := by
   exact ⟨bellPhiPlus_perfectPrediction_fromScenario .z 0, by
     simp [OutcomeObtained, bellEPRInterpretation, noOutcomeBellSemantics]⟩
 
 /-- A toy ontic labeling in which the post-context B reality differs from its
 prior reality. -/
 def onticallyChangedBellSituation : PhysicalSituation BellContext Bool :=
-  bellPhysicalSituation .z 0 false true
+  bellPhiPlusPhysicalSituation .z 0 false true
 
 /-- The checked Bell operational no-signalling theorem and denial of ontic
 no-disturbance are logically compatible. This is a concrete non-implication
@@ -172,7 +172,7 @@ theorem operational_noSignalling_with_ontic_change :
   constructor
   · exact bellPhiPlus_operationalNoSignalling .z
   · simp [NoOnticDisturbance, onticallyChangedBellSituation,
-      bellPhysicalSituation]
+      bellPhiPlusPhysicalSituation]
 
 /-- The Pauli obstruction excludes the Bell joint-representation meaning for
 every density description and all four pairs of selected outcomes. -/

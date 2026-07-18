@@ -90,7 +90,7 @@ def bellEPRInterpretation {Reality : Type*}
 
 /-- A context-indexed Bell physical situation with explicit prior and post
 ontic realities. -/
-def bellPhysicalSituation {Reality : Type*}
+def bellPhiPlusPhysicalSituation {Reality : Type*}
     (s : Setting) (w : Outcome) (prior post : Reality) :
     PhysicalSituation BellContext Reality where
   context := ⟨s, w⟩
@@ -103,25 +103,25 @@ theorem bellPhiPlus_certainPrediction
     {Reality : Type*} (S : BellInterpretiveSemantics Reality)
     (s : Setting) (w : Outcome) (prior post : Reality) :
     CertainPrediction (bellEPRInterpretation S)
-      (bellPhysicalSituation s w prior post) s w :=
+      (bellPhiPlusPhysicalSituation s w prior post) s w :=
   ⟨rfl, rfl, bellPhiPlus_perfectPrediction_fromScenario s w⟩
 
 /-- The selected Z and X branches are genuinely alternative contexts. -/
 theorem bell_z_x_alternative
     {Reality : Type*} (zOutcome xOutcome : Outcome)
-    (prior postZ postX : Reality) :
+    (priorZ postZ priorX postX : Reality) :
     AlternativeContexts
-      (bellPhysicalSituation .z zOutcome prior postZ)
-      (bellPhysicalSituation .x xOutcome prior postX) := by
-  simp [AlternativeContexts, bellPhysicalSituation]
+      (bellPhiPlusPhysicalSituation .z zOutcome priorZ postZ)
+      (bellPhiPlusPhysicalSituation .x xOutcome priorX postX) := by
+  simp [AlternativeContexts, bellPhiPlusPhysicalSituation]
 
 /-- Both alternative Bell contexts start from the same supplied reality. -/
 theorem bell_z_x_samePrior
     {Reality : Type*} (zOutcome xOutcome : Outcome)
     (prior postZ postX : Reality) :
     SamePriorReality
-      (bellPhysicalSituation .z zOutcome prior postZ)
-      (bellPhysicalSituation .x xOutcome prior postX) :=
+      (bellPhiPlusPhysicalSituation .z zOutcome prior postZ)
+      (bellPhiPlusPhysicalSituation .x xOutcome prior postX) :=
   rfl
 
 /-- No density description can jointly represent the exact values associated
@@ -146,30 +146,34 @@ and common prior reality only under every named interpretative premise. -/
 theorem bellPhiPlus_epr_incompleteness
     {Reality : Type*} (S : BellInterpretiveSemantics Reality)
     (description : DensityState QubitIndex)
-    (zOutcome xOutcome : Outcome) (prior postZ postX : Reality)
+    (zOutcome xOutcome : Outcome)
+    (priorZ postZ priorX postX : Reality)
+    (hPrior : SamePriorReality
+      (bellPhiPlusPhysicalSituation .z zOutcome priorZ postZ)
+      (bellPhiPlusPhysicalSituation .x xOutcome priorX postX))
     (hOutcomeZ : OutcomeObtained (bellEPRInterpretation S)
-      (bellPhysicalSituation .z zOutcome prior postZ))
+      (bellPhiPlusPhysicalSituation .z zOutcome priorZ postZ))
     (hOutcomeX : OutcomeObtained (bellEPRInterpretation S)
-      (bellPhysicalSituation .x xOutcome prior postX))
+      (bellPhiPlusPhysicalSituation .x xOutcome priorX postX))
     (hNoDisturbanceZ : NoOnticDisturbance
-      (bellPhysicalSituation .z zOutcome prior postZ))
+      (bellPhiPlusPhysicalSituation .z zOutcome priorZ postZ))
     (hNoDisturbanceX : NoOnticDisturbance
-      (bellPhysicalSituation .x xOutcome prior postX))
+      (bellPhiPlusPhysicalSituation .x xOutcome priorX postX))
     (hCriterion : RealityCriterion (bellEPRInterpretation S))
     (hValueBridge : RealityValueBridge (bellEPRInterpretation S))
     (hCounterfactual : CounterfactualStability (bellEPRInterpretation S))
     (hRepresentation :
       CompletenessRepresentationBridge (bellEPRInterpretation S)) :
-    ¬ CompleteFor (bellEPRInterpretation S) description prior := by
-  have hPostZ : postZ = prior := hNoDisturbanceZ
+    ¬ CompleteFor (bellEPRInterpretation S) description priorZ := by
+  have hPostZ : postZ = priorZ := hNoDisturbanceZ
   have hIncomplete :
       ¬ CompleteFor (bellEPRInterpretation S) description postZ :=
     epr_incompleteness
-      (bell_z_x_alternative zOutcome xOutcome prior postZ postX)
-      (bell_z_x_samePrior zOutcome xOutcome prior postZ postX)
+      (bell_z_x_alternative zOutcome xOutcome priorZ postZ priorX postX)
+      hPrior
       hOutcomeZ hOutcomeX
-      (bellPhiPlus_certainPrediction S .z zOutcome prior postZ)
-      (bellPhiPlus_certainPrediction S .x xOutcome prior postX)
+      (bellPhiPlus_certainPrediction S .z zOutcome priorZ postZ)
+      (bellPhiPlus_certainPrediction S .x xOutcome priorX postX)
       hNoDisturbanceZ hNoDisturbanceX hCriterion hValueBridge
       hCounterfactual hRepresentation
       (bellPhiPlus_noJointRepresentation_zx S description

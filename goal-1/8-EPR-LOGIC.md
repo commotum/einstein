@@ -60,6 +60,10 @@
   type and user-supplied element/counterpart predicates. Its mathematical
   certainty and incompatibility facts must come from the already checked Bell
   and Pauli modules.
+- The final Bell theorem must take the Z-context and X-context prior realities
+  separately and require their equality through `SamePriorReality`; a shared
+  constructor argument is useful as a convenience theorem but must not hide
+  the same-reality premise in the main signature.
 - Stage 7 operational no-signalling is true for the model but does not prove
   Stage 8 ontic no-disturbance. The logic proof path must make that separation
   visible in imports, hypotheses, and source scans.

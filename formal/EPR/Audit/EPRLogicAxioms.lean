@@ -77,7 +77,7 @@ namespace EPR.Audit.EPRLogicAxioms
 #check EPR.Examples.BellEPR.BellInterpretiveSemantics
 #check EPR.Examples.BellEPR.bellJointlyRepresents
 #check EPR.Examples.BellEPR.bellEPRInterpretation
-#check EPR.Examples.BellEPR.bellPhysicalSituation
+#check EPR.Examples.BellEPR.bellPhiPlusPhysicalSituation
 #check EPR.Examples.BellEPR.bellPhiPlus_certainPrediction
 #check EPR.Examples.BellEPR.bell_z_x_alternative
 #check EPR.Examples.BellEPR.bell_z_x_samePrior
@@ -91,7 +91,7 @@ namespace EPR.Audit.EPRLogicAxioms
 #print axioms EPR.Examples.BellEPR.BellInterpretiveSemantics
 #print axioms EPR.Examples.BellEPR.bellJointlyRepresents
 #print axioms EPR.Examples.BellEPR.bellEPRInterpretation
-#print axioms EPR.Examples.BellEPR.bellPhysicalSituation
+#print axioms EPR.Examples.BellEPR.bellPhiPlusPhysicalSituation
 #print axioms EPR.Examples.BellEPR.bellPhiPlus_certainPrediction
 #print axioms EPR.Examples.BellEPR.bell_z_x_alternative
 #print axioms EPR.Examples.BellEPR.bell_z_x_samePrior
