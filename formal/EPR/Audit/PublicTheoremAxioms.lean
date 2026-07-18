@@ -101,6 +101,7 @@ namespace EPR.Audit.PublicTheoremAxioms
 
 /-! ## Generic steering structures -/
 
+#print axioms EPR.Examples.BellSteering.Setting
 #print axioms EPR.Quantum.PerfectConditionalPrediction
 #print axioms EPR.Quantum.SteeringScenario
 

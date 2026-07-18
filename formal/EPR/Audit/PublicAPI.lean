@@ -40,6 +40,7 @@ namespace EPR.Audit.PublicAPI
 
 /-! ## Finite example, incompatibility, and operational API -/
 
+#check EPR.Examples.BellSteering.Setting
 #check EPR.Examples.BellSteering.bellPhiPlus
 #check EPR.Examples.BellSteering.bellPhiPlus_probability
 #check EPR.Examples.BellSteering.bellPhiPlus_conditionalB
