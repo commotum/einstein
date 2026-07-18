@@ -91,9 +91,17 @@ def xKet (w : Outcome) : QubitKet :=
 def xState (w : Outcome) : PureState QubitIndex where
   ket := xKet w
   normalized := by
-    fin_cases w <;>
-      simp [dotProduct, Fin.sum_univ_two, xKet, star_invSqrtTwo,
-        invSqrtTwo_sq]
+    have hstar : (starRingEnd ℂ) invSqrtTwo = invSqrtTwo := by
+      simpa only [starRingEnd_apply] using star_invSqrtTwo
+    fin_cases w
+    · change invSqrtTwo * (starRingEnd ℂ) invSqrtTwo +
+        invSqrtTwo * (starRingEnd ℂ) invSqrtTwo = 1
+      rw [hstar, invSqrtTwo_sq]
+      norm_num
+    · change invSqrtTwo * (starRingEnd ℂ) invSqrtTwo +
+        (-invSqrtTwo) * (starRingEnd ℂ) (-invSqrtTwo) = 1
+      rw [map_neg, hstar, neg_mul_neg, invSqrtTwo_sq]
+      norm_num
 
 /-- The rank-one orthogonal projection associated with a qubit pure state. -/
 def stateProjection (psi : PureState QubitIndex) : Projection QubitIndex where
@@ -193,20 +201,18 @@ def pauliZMeasurement : ProjectiveMeasurement Outcome QubitIndex where
     · ext i j
       fin_cases i <;> fin_cases j <;>
         simp [zProjection, stateProjection, zState, zKet,
-          PureState.toDensity_matrix_apply, Matrix.mul_apply,
-          Matrix.vecMulVec_apply, Fin.sum_univ_two]
+          Matrix.mul_apply, Matrix.vecMulVec_apply, Fin.sum_univ_two]
     · ext i j
       fin_cases i <;> fin_cases j <;>
         simp [zProjection, stateProjection, zState, zKet,
-          PureState.toDensity_matrix_apply, Matrix.mul_apply,
-          Matrix.vecMulVec_apply, Fin.sum_univ_two]
+          Matrix.mul_apply, Matrix.vecMulVec_apply, Fin.sum_univ_two]
     · exact (hwv rfl).elim
   complete := by
     rw [Fin.sum_univ_two]
     ext i j
     fin_cases i <;> fin_cases j <;>
       simp [zProjection, stateProjection, zState, zKet,
-        PureState.toDensity_matrix_apply, Matrix.vecMulVec_apply]
+        Matrix.vecMulVec_apply]
 
 /-- The complete Pauli-X-basis projective measurement. -/
 def pauliXMeasurement : ProjectiveMeasurement Outcome QubitIndex where
