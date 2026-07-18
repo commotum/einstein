@@ -246,6 +246,31 @@ distributional extension, not an ordinary Hilbert-space-vector example.
   exists in the current project or pinned mathlib tree. Stage 8 therefore adds
   a lightweight project-owned logical interface rather than treating any
   philosophical predicate as inherited physics.
+- `EPR.Logic.EPR` now provides a theory-neutral, context- and reality-indexed
+  vocabulary. `OutcomeObtained`, `CertainPrediction`, `ElementOfReality`,
+  `PossessesValue`, `SimultaneouslyReal`, `TheoryCounterpart`, and
+  `JointlyRepresents` are distinct predicates. `NoOnticDisturbance` is explicit
+  equality of post- and prior reality; common prior reality plus two such
+  premises yields `SamePostReality` separately from counterfactual aggregation.
+- `RealityCriterion`, `RealityValueBridge`, `CounterfactualStability`, and
+  `CompletenessRepresentationBridge` are propositions passed to theorems, not
+  project axioms or structure fields asserted about nature. `CompleteFor`
+  supplies only quantity counterparts. The axiom-free abstract theorem
+  `epr_incompleteness` consumes every premise and concludes only relative
+  incompleteness of the selected theory description.
+- `EPR.Examples.BellEPR` connects that logic to
+  `bellPhiPlusSteeringScenario.predicts` for arbitrary Z/X outcomes and to
+  `pauliXZ_noJointSharpState` for the exact joint-representation exclusion.
+  Its `bellPhiPlus_epr_incompleteness` theorem takes separate prior/post
+  realities, an explicit `SamePriorReality` premise, two actuality premises,
+  two ontic no-disturbance premises, and all four interpretative bridges. It
+  imports no no-signalling module.
+- `EPR.Audit.EPRLogic` supplies independently rejectable toy interpretations,
+  all-branch/all-outcome checks, and a concrete conjunction of Bell operational
+  no-signalling with denial of toy ontic no-disturbance. Its axiom leaf checks
+  all 58 explicit Stage 8 declarations. The 26 abstract declarations use no
+  axioms; all remaining declarations use at most the established standard
+  `propext`, `Classical.choice`, and `Quot.sound` footprint.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -253,17 +278,17 @@ distributional extension, not an ordinary Hilbert-space-vector example.
 
 | Paper locus | Claim or construction | Formal status and correction target |
 | --- | --- | --- |
-| Sec. 1, completeness condition | Every element of physical reality has a counterpart in a complete theory. | Interpretative criterion. Define a relative `CompleteFor` predicate. The extra bridge from “counterpart” to a theory state making the value available or sharp must not be smuggled in. |
-| Sec. 1, reality criterion | Certainty of prediction without disturbance is sufficient for an element of reality. | Explicit premise, not a theorem of quantum mechanics. Split certainty, disturbance, and reality into separate predicates. |
+| Sec. 1, completeness condition | Every element of physical reality has a counterpart in a complete theory. | `CompleteFor` now expresses exactly this necessary, relative condition through `TheoryCounterpart`. `CompletenessRepresentationBridge` is the separately rejectable extra step from simultaneous reality plus counterparts to exact joint representation. |
+| Sec. 1, reality criterion | Certainty of prediction without disturbance is sufficient for an element of reality. | `RealityCriterion` is an explicit sufficient-only premise with separate `OutcomeObtained`, `CertainPrediction`, and `NoOnticDisturbance` antecedents. `RealityValueBridge` separately connects an element for a quantity to possession of the predicted value. |
 | Eqs. (1)–(5) | Eigenstate-eigenvalue reasoning for momentum and position. | Plane wave in Eq. (2) is not normalized in `L²(ℝ)`. Preserve only as a generalized-state calculation or replace with finite-dimensional sharpness. |
 | Eq. (6) | A plane wave gives a uniform position “probability.” | As written, the state is unnormalizable and the displayed quantity is not a normalized probability distribution on `ℝ`. Record as an idealized relative density, not an ordinary Born probability. |
 | Sec. 1 after Eq. (6) | Noncommuting observables cannot both be precisely known. | Stage 6 separates noncommutation, common nonzero eigenvectors, and jointly sharp density states; proves the stronger exclusion for Pauli `X`/`Z`; and checks a `Fin 3` noncommuting/common-sharp counterexample to the paper's unrestricted wording. |
 | Eqs. (7)–(8) | A bipartite state has different expansions; a selected outcome has an associated conditional state of system II. | Stages 4–5 complete the generic finite Lüders/relative-state API, positive-probability normalization, and the concrete four-branch Bell/Pauli steering analogue. Lüders degeneracy and the nonselective state are explicit modern modeling additions. |
 | Modern finite operational result | Discarding the outcome of a complete projective Lüders measurement on A leaves B's unconditioned marginal and all projective Born statistics unchanged. | Stage 7 proves this directionally and generically, compares both Bell/Pauli settings, and separately checks that selected conditional states and the joint state can change. This is not attributed to the paper as an ontic theorem. |
-| Sec. 2 after Eq. (8) | Operations on I cause no real change in II once interaction ends. | Strong locality/ontic no-disturbance premise. It is not merely absence of a Hamiltonian interaction and is not implied by operational no-signalling. |
-| “two different wave functions … same reality” | Alternative measurements on I steer II to different relative states while II's underlying reality is fixed. | Requires a framework relating operational conditional states, measurement choice, outcomes, and an underlying reality/ontic state. Treat as a conditional interpretative bridge. |
+| Sec. 2 after Eq. (8) | Operations on I cause no real change in II once interaction ends. | `NoOnticDisturbance` represents the strong premise as equality of context-specific post and prior realities. It is a theorem hypothesis, not a consequence of interaction status or operational no-signalling. |
+| “two different wave functions … same reality” | Alternative measurements on I steer II to different relative states while II's underlying reality is fixed. | `PhysicalSituation`, `SamePriorReality`, and `samePostReality_of_noOnticDisturbance` keep the cross-context identity step explicit. `CounterfactualStability` is an additional premise before the context-tagged assignments become `SimultaneouslyReal`. |
 | Eqs. (9)–(18) | Perfect position/momentum correlations and noncommutation. | Eq. (9) is distributional (proportional to a delta constraint), not a normalizable bipartite `L²` vector; plane waves and deltas are generalized eigenvectors. A rigorous version needs a rigged Hilbert space, distributions/spectral measures, or normalized approximants plus limit/error bounds. |
-| Final paragraphs | Alternative local choices imply simultaneous reality of `P` and `Q`; completeness conflicts with the quantum description. | Requires counterfactual aggregation/context-independence in addition to the reality and locality criteria. Formal conclusion must list all premises. The paper leaves existence of a complete replacement theory open. |
+| Final paragraphs | Alternative local choices imply simultaneous reality of `P` and `Q`; completeness conflicts with the quantum description. | `epr_incompleteness` and the outcome-generic `bellPhiPlus_epr_incompleteness` expose actuality, ontic stability, reality/value, same-reality, aggregation, counterpart/readout, and exact no-joint-representation dependencies. They conclude only `¬ CompleteFor` for the supplied quantum description and reality; another complete theory remains open. |
 
 ### Preliminary calculation checks
 
@@ -289,17 +314,21 @@ modal or counterfactual steps. Tentative ingredients are:
 1. **Quantum scenario.** A bipartite preparation, two alternative local
    measurements on subsystem A, two observables `P` and `Q` on subsystem B,
    and outcome-conditioned states.
-2. **Perfect prediction.** In each relevant branch, an outcome on A determines
-   a value for the corresponding B observable with probability one. This is a
-   mathematical/operational fact to prove for the finite example.
+2. **Perfect prediction and actuality.** In each positive branch, an outcome
+   on A determines a value for the corresponding B observable with probability
+   one. `CertainPrediction` records that checked operational fact, while
+   `OutcomeObtained` separately says the source result is actual in the modeled
+   alternative situation.
 3. **Spacelike or post-interaction separation.** A relation specifying when
    the systems are considered separated. Separation alone must not definitionally
    imply ontic locality.
 4. **No-disturbance/locality premise.** The chosen action on A does not change
    the relevant physical reality of B. This is an explicit interpretative
    hypothesis.
-5. **Reality criterion.** Perfect predictability together with no disturbance
-   suffices for an `ElementOfReality` for the predicted quantity and value.
+5. **Reality and value criteria.** The sufficient `RealityCriterion` maps
+   actuality, certainty, and no disturbance to an `ElementOfReality` for the
+   quantity. `RealityValueBridge` separately yields `PossessesValue` for the
+   predicted value.
 6. **Counterfactual stability/aggregation.** Reality assignments inferred in
    alternative A-measurement contexts apply to the same B reality and can be
    combined as simultaneous reality. This premise carries a major part of the
@@ -343,7 +372,7 @@ identified with item 4.
   prove only a conditional incompleteness theorem under named philosophical
   premises.
 
-### Candidate declarations (names provisional)
+### Established declarations
 
 - Mathematical layer: established `BipartiteState`, `ProjectiveMeasurement`,
   `conditionalState`, `localAConditionalBState`, `SharpValue`, and
@@ -351,11 +380,17 @@ identified with item 4.
   `SteeringScenario`, `localANonselectiveState`, and
   `OperationalNoSignallingAtoB`, with generic reduced-B and projective-
   statistic invariance.
-- Interpretative layer: `PhysicalSituation`, `ElementOfReality`,
-  `NoOnticDisturbance`, `SimultaneouslyReal`, `TheoryCounterpart`,
-  `CompleteFor`, `RealityCriterion`, `CounterfactualStability`.
+- Interpretative layer: `PhysicalSituation`, `AlternativeContexts`,
+  `SamePriorReality`, `SamePostReality`, `NoOnticDisturbance`,
+  `OutcomeObtained`, `CertainPrediction`, `ElementOfReality`,
+  `PossessesValue`, `SimultaneouslyReal`, `TheoryCounterpart`,
+  `JointlyRepresents`, `CompleteFor`, `RealityCriterion`,
+  `RealityValueBridge`, `CounterfactualStability`, and
+  `CompletenessRepresentationBridge`.
 - Established example/results layer: `bellPhiPlus`,
-  `bellPhiPlus_perfectPrediction`, and `bellPhiPlusSteeringScenario`.
+  `bellPhiPlus_perfectPrediction`, `bellPhiPlusSteeringScenario`,
+  `BellPerfectPrediction`, and
+  `bellPhiPlus_perfectPrediction_fromScenario`.
 - Established Stage 6 results: `pauliXZ_noncommutes`,
   `pauliXZ_noCommonEigenvector`, `pauliXZ_noJointSharpState`, and
   `pauliXZ_not_jointlySharp`. Established Stage 7 results include
@@ -364,9 +399,12 @@ identified with item 4.
   `bellPhiPlus_operationalNoSignalling`, and
   `bellPhiPlus_sourceSetting_independent`.
 - Logic layer: `reality_of_perfect_prediction`,
+  `possessed_value_of_perfect_prediction`,
   `simultaneous_reality_of_alternative_predictions`,
-  `not_complete_of_no_joint_sharp_representation`, and a top-level
-  `epr_incompleteness` theorem whose hypotheses reveal the full dependency.
+  `theoryCounterpart_of_complete`, `joint_representation_of_complete`,
+  `not_complete_of_no_joint_representation`, and the top-level axiom-free
+  `epr_incompleteness`. The concrete bridge culminates in
+  `bellPhiPlus_epr_incompleteness`.
 
 Names already established in Stages 1–7 follow the checked pinned APIs. Later
 names and representations must continue to follow compiled infrastructure
@@ -379,15 +417,15 @@ finite linear algebra / quantum states
                  |
         bipartite + measurement
           /              \
-conditional states     no-signalling
+conditional states     no-signalling (operational branch)
          |
 Bell steering + Pauli incompatibility
-         |
-abstract reality/locality/completeness interfaces
-         |
-conditional EPR logic theorem
-         |
-traceability, correction log, axiom audit
+         |                         abstract logic interfaces
+         +--------------------------+
+                         |
+               conditional Bell EPR theorem
+                         |
+             traceability + private audits
 
 continuous-variable audit/extension (separate leaf; never a dependency of core)
 ```
@@ -429,12 +467,17 @@ verified example and the abstract logic.
   reduced-state equality, arbitrary B-projective-statistic invariance, and
   source-setting independence. It does not claim arbitrary-channel or ontic
   invariance.
-- **Modal indexing:** determine whether worlds, preparations, measurement
-  contexts, and times are explicit indices. The minimal abstraction must still
-  make “same reality” and alternative choices well typed.
-- **Completeness:** decide whether it is relative to a theory, physical
-  situation, set of quantities, and representation relation. A global Boolean
-  is likely too coarse.
+- **Modal indexing (resolved for Stage 8):** `PhysicalSituation` records a
+  context plus prior/post realities. Elements and possessed values retain their
+  context tags; separate alternative-context, same-prior, no-disturbance,
+  same-post, and aggregation predicates prevent silent cross-world conjunction.
+  An explicit time or spacelike relation remains an optional refinement rather
+  than a hidden meaning of separation.
+- **Completeness (resolved for Stage 8):** `CompleteFor` is relative to one
+  theory description and one reality and maps every context-indexed element to
+  a quantity counterpart. Exact value readout and joint sharpness occur only
+  through `CompletenessRepresentationBridge` and the concrete Bell
+  `JointlyRepresents` interpretation.
 - **Axiom strategy:** put philosophical premises in theorem hypotheses or
   fields of a named assumption bundle. Reserve Lean's trusted axioms for those
   already inherited from Lean/mathlib and audit with `#print axioms`.

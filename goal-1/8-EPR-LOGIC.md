@@ -118,9 +118,11 @@
 - Scan the Bell theorem proof path for
   `OperationalNoSignallingAtoB`, `localA_nonselective_noSignalling`, and
   `bellPhiPlus_operationalNoSignalling`; all must be absent.
-- Confirm the Bell prediction adapter names
-  `bellPhiPlus_perfectPrediction`, and its incompatibility adapter names the
-  checked Pauli no-joint-sharp theorem rather than bare noncommutation.
+- Confirm the Bell prediction adapter projects
+  `bellPhiPlusSteeringScenario.predicts` through
+  `bellPhiPlus_perfectPrediction_fromScenario`, and its incompatibility
+  adapter names the checked Pauli no-joint-sharp theorem rather than bare
+  noncommutation.
 - Add rejection witnesses showing that reality criterion, ontic
   no-disturbance, counterfactual stability, and completeness representation
   are individually consistent to deny; no structure definition may force any

@@ -83,11 +83,13 @@ the positive-source-probability, target-probability-one certificate obtained
 from `bellPhiPlusSteeringScenario`; `bellCertainPrediction` exposes it as
 `CertainPrediction` without asserting `OutcomeObtained`. The theorem
 `bellPhiPlus_epr_incompleteness` is outcome-generic in arbitrary selected
-`zOutcome` and `xOutcome`. It takes both actuality hypotheses and every ontic
-or interpretative bridge explicitly, consumes the bundled four-branch
-scenario for certainty, and uses `bellPhiPlus_noJointRepresentation_zx`, whose
-proof invokes `pauliXZ_noJointSharpState`. Its conclusion concerns one supplied
-density description and the supplied common prior reality.
+`zOutcome` and `xOutcome`. It takes separate Z/X prior and post realities, an
+explicit `SamePriorReality` hypothesis, both actuality hypotheses, and every
+ontic or interpretative bridge. It consumes the bundled four-branch scenario
+for certainty and uses `bellPhiPlus_noJointRepresentation_zx`, whose proof
+invokes `pauliXZ_noJointSharpState`. Its conclusion concerns one supplied
+density description and the supplied Z-side prior reality, with the common
+prior supplied through `SamePriorReality`.
 
 `EPR.Examples.BellEPR` imports no no-signalling module. The operational Bell
 theorems remain in `EPR.Examples.BellNoSignalling`; importing both branches at

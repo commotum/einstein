@@ -41,6 +41,9 @@ yet been formalized.
   concrete Pauli facts. The Hermitian `Fin 3` witness
   `fin3_noncommuting_with_common_sharp_state` checks that noncommutation can
   coexist with both a common eigenvector and a jointly sharp rank-one density.
+  Stage 8's `bellPhiPlus_noJointRepresentation_zx` invokes
+  `pauliXZ_noJointSharpState`, rather than `pauliXZ_noncommutes`, for the final
+  Bell/Pauli contradiction.
 
 ## C-004: Absence of interaction versus ontic no-disturbance
 
@@ -55,30 +58,56 @@ yet been formalized.
 - **Status:** The operational part is checked in Stage 7.
   `localA_nonselective_noSignalling` proves directional A-to-B reduced-state
   invariance generically, and `bellPhiPlus_operationalNoSignalling` checks both
-  Bell/Pauli source settings. The paper's page-779 claim that no interaction
-  entails no real change remains a documented Stage 8 ontic obligation; it is
-  not derived from either theorem.
+  Bell/Pauli source settings. Stage 8 represents ontic stability separately as
+  `NoOnticDisturbance`; it remains a hypothesis, not a theorem derived from
+  either operational result. The audit theorem
+  `operational_noSignalling_with_ontic_change` conjoins the checked Bell
+  operational theorem with `¬ NoOnticDisturbance` for an explicitly changed
+  toy Boolean reality, demonstrating logical coexistence rather than making an
+  empirical ontological claim.
 
-## C-005: Counterfactual aggregation
+## C-005: Same-reality transport and counterfactual aggregation
 
-- **Paper:** Reality inferred after either one of two alternative measurements
-  is treated as simultaneous reality for both quantities.
-- **Correction:** Combining conclusions from incompatible contexts requires a
-  context-independence/counterfactual-stability premise.
-- **Formal consequence:** Name this bridge and expose it in the main theorem's
-  hypotheses.
-- **Status:** Documented; Stage 8 obligation.
+- **Paper:** On printed p. 779, two conditional wave functions are assigned to
+  the “same reality”; on printed p. 780, reality inferred under either remote
+  measurement choice is treated as simultaneous reality for both quantities.
+- **Correction:** Transporting two alternatives to one post-measurement reality
+  and aggregating their context-specific elements and values are different
+  moves. The first requires a common prior reality and ontic stability in both
+  alternatives. The second requires a context-independence/counterfactual-
+  stability premise.
+- **Formal consequence:** Keep `SamePriorReality`, `NoOnticDisturbance`, and
+  the derived `SamePostReality` separate from `CounterfactualStability`. The
+  latter consumes `AlternativeContexts`, same post reality, both
+  `ElementOfReality` judgments, and both `PossessesValue` judgments before it
+  yields `SimultaneouslyReal`.
+- **Status:** Checked conditionally in Stage 8.
+  `samePostReality_of_noOnticDisturbance` performs only the same-reality
+  transport; `simultaneous_reality_of_alternative_predictions` then uses the
+  separately supplied `CounterfactualStability`. The audit theorem
+  `counterfactualStability_rejectable` verifies that aggregation is not forced
+  by the surrounding vocabulary.
 
-## C-006: Completeness-to-predictability bridge
+## C-006: Counterparts do not imply joint exact representation
 
-- **Paper:** If the wave function were complete, real definite values would
-  occur in the description and “would then be predictable.”
-- **Correction:** The bare condition that every element of reality has a
-  counterpart does not, without a definition, imply operational
-  predictability or simultaneous quantum sharpness.
-- **Formal consequence:** Define the representation/readout bridge separately
-  rather than hiding it inside the proof.
-- **Status:** Documented; Stage 8 obligation.
+- **Paper:** Printed p. 777 requires every element of physical reality to have
+  a counterpart in a complete theory. Printed p. 778 then says simultaneous
+  definite values would enter a complete wave-function description and “would
+  then be predictable.”
+- **Correction:** The bare counterpart condition does not, without another
+  premise, imply a readout of definite values, operational predictability, or
+  simultaneous quantum sharpness.
+- **Formal consequence:** `CompleteFor I theory r` yields only
+  `TheoryCounterpart I theory q` from a context-indexed reality element.
+  Supply `CompletenessRepresentationBridge I` separately to turn
+  `SimultaneouslyReal` plus both counterparts into a value-specific
+  `JointlyRepresents` judgment.
+- **Status:** Checked conditionally in Stage 8. `theoryCounterpart_of_complete`
+  exposes the bare completeness consequence, while
+  `joint_representation_of_complete` requires the extra bridge. The audit
+  theorems `completenessRepresentationBridge_rejectable` and
+  `completeness_without_joint_representation` verify that neither joint
+  representation nor its bridge is definitionally hidden in `CompleteFor`.
 
 ## C-007: Eq. (9) is distributional
 
@@ -112,3 +141,24 @@ yet been formalized.
   form the normalized conditional state.
 - **Status:** Checked generically in Stage 4 and concretely for all four
   probability-`1/2` Bell/Pauli branches in Stage 5.
+
+## C-010: Conditional certainty is not actuality or value possession
+
+- **Paper:** Printed p. 777 identifies certainty with probability one; printed
+  p. 779 conditions the relative state on a source result being found; printed
+  p. 780 moves from alternative certainty claims to elements and definite
+  values of reality.
+- **Correction:** A positive-probability branch with target conditional
+  probability one does not assert that the source outcome occurred, that an
+  element of reality exists, or that the target possesses the predicted value.
+- **Formal consequence:** Keep `OutcomeObtained`, `CertainPrediction`,
+  `ElementOfReality`, and `PossessesValue` distinct. `RealityCriterion`
+  supplies only the element-of-reality implication from actuality, certainty,
+  and `NoOnticDisturbance`; `RealityValueBridge` is a further implication to
+  the specific possessed value.
+- **Status:** Checked as explicit Stage 8 boundaries. In the Bell adapter,
+  `BellPerfectPrediction` is supplied for every branch by the bundled
+  `bellPhiPlusSteeringScenario`, while `bellCertainPrediction` still asserts no
+  actuality. The audit theorems `certainty_does_not_assert_outcome`,
+  `bell_prediction_does_not_assert_actuality`, `realityCriterion_rejectable`,
+  and `realityValueBridge_rejectable` witness the separations.
