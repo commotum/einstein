@@ -60,6 +60,27 @@ theorem allInterpretiveBridges_satisfiable :
     ElementOfReality, PossessesValue, SimultaneouslyReal, TheoryCounterpart,
     JointlyRepresents, acceptingInterpretation, propositionInterpretation]
 
+/-- A second proposition-valued interpretation used to exercise the complete
+conditional theorem. Reality and simultaneous-reality relations hold, while
+theory counterparts and joint representation are both declined. -/
+def eprWitnessInterpretation :
+    EPRInterpretation Bool Unit Unit Unit Unit :=
+  propositionInterpretation True True True True True False False
+
+/-- The four interpretative bridges required by `epr_incompleteness` are
+jointly satisfiable in the witness interpretation. The representation bridge
+is vacuous because that toy model declines theory counterparts; this theorem
+tests interface coherence, not physical adequacy. -/
+theorem eprWitnessInterpretiveBridges_satisfiable :
+    RealityCriterion eprWitnessInterpretation ∧
+      RealityValueBridge eprWitnessInterpretation ∧
+      CounterfactualStability eprWitnessInterpretation ∧
+      CompletenessRepresentationBridge eprWitnessInterpretation := by
+  simp [RealityCriterion, RealityValueBridge, CounterfactualStability,
+    CompletenessRepresentationBridge, OutcomeObtained, CertainPrediction,
+    ElementOfReality, PossessesValue, SimultaneouslyReal, TheoryCounterpart,
+    JointlyRepresents, eprWitnessInterpretation, propositionInterpretation]
+
 /-- First toy context, with unchanged unit-valued reality. -/
 def firstSituation : PhysicalSituation Bool Unit where
   context := false
@@ -86,6 +107,24 @@ theorem toy_first_noOnticDisturbance :
 theorem toy_second_noOnticDisturbance :
     NoOnticDisturbance secondSituation :=
   rfl
+
+/-- A checked wiring example that invokes the abstract EPR theorem with every
+premise supplied explicitly. It says only that the deliberately constructed
+proposition model is incomplete for its unit theory description. -/
+theorem toy_epr_incompleteness_via_explicit_premises :
+    ¬ CompleteFor eprWitnessInterpretation () firstSituation.postReality := by
+  rcases eprWitnessInterpretiveBridges_satisfiable with
+    ⟨hCriterion, hValueBridge, hCounterfactual, hRepresentation⟩
+  exact epr_incompleteness
+    (I := eprWitnessInterpretation)
+    (s := firstSituation) (t := secondSituation)
+    (theory := ()) (q₁ := ()) (q₂ := ()) (v₁ := ()) (v₂ := ())
+    toy_alternative_contexts toy_same_prior
+    (by trivial) (by trivial) (by trivial) (by trivial)
+    toy_first_noOnticDisturbance toy_second_noOnticDisturbance
+    hCriterion hValueBridge hCounterfactual hRepresentation
+    (by simp [JointlyRepresents, eprWitnessInterpretation,
+      propositionInterpretation])
 
 /-- Certainty and an obtained outcome are independent predicates. -/
 theorem certainty_does_not_assert_outcome :

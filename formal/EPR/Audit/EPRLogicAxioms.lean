@@ -103,12 +103,15 @@ namespace EPR.Audit.EPRLogicAxioms
 #check EPR.Audit.EPRLogic.propositionInterpretation
 #check EPR.Audit.EPRLogic.acceptingInterpretation
 #check EPR.Audit.EPRLogic.allInterpretiveBridges_satisfiable
+#check EPR.Audit.EPRLogic.eprWitnessInterpretation
+#check EPR.Audit.EPRLogic.eprWitnessInterpretiveBridges_satisfiable
 #check EPR.Audit.EPRLogic.firstSituation
 #check EPR.Audit.EPRLogic.secondSituation
 #check EPR.Audit.EPRLogic.toy_alternative_contexts
 #check EPR.Audit.EPRLogic.toy_same_prior
 #check EPR.Audit.EPRLogic.toy_first_noOnticDisturbance
 #check EPR.Audit.EPRLogic.toy_second_noOnticDisturbance
+#check EPR.Audit.EPRLogic.toy_epr_incompleteness_via_explicit_premises
 #check EPR.Audit.EPRLogic.certainty_does_not_assert_outcome
 #check EPR.Audit.EPRLogic.realityCriterion_rejectable
 #check EPR.Audit.EPRLogic.realityValueBridge_rejectable
@@ -125,12 +128,15 @@ namespace EPR.Audit.EPRLogicAxioms
 #print axioms EPR.Audit.EPRLogic.propositionInterpretation
 #print axioms EPR.Audit.EPRLogic.acceptingInterpretation
 #print axioms EPR.Audit.EPRLogic.allInterpretiveBridges_satisfiable
+#print axioms EPR.Audit.EPRLogic.eprWitnessInterpretation
+#print axioms EPR.Audit.EPRLogic.eprWitnessInterpretiveBridges_satisfiable
 #print axioms EPR.Audit.EPRLogic.firstSituation
 #print axioms EPR.Audit.EPRLogic.secondSituation
 #print axioms EPR.Audit.EPRLogic.toy_alternative_contexts
 #print axioms EPR.Audit.EPRLogic.toy_same_prior
 #print axioms EPR.Audit.EPRLogic.toy_first_noOnticDisturbance
 #print axioms EPR.Audit.EPRLogic.toy_second_noOnticDisturbance
+#print axioms EPR.Audit.EPRLogic.toy_epr_incompleteness_via_explicit_premises
 #print axioms EPR.Audit.EPRLogic.certainty_does_not_assert_outcome
 #print axioms EPR.Audit.EPRLogic.realityCriterion_rejectable
 #print axioms EPR.Audit.EPRLogic.realityValueBridge_rejectable

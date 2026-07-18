@@ -12,7 +12,7 @@ objects are tempered distributions; and position and momentum act on the
 explicit common invariant domain `𝓢(ℝ, ℂ)`.
 
 The module does **not** turn any generalized eigenfunction or distribution into
-a normalized project state. It also does not supply spectral projectors,
+a normalized Hilbert-space state. It also does not supply spectral projectors,
 continuous Born probabilities, conditional measurement states, or an instance
 of the exact EPR reality criterion. In particular, `eprCorrelation` names the
 audited distribution `h δ(x₁ - x₂ + x₀)`; it is not a claim that the paper's

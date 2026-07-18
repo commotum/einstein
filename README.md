@@ -63,6 +63,8 @@ Premise choice is compile-checked rather than hidden in definitions:
 - `EPR.Audit.EPRLogic.allInterpretiveBridges_satisfiable` gives a small
   proposition-valued model in which all four interpretative bridges can be
   supplied; it is not a claim about nature.
+- `toy_epr_incompleteness_via_explicit_premises` invokes the abstract theorem
+  with every premise supplied in a deliberately minimal proposition model.
 - `realityCriterion_rejectable`, `realityValueBridge_rejectable`,
   `counterfactualStability_rejectable`, and
   `completenessRepresentationBridge_rejectable` independently decline them.

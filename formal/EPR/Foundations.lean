@@ -10,8 +10,8 @@ public import Mathlib.LinearAlgebra.Matrix.Trace
 
 This module fixes only basis-indexed carrier types. It deliberately does not
 define physical states, observables, measurements, probabilities, locality, or
-reality claims. Those concepts require explicit invariants and belong to later
-stages.
+reality claims. The invariant-bearing finite definitions live in
+`EPR.Quantum.*`; the interpretative vocabulary lives in `EPR.Logic.EPR`.
 -/
 
 @[expose] public section

@@ -2,6 +2,8 @@ module
 
 import EPR.Audit.PublicAPI
 import EPR.Audit.PublicTheoremAxioms
+import EPR.Audit.ApiProbe
+import EPR.Audit.QuantumCore
 import EPR.Audit.QuantumCoreAxioms
 import EPR.Audit.BipartiteAxioms
 import EPR.Audit.ConditionalAxioms
@@ -14,7 +16,7 @@ import EPR.Audit.ContinuumAxioms
 /-!
 # Whole-library signature and axiom audit
 
-Importing this private leaf compiles the public-root surface sentinel and every
+Importing this opt-in leaf compiles the public-root surface sentinel and every
 stage-specific diagnostic/axiom leaf. The checks below select the principal
 results that justify the final mathematical, operational, logical, correction,
 and continuum claims.
@@ -35,6 +37,7 @@ namespace EPR.Audit.FinalAxioms
 #check EPR.Logic.epr_incompleteness
 #check EPR.Examples.BellEPR.bellPhiPlus_epr_incompleteness
 #check EPR.Audit.EPRLogic.allInterpretiveBridges_satisfiable
+#check EPR.Audit.EPRLogic.toy_epr_incompleteness_via_explicit_premises
 #check EPR.Audit.EPRLogic.operational_noSignalling_with_ontic_change
 #check EPR.Continuum.planeWave_not_memLp_two
 #check EPR.Continuum.momentum_position_commutator
@@ -52,6 +55,7 @@ namespace EPR.Audit.FinalAxioms
 #print axioms EPR.Logic.epr_incompleteness
 #print axioms EPR.Examples.BellEPR.bellPhiPlus_epr_incompleteness
 #print axioms EPR.Audit.EPRLogic.allInterpretiveBridges_satisfiable
+#print axioms EPR.Audit.EPRLogic.toy_epr_incompleteness_via_explicit_premises
 #print axioms EPR.Audit.EPRLogic.operational_noSignalling_with_ontic_change
 #print axioms EPR.Continuum.planeWave_not_memLp_two
 #print axioms EPR.Continuum.momentum_position_commutator

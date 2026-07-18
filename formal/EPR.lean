@@ -12,7 +12,7 @@ The public root exposes three deliberately distinct completed branches:
 * reusable finite-dimensional states, projective conditioning, Bell steering,
   Pauli incompatibility, and directional operational no-signalling;
 * the theory-neutral conditional EPR logic and its Bell/Pauli instantiation;
-* the independent tempered-distribution/Schwartz-space audit of the paper's
+* the independent tempered-distribution/Schwartz-space treatment of the paper's
   idealized position--momentum construction.
 
 The incompleteness theorems assert no philosophical premise unconditionally.
