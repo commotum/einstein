@@ -11,7 +11,12 @@ yet been formalized.
   is not a normalized element of `L²(ℝ)`.
 - **Formal consequence:** Treat it only as a generalized eigenfunction or use
   normalized approximants with explicit error statements.
-- **Status:** Documented; Stage 9 obligation.
+- **Status:** Checked in Stage 9. `planeWave_not_memLp_two` and
+  `planeWave_not_integrable` prove the obstruction on `ℝ`.
+  `generalizedPlaneWave` instead constructs the positive-phase mode as the
+  inverse Fourier transform of a Dirac delta, and
+  `eprMomentumMode_eigenvalue` proves the paper's `p` eigenvalue only in
+  tempered distributions with explicit `h ≠ 0`.
 
 ## C-002: Eq. (6) is not a normalized probability
 
@@ -21,7 +26,10 @@ yet been formalized.
   constant density on all of `ℝ`; the displayed expression is not an ordinary
   Born probability for a normalized state.
 - **Formal consequence:** Do not encode Eq. (6) as a probability distribution.
-- **Status:** Documented; Stage 9 obligation.
+- **Status:** Checked in Stage 9. `unnormalizedIntervalWeight_eq` proves the
+  displayed `b - a` calculation as an oriented interval integral, while
+  `eq6_can_exceed_one` checks the concrete value two on `[0,2]`. The API names
+  this an unnormalized weight and supplies no probability-state coercion.
 
 ## C-003: Noncommutation is not no-common-eigenstate in general
 
@@ -113,11 +121,22 @@ yet been formalized.
 
 - **Paper:** The integral in Eq. (9) is treated as a two-particle wave function.
 - **Correction:** Under the stated Fourier convention it is formally
-  proportional to `h δ(x₁ - x₂ + x₀)` and is not a normalized bipartite
-  `L²(ℝ²)` vector. Eqs. (10)–(16) likewise use generalized eigenvectors.
+  exactly `h δ(x₁ - x₂ + x₀)` for the source's physical assumption `h > 0`
+  and is not a normalized bipartite `L²(ℝ²)` vector. For arbitrary nonzero
+  real `h`, delta scaling would contribute `|h|`. Eqs. (10)–(16) likewise use
+  generalized eigenvectors and distributional expansions.
 - **Formal consequence:** A rigorous literal treatment requires distributions,
   a rigged Hilbert space, or spectral measures and operator-domain control.
-- **Status:** Documented; Stage 9 obligation.
+- **Status:** Partly checked and precisely bounded in Stage 9.
+  `fourierInv_volume_eq_delta_zero` checks the underlying Fourier convention.
+  `affineLineDelta` constructs the exact distribution
+  `δ(x₁ - x₂ + x₀)` by integration along `x₂ = x₁ + x₀`, and
+  `eprCorrelation` records its source-scaled `hδ` form.
+  `eprCorrelation_relativePosition` proves
+  `(Q₂-Q₁)Ψ = x₀Ψ`. The raw oscillatory `p`-integral-to-`hδ` equality, the
+  companion `(P₁+P₂)Ψ = 0` relation, and continuous conditional-measurement
+  semantics remain explicit extension obligations because pinned mathlib has
+  no partial Fourier transform/kernel theorem or unbounded spectral PVM layer.
 
 ## C-008: Commutator domain
 
@@ -126,7 +145,11 @@ yet been formalized.
   `x`, but an operator identity for unbounded operators requires a specified
   common invariant domain.
 - **Formal consequence:** Any continuous-variable theorem must state its domain.
-- **Status:** Documented; Stage 9 obligation.
+- **Status:** Checked on the named common invariant Schwartz domain in Stage 9.
+  `momentumSchwartz` and `positionSchwartz` are continuous endomorphisms of
+  `𝓢(ℝ,ℂ)`, and `momentum_position_commutator` proves exactly
+  `[P,Q]f = (h/(2πi))f` for every `f` in that domain. No claim of boundedness,
+  maximal domain, closure, or self-adjointness on `L²` is made.
 
 ## C-009: Selected coefficient functions require normalization
 
@@ -162,3 +185,24 @@ yet been formalized.
   actuality. The audit theorems `certainty_does_not_assert_outcome`,
   `bell_prediction_does_not_assert_actuality`, `realityCriterion_rejectable`,
   and `realityValueBridge_rejectable` witness the separations.
+
+## C-011: Generalized exact correlation is not a Born-probability branch
+
+- **Paper:** The continuous expansions in Eqs. (11) and (15) are used to infer
+  exact remote values after a continuous momentum or position result.
+- **Correction:** Delta-normalized modes, Dirac position eigen-distributions,
+  and the affine-line Eq. (9) object are not normalized Hilbert vectors.
+  Distributional eigenrelations alone do not define positive-probability exact
+  outcome branches or conditional density states for continuous observables.
+- **Formal consequence:** Do not instantiate `PerfectConditionalPrediction`,
+  `CertainPrediction`, or the exact reality criterion from the Stage 9
+  distributions. A literal treatment needs self-adjoint operators, spectral
+  PVMs, measurable conditioning/regular conditional probabilities, and an
+  appropriate treatment of measure-zero sharp outcomes. A normalized
+  approximation instead needs finite-resolution error bounds and a separately
+  stated approximate or limiting reality premise.
+- **Status:** Audited obstruction in Stage 9. The continuum module imports no
+  finite quantum or logic module and exposes no project state, probability,
+  conditioning, or reality declaration. The missing spectral and conditional
+  infrastructure is recorded in `docs/Dependencies.md` and
+  `goal-1/9-CONTINUUM.md` rather than postulated.

@@ -8,13 +8,17 @@ distinguishes checked declarations from later obligations.
 | --- | --- | --- | --- |
 | Printed p. 777, §1 completeness condition | Every element of physical reality must have a counterpart in a complete physical theory. | `CompleteFor I theory r` yields only `TheoryCounterpart I theory q` for each context-indexed `ElementOfReality I r c q`. Definite-value joint representation is a further premise, `CompletenessRepresentationBridge`. | Checked in `EPR.Logic.EPR` by `theoryCounterpart_of_complete` and `joint_representation_of_complete`. |
 | Printed p. 777, §1 reality criterion | Prediction with certainty—probability one—without disturbance is a sufficient, not necessary, condition for an element of reality. | `OutcomeObtained`, `CertainPrediction`, and `NoOnticDisturbance` are separate antecedents of the supplied `RealityCriterion`; it concludes `ElementOfReality`. The separately supplied `RealityValueBridge` concludes `PossessesValue` for the predicted value. | Checked as a conditional interface in `EPR.Logic.EPR`; none of the criterion, actuality, ontic, or value premises is asserted as a fact of nature. |
-| Printed pp. 777–778, Eqs. (1)–(6) | Eigenstate reasoning illustrated by a momentum plane wave and a uniform position distribution. | Finite-dimensional sharpness first; continuous example audited separately because the plane wave is not normalized in `L²(ℝ)`. | Finite normalized-state, eigenstate, Born-probability, and sharpness vocabulary completed in `EPR.Quantum.Core`; the plane-wave correction remains a `9-CONTINUUM` obligation. |
+| Printed p. 778, Eqs. (2)–(4) | The positive-phase plane wave has exact momentum value `p₀` under `P = h/(2πi) d/dx`. | `planeWave_not_memLp_two` and `planeWave_not_integrable` reject normalized-state use. `generalizedPlaneWave` is `𝓕⁻δ`; with `h ≠ 0`, `eprMomentumMode_eigenvalue` proves the eigenvalue `p₀` in tempered distributions. | Generalized eigenrelation and nonnormalizability checked in `EPR.Continuum.Idealized`; no `PureState`/`DensityState` or Born-probability claim. |
+| Printed p. 778, Eqs. (5)–(6) | Multiplication by position is not sharp in the plane wave; integrating its unit modulus over `[a,b]` gives `b-a`, described as relative probability. | `unnormalizedIntervalWeight_eq` checks `b-a` only as oriented Lebesgue interval weight. `eq6_can_exceed_one` checks value two on `[0,2]`; the total real-line mass is infinite. | Calculation and normalization obstruction checked; it is deliberately not encoded as probability. |
 | Printed p. 778, paragraphs after Eq. (6) | The paper states a disjunction: the wave-function description is incomplete, or noncommuting quantities cannot have simultaneous reality. | Keep matrix noncommutation, common-eigenvector exclusion, and absence of a jointly sharp density state distinct. The final finite contradiction uses `NoJointSharpState`, not bare noncommutation. | `EPR.Quantum.Incompatibility` makes the distinctions; `EPR.Examples.PauliIncompatibility` proves `pauliXZ_noJointSharpState`; `EPR.Audit.Incompatibility` supplies a noncommuting pair with a common jointly sharp state. |
 | Printed p. 779, Eqs. (7)–(8) | Alternative measurements on system I select different relative states of system II after a source outcome is found. | Represent each selected coefficient by a raw subnormalized relative branch, normalize only for positive probability, and keep the possible branch distinct from the assertion `OutcomeObtained`. | `EPR.Quantum.Conditional` supplies conditioning; `EPR.Quantum.Steering` packages nonvacuous conditional certainty; `EPR.Examples.BellSteering` checks all four `bellPhiPlus` branches. Stage 8's Bell adapter keeps actuality separate. |
 | Modern finite operational result, not a separate paper claim | Discarding the outcome of a complete projective Lüders measurement on A leaves B's unconditioned reduced density and every projective Born statistic unchanged. | Sum the raw weighted local branches, prove directional A-to-B reduced-state equality, and keep this outcome-forgotten state distinct from every selected conditional state. | `EPR.Quantum.NoSignalling` proves the generic finite result; `EPR.Examples.BellNoSignalling` checks both Bell/Pauli source settings and their selected-state contrast. |
 | Printed p. 779, paragraph after Eq. (8) | Because I and II no longer interact, the paper says that an operation on I causes no real change in II. | `NoOnticDisturbance s` means equality of the modeled prior and post realities. It is an explicit ontic premise, not a consequence of absent interaction or `OperationalNoSignallingAtoB`. | Checked as a separate predicate in `EPR.Logic.EPR`; `EPR.Audit.EPRLogic.operational_noSignalling_with_ontic_change` demonstrates operational no-signalling coexisting with its denial in a toy ontology. |
 | Printed p. 779, “two different wave functions … same reality” | Two alternative conditional wave functions are assigned to the same underlying reality of II. | `SamePriorReality s t`, together with `NoOnticDisturbance s` and `NoOnticDisturbance t`, transports the alternatives to `SamePostReality s t`. This transport is distinct from counterfactual aggregation. | Checked by `samePostReality_of_noOnticDisturbance`; the equality premises remain explicit. |
-| Printed p. 780, Eqs. (9)–(18) | Ideal perfect position/momentum correlations using plane waves and deltas. | Distributional/rigged-Hilbert-space treatment or normalized approximants, never ordinary normalized vectors. The finite Bell/Pauli example is only a role analogue. | Audited extension in `9-CONTINUUM`; no Stage 8 theorem identifies Pauli `X`/`Z` with position/momentum. |
+| Printed pp. 779–780, Eq. (9) | The oscillatory momentum integral defines a two-particle state with exact relative-position support. | For physical `h > 0` its audited distributional value is exactly `h δ(x₁-x₂+x₀)`, not an `L²(ℝ²)` wavefunction. `affineLineDelta` integrates Schwartz tests along `x₂=x₁+x₀`; `eprCorrelation` supplies the `h` scaling and `eprCorrelation_relativePosition` proves `(Q₂-Q₁)Ψ=x₀Ψ`. | Affine-line distribution, action, scaling, and relative-position relation checked. The raw oscillatory-integral equality and `(P₁+P₂)Ψ=0` remain named extension obligations. |
+| Printed pp. 779–780, Eqs. (10)–(13) | Continuous momentum modes on I select an opposite-momentum coefficient mode on II. | Both signs are non-`L²`. `eprMomentumMode_eigenvalue` checks `+p`; `eprShiftedOppositeMomentumMode_eigenvalue` includes the `x₀` phase and checks `-p`, with `h ≠ 0`, as tempered-distribution eigenrelations. Eq. (11) is distributional, not a Bochner `L²` expansion. | Mode signs/eigenvalues and nonnormalizability checked. Delta normalization, direct-integral coefficient extraction, and spectral conditioning remain outside the current API. |
+| Printed p. 780, Eqs. (14)–(17) | Dirac position modes yield the selected coefficient `hδ(x-x₂+x₀)` with value `x+x₀` for `Q₂`. | `delta_position_eigenrelation` proves the generalized delta eigenrelation; `affineLineDelta_apply` and the relative-position theorem check the joint support convention. Deltas remain distributions, never normalized vectors. | Generalized position relation and joint affine support checked. The full Eq. (15) distributional expansion and a continuous selected-state semantics remain extension obligations. |
+| Printed p. 780, Eq. (18) | `PQ-QP = h/(2πi)`. | `positionSchwartz` and `momentumSchwartz` act on the named common invariant domain `𝓢(ℝ,ℂ)`; `momentum_position_commutator` proves the source sign there. | Checked on Schwartz space only; no everywhere-defined bounded `L²` identity or self-adjoint/maximal-domain theorem is claimed. |
 | Printed p. 780, first final paragraph | Either remote choice permits a certainty claim and hence a context-specific element of reality; both alternatives are then treated as belonging to one reality. | Checked `CertainPrediction` plus supplied actuality, `NoOnticDisturbance`, and `RealityCriterion` produce each `ElementOfReality`; `RealityValueBridge` produces each `PossessesValue`; `CounterfactualStability` alone aggregates them into `SimultaneouslyReal`. | `simultaneous_reality_of_alternative_predictions` checks the full conditional chain without identifying any adjacent step. |
 | Printed p. 780, incompleteness paragraph | Assuming completeness and simultaneous reality conflicts with the wave-function description. | `CompleteFor` supplies two `TheoryCounterpart`s; `CompletenessRepresentationBridge` turns those counterparts and `SimultaneouslyReal` into `JointlyRepresents`; a separate no-joint-representation fact refutes relative completeness. | `epr_incompleteness` proves the abstract conditional result. `bellPhiPlus_epr_incompleteness` specializes it using the bundled four-branch Bell scenario and the `pauliXZ_noJointSharpState` contradiction. |
 | Printed p. 780, objection paragraph | The paper rejects making simultaneous reality depend on which remote measurement is chosen. | Preserve that disputed move as the explicit `CounterfactualStability` premise rather than deriving it from certainty or same-reality transport. | Checked as an independently rejectable premise by `counterfactualStability_rejectable`. |
@@ -30,6 +34,53 @@ Lüders treatment of degenerate outcomes and the explicit nonselective state
 are documented modern modeling choices. They clarify omissions in the paper;
 they are not presented as measurement rules derived from its text. This
 normalization correction is recorded as C-009 in `docs/Corrections.md`.
+
+## Stage 9 continuous-variable boundary
+
+`EPR.Continuum.Idealized` is a separate analytic leaf importing only pinned
+mathlib's tempered-distribution infrastructure. It is deliberately absent from
+the finite quantum, Bell, operational no-signalling, and logical dependency
+chains. Its declarations divide the source calculations into three types:
+
+1. `planeWave` is an ordinary complex function used only for pointwise norm
+   and integration facts. `planeWave_not_memLp_two` and
+   `planeWave_not_integrable` rule out normalized real-line state semantics;
+   `unnormalizedIntervalWeight_eq` preserves Eq. (6)'s algebra without calling
+   it probability.
+2. `generalizedPlaneWave`, `eprMomentumMode`, deltas, `affineLineDelta`, and
+   `eprCorrelation` are tempered distributions. Their theorems are equality or
+   generalized-eigenvalue statements in `𝓢'`, not Hilbert-vector norm or Born-
+   probability statements. `generalizedPlaneWave_apply` fixes the positive
+   Fourier sign, while the two EPR mode theorems check eigenvalues `p` and
+   `-p`.
+3. `positionSchwartz` and `momentumSchwartz` act on `𝓢(ℝ,ℂ)`.
+   `momentum_position_commutator` is therefore a common-domain identity; it
+   does not assert an equality of everywhere-defined bounded `L²` operators.
+
+The source audit uses `h > 0`, hence
+`∫ exp(2πiyp/h) dp = hδ(y)`. For an arbitrary nonzero real scale, the delta
+scaling factor is `|h|`. The checked `affineLineDelta` convention has no hidden
+Jacobian because it pairs a test function as `∫ f(t,t+x₀) dt`.
+
+Four obligations remain visible rather than assumed:
+
+- prove the paper's raw oscillatory `p`-integral equals the scaled affine-line
+  distribution through an explicit partial-Fourier/change-of-variables
+  construction;
+- prove the companion joint momentum relation `(P₁+P₂)Ψ=0` distributionally;
+- construct concrete self-adjoint position and momentum operators, their
+  maximal domains and spectral PVMs, if literal continuous Born probabilities
+  are required; and
+- develop measurable continuous-outcome conditioning before calling any exact
+  branch a `PerfectConditionalPrediction`.
+
+Pinned mathlib has no packaged partial Fourier transform/Schwartz kernel
+theorem, unbounded spectral theorem, or projection-valued-measure layer that
+discharges those obligations. A Gaussian or box regularization would instead
+prove finite-resolution, high-probability correlations and would require an
+additional approximate or limiting reality premise. Stage 9 therefore neither
+uses an approximant nor connects its distributions to the exact Stage 8
+reality criterion.
 
 ## Target finite-dimensional analogue
 
