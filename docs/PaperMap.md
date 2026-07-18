@@ -11,6 +11,7 @@ distinguishes checked declarations from later obligations.
 | Eqs. (1)–(6) | Eigenstate reasoning illustrated by a momentum plane wave and a uniform position distribution. | Finite-dimensional sharpness first; continuous example audited separately because the plane wave is not normalized in `L²(ℝ)`. | Finite normalized-state, eigenstate, Born-probability, and sharpness vocabulary completed in `EPR.Quantum.Core`; the plane-wave correction remains a `9-CONTINUUM` obligation. |
 | General claim after Eq. (6) | Noncommuting quantities cannot have simultaneous precise values. | Separate matrix noncommutation, existence of a common nonzero eigenvector, and existence of a jointly sharp density state. Use the last property for the quantum-state exclusion, not bare noncommutation. | `EPR.Quantum.Incompatibility` provides the generic distinctions and mixed-state bridge; `EPR.Examples.PauliIncompatibility` proves all three Pauli `X`/`Z` results. `EPR.Audit.Incompatibility` checks a noncommuting Hermitian `Fin 3` pair that nevertheless has a common eigenvector and jointly sharp state. |
 | Eqs. (7)–(8) | Alternative measurements on system I select different relative states of system II. | Represent the selected coefficient by a raw subnormalized relative branch, then normalize only for positive probability. Keep this selective state distinct from the unconditioned marginal and from a full nonselective measurement. | The generic finite conditioning API is complete in `EPR.Quantum.Conditional`; `EPR.Quantum.Steering` packages nonvacuous conditional certainty, and `EPR.Examples.BellSteering` checks both Pauli settings and all four `bellPhiPlus` branches. |
+| Modern finite operational result, not a separate paper claim | Discarding the outcome of a complete projective Lüders measurement on A leaves B's unconditioned reduced density and every projective Born statistic unchanged. | Sum the raw weighted local branches, prove directional A-to-B reduced-state equality, and keep this outcome-forgotten state distinct from every selected conditional state. | `EPR.Quantum.NoSignalling` proves the generic finite result; `EPR.Examples.BellNoSignalling` checks both Bell/Pauli source settings and their selected-state contrast. |
 | Paragraph after Eq. (8) | No real change occurs in II after an operation on separated I. | Explicit ontic premise, not a mathematical consequence of absent interaction or no-signalling. | Planned for `8-EPR-LOGIC`. |
 | “two different wave functions … same reality” | Different conditional wave functions may describe the same underlying reality of II. | Explicit context/world indexing and counterfactual-stability bridge. | Planned for `8-EPR-LOGIC`. |
 | Eqs. (9)–(18) | Ideal perfect position/momentum correlations using plane waves and deltas. | Distributional/rigged-Hilbert-space treatment or normalized approximants, never ordinary normalized vectors. | Audited extension in `9-CONTINUUM`. |
@@ -83,11 +84,40 @@ paper's further instrument-dependent statement that measuring one observable
 must disturb knowledge of the other, and it draws no conclusion about
 simultaneous physical reality.
 
+## Finite operational no-signalling boundary
+
+For any finite bipartite density state `ρ` and complete projective measurement
+`M` on A, `localANonselectiveState ρ M` is the outcome-forgotten local Lüders
+state. Its matrix is the sum of the raw subnormalized branches
+`(P_w ⊗ I) ρ (P_w ⊗ I)`, whose traces already carry their Born weights; it is
+not an unweighted sum of normalized conditional states.
+
+`OperationalNoSignallingAtoB ρ M` means exactly that the reduced B state after
+this update equals `reducedB ρ`. The theorem
+`localA_nonselective_noSignalling` proves that equality, while
+`localA_nonselective_outcomeProbability` covers every projective statistic on
+B. The two independence theorems compare any two complete source
+measurements.
+
+For the Bell/Pauli scenario, `bellPhiPlus_operationalNoSignalling` and
+`bellPhiPlus_reducedB_invariant` cover either source setting, and
+`bellPhiPlus_sourceSetting_independent` compares the settings directly.
+`bellPhiPlus_selected_changes_with_noSignalling` separately checks that
+different selected B states coexist with both outcome-forgotten measurements
+satisfying the operational theorem.
+
+This result is directional from A to B and is limited to finite complete
+projective Lüders measurements. It establishes no theorem about arbitrary
+channels, communication protocols, spacetime separation, absence of
+interaction, physical reality, or ontic disturbance. In particular, the
+paper's page-779 inference from no interaction to “no real change” remains an
+explicit Stage 8 premise.
+
 This construction is a normalized finite role analogue of the alternative-
 expansion and conditional-certainty steps. It neither digitizes nor
 approximates Eq. (9), does not identify Pauli `X` or `Z` with the paper's
 position or momentum operators, and does not reproduce the `-p` momentum
 relation, the `x + x₀` position offset, or the unbounded-operator commutator in
-Eq. (18). Those analytic claims remain Stage 9 obligations. Operational
-no-signalling remains Stage 7; locality, same-reality, counterfactual, and
-completeness claims remain Stage 8.
+Eq. (18). Those analytic claims remain Stage 9 obligations. Stage 7 checks
+only the finite operational result above; locality, same-reality,
+counterfactual, and completeness claims remain Stage 8.

@@ -48,9 +48,16 @@ yet been formalized.
   with no real change in II caused by operations on I.
 - **Correction:** No current interaction, operational no-signalling, and
   invariance of an underlying physical reality are distinct statements.
-- **Formal consequence:** Prove operational no-signalling separately and take
-  ontic no-disturbance only as an explicit hypothesis.
-- **Status:** Documented; Stages 7 and 8 obligation.
+- **Formal consequence:** For a complete local projective Lüders measurement,
+  sum the raw outcome-weighted branches and compare B's unconditioned reduced
+  state, not a selected conditional state. Take ontic no-disturbance only as an
+  explicit hypothesis.
+- **Status:** The operational part is checked in Stage 7.
+  `localA_nonselective_noSignalling` proves directional A-to-B reduced-state
+  invariance generically, and `bellPhiPlus_operationalNoSignalling` checks both
+  Bell/Pauli source settings. The paper's page-779 claim that no interaction
+  entails no real change remains a documented Stage 8 ontic obligation; it is
+  not derived from either theorem.
 
 ## C-005: Counterfactual aggregation
 
