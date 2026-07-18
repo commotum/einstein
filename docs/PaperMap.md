@@ -96,8 +96,9 @@ not an unweighted sum of normalized conditional states.
 this update equals `reducedB ρ`. The theorem
 `localA_nonselective_noSignalling` proves that equality, while
 `localA_nonselective_outcomeProbability` covers every projective statistic on
-B. The two independence theorems compare any two complete source
-measurements.
+B. `localA_nonselective_reducedB_independent` and
+`localA_nonselective_outcomeProbability_independent` compare any two complete
+source measurements.
 
 For the Bell/Pauli scenario, `bellPhiPlus_operationalNoSignalling` and
 `bellPhiPlus_reducedB_invariant` cover either source setting, and

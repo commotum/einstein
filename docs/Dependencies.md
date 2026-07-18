@@ -188,8 +188,8 @@ an A-lift coordinate sentinel that detects a tensor-factor swap despite the
 Bell state's symmetry. `EPR.Audit.BellSteeringAxioms` is a separate diagnostic
 leaf that reviews the generic and concrete signatures and prints the axioms of
 the principal declarations. Neither Stage 5 audit is imported by the public
-`EPR` root; `EPR.Examples.BellSteering` is re-exported through the later
-`EPR.Examples.PauliIncompatibility` public layer.
+`EPR` root; `EPR.Examples.BellSteering` is re-exported through the later public
+`EPR.Examples.PauliIncompatibility` and `EPR.Examples.BellNoSignalling` layers.
 
 These are selected-branch mathematical facts. They assert no actual outcome,
 common sharp state, noncommutation result, unconditioned marginal invariance,
@@ -235,15 +235,71 @@ They do not commute, yet `fin3SharedState` is a common normalized eigenstate
 and its density is jointly sharp for both. The combined theorem
 `fin3_noncommuting_with_common_sharp_state` prevents the public API or later
 proofs from substituting bare noncommutation for the stronger state-space
-obstruction. The public `EPR` root ends at
+obstruction. The public `EPR` root imports
 `EPR.Examples.PauliIncompatibility`; both `EPR.Audit.Incompatibility` and
-`EPR.Audit.IncompatibilityAxioms` remain outside that import chain.
+`EPR.Audit.IncompatibilityAxioms` remain outside the public import chain.
 
 This layer proves no measurement-disturbance, marginal-invariance,
 no-signalling, locality, physical-reality, simultaneous-reality,
 counterfactual, completeness, or incompleteness claim. Its finite Pauli
 product calculation is not a formalization of the unbounded position-momentum
 commutator in Eq. (18).
+
+## Stage 7 checked operational no-signalling layer
+
+`EPR.Quantum.NoSignalling` imports only `EPR.Quantum.Conditional`. Its scope is
+a finite complete projective measurement on A with the outcome discarded:
+
+- `ProjectiveMeasurement.localAProjection` tags each source projector on A,
+  and `ProjectiveMeasurement.sum_localAProjection_lift` proves that the lifted
+  projectors resolve the identity on `A × B`;
+- `localANonselectiveState` sums the raw Lüders branches
+  `(P_w ⊗ I) ρ (P_w ⊗ I)`. Their traces already contain the outcome weights,
+  so this is not an unweighted sum of normalized conditional states;
+- `OperationalNoSignallingAtoB ρ M` is the directional equality
+  `reducedB (localANonselectiveState ρ M) = reducedB ρ`; and
+- `localA_nonselective_noSignalling` proves that equality for every input state
+  and complete source PVM. `localA_nonselective_outcomeProbability` derives
+  invariance of an arbitrary projective Born statistic on B, while
+  `localA_nonselective_reducedB_independent` and
+  `localA_nonselective_outcomeProbability_independent` compare any two source
+  measurement choices.
+
+`EPR.Examples.BellNoSignalling` imports the generic no-signalling module and
+the checked Bell steering example without making either layer depend on the
+other's diagnostics. It provides:
+
+- `bellPhiPlusAfterLocalMeasurement`, the joint Bell state after an A-side
+  Pauli measurement with its outcome discarded;
+- `bellPhiPlus_operationalNoSignalling` and
+  `bellPhiPlus_reducedB_invariant` for either source setting;
+- `bellPhiPlus_sourceSetting_independent`,
+  `bellPhiPlus_targetStatistic_invariant`, and
+  `bellPhiPlus_targetStatistic_sourceSetting_independent` for direct
+  source-choice comparisons; and
+- `bellPhiPlus_selected_z_outcomes_differ`,
+  `bellPhiPlus_selected_settings_differ`, and
+  `bellPhiPlus_selected_changes_with_noSignalling`, which check that selected
+  conditional B states can differ even though both outcome-forgotten settings
+  satisfy the operational theorem.
+
+`EPR.Audit.NoSignalling` checks that the Z nonselective joint state differs
+from the input while its B marginal remains the same maximally mixed state,
+checks the same B marginal after the X setting, distinguishes a selected state
+from that unconditioned marginal, and uses `Fin 2 × Fin 3` to sentinel the
+A-to-B direction. `EPR.Audit.NoSignallingAxioms` checks the full signature and
+axiom surface. Neither audit leaf is imported by the public `EPR` root. The
+root directly imports the two public example branches
+`EPR.Examples.PauliIncompatibility` and
+`EPR.Examples.BellNoSignalling`.
+
+This is a directional A-to-B result for complete projective Lüders
+measurements, not a theorem about arbitrary channels, communication protocols,
+spacetime separation, absence of interaction, or ontic locality. It does not
+assert an actual outcome and does not turn a selected conditional state into an
+unconditioned marginal. The paper's page-779 claim that absence of interaction
+means no real change in system II remains an explicit Stage 8 premise, not a
+consequence of `OperationalNoSignallingAtoB`.
 
 ## Checked representation choice
 
@@ -260,6 +316,12 @@ commutator in Eq. (18).
   extensions unless later proof obligations require them.
 - Use checked subnormalized selective branches and normalize only with explicit
   strictly positive outcome-probability evidence.
+- Form a local nonselective projective update by summing every raw weighted
+  branch; never sum normalized selected conditional states without their Born
+  weights.
+- State finite operational no-signalling directionally as equality of the
+  unconditioned remote reduced state, then derive projective-statistic and
+  source-setting independence as corollaries.
 - Package conditional certainty with strict source-branch positivity and keep
   each correlation/anticorrelation convention in an explicit response map.
 - Keep matrix noncommutation, common-eigenvector exclusion, and joint-sharp
@@ -287,8 +349,14 @@ EPR.Quantum.Core
 EPR.Quantum.Incompatibility + EPR.Examples.BellSteering
   -> EPR.Examples.PauliIncompatibility
 
-EPR.Quantum.Conditional + EPR.Examples.BellSteering
+EPR.Quantum.Conditional
   -> EPR.Quantum.NoSignalling
+
+EPR.Quantum.NoSignalling + EPR.Examples.BellSteering
+  -> EPR.Examples.BellNoSignalling
+
+EPR.Examples.PauliIncompatibility + EPR.Examples.BellNoSignalling
+  -> EPR (public root)
 
 EPR.Interpretation.Core
   -> EPR.Logic.Incompleteness
