@@ -44,6 +44,10 @@
   two represents ontic no-disturbance but is never asserted unconditionally.
 - Certainty, an actual source outcome, a target value, an element of reality,
   and a quantum sharp value remain distinct data or predicates.
+- A quantity's `ElementOfReality` status and its possession of a particular
+  value must also remain separate. The source moves between those ideas in
+  prose; Stage 8 will expose a named value bridge rather than identify them by
+  definition.
 - Alternative contexts may share a prior reality, but their inferred elements
   are combined only through a named counterfactual-stability/aggregation
   premise.
@@ -71,10 +75,12 @@
 
 - Add `formal/EPR/Logic/EPR.lean` with:
   - context-indexed `PhysicalSituation` data and explicit pre/post realities;
-  - named certainty, reality, simultaneous-reality, theory-counterpart, joint-
-    representation, and relative-completeness predicates;
+  - named outcome-occurrence, certainty, element-of-reality, possessed-value,
+    simultaneous-reality, theory-counterpart, joint-representation, and
+    relative-completeness predicates;
   - `NoOnticDisturbance`, same-prior-reality, `RealityCriterion`,
-    `CounterfactualStability`, and a completeness-to-representation bridge;
+    a reality-to-value bridge, `CounterfactualStability`, and a
+    completeness-to-representation bridge;
   - small inference lemmas and a top-level conditional `epr_incompleteness`
     theorem.
 - Add `formal/EPR/Examples/BellEPR.lean` with a Bell context and adapter whose
@@ -98,10 +104,11 @@
 - Scan completed Lean modules for `sorry`, `admit`, `sorryAx`, project
   `axiom`, `opaque`, `unsafe`, `partial def`, and `implemented_by`.
 - Inspect the full `epr_incompleteness` and Bell theorem signatures: certainty,
-  two ontic no-disturbance facts, the reality criterion, same-reality/context
-  bridge, counterfactual aggregation, completeness representation bridge, and
-  the mathematical joint-representation exclusion must be explicit or
-  visibly constructed from checked inputs.
+  two actual-outcome facts, two ontic no-disturbance facts, the sufficient
+  reality criterion, the possessed-value bridge, same-reality/context bridge,
+  counterfactual aggregation, completeness representation bridge, and the
+  mathematical joint-representation exclusion must be explicit or visibly
+  constructed from checked inputs.
 - Confirm the abstract logic module imports no quantum/example module and the
   Bell logic module imports no no-signalling module.
 - Scan the Bell theorem proof path for
