@@ -112,8 +112,9 @@
   and use cannot masquerade as a normalized probability.
 - Record any unproved raw scaled-Fourier-integral, support/non-`L²`, spectral,
   or conditional-semantics claim as an obligation rather than an axiom.
-- Run warning-as-error focused builds, full build, source/import/signature
-  scans, whitespace checks, and an autosave-history diff review.
+- Run warning-as-error focused builds, the default public-root build, an
+  explicit combined Stage 9 target build, source/import/signature scans,
+  whitespace checks, and an autosave-history diff review.
 
 ## Completion Requirements
 
@@ -122,16 +123,18 @@
   hypotheses.
 - Plane waves are proved non-`L²`; Eq. (6) is named and checked only as
   unnormalized interval mass; no delta is a normalized project state.
-- The affine-line distribution and its relative-position correlation compile,
-  and Eq. (18) compiles on Schwartz space with the paper's sign.
+- The affine-line distribution and its relative-position and total-momentum-
+  zero relations compile, and Eq. (18) compiles on Schwartz space with the
+  paper's sign.
 - The documentation maps Eqs. (2), (6), and (9)--(18) individually enough to
   distinguish checked results from source interpretation and open obligations.
 - The finite Bell/Pauli EPR result remains unchanged and independent; no exact
   continuous `PerfectConditionalPrediction` or reality-criterion instance is
   claimed.
-- Focused implementation/audit/axiom builds, public-root and full builds,
-  warning-as-error builds, proof-hole/project-axiom/forbidden-shortcut/import
-  scans, `git diff --check`, and axiom audits pass with exact evidence recorded.
+- Focused implementation/audit/axiom builds, public-root and explicit combined
+  Stage 9 builds, warning-as-error builds, proof-hole/project-axiom/forbidden-
+  shortcut/import scans, `git diff --check`, and axiom audits pass with exact
+  evidence recorded.
 
 ## Stage Results
 

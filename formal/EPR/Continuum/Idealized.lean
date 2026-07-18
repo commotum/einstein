@@ -106,7 +106,7 @@ theorem generalizedPlaneWave_apply (k : ℝ) (f : 𝓢(ℝ, ℂ)) :
   ring_nf
 
 /-- Multiplication by position sends a Dirac delta at `k` to `k` times that
-delta. This is the generalized position-eigenvalue relation behind Eq. (14). -/
+delta. This is the generalized position eigen-equation behind Eq. (14). -/
 theorem delta_position_eigenrelation (k : ℝ) :
     TemperedDistribution.smulLeftCLM ℂ (fun x : ℝ => (x : ℂ))
         (TemperedDistribution.delta k) =
@@ -126,8 +126,9 @@ theorem lineDeriv_one_eq_deriv (u : 𝓢'(ℝ, ℂ)) :
     TemperedDistribution.derivCLM_apply_apply]
   congr 2
 
-/-- A generalized Fourier plane wave is an eigen-distribution of the
-distributional derivative with eigenvalue `2π k i`. -/
+/-- A generalized Fourier plane wave satisfies the distributional derivative
+eigen-equation with coefficient `2π k i`. No separate nonzeroness theorem is
+claimed here. -/
 theorem deriv_generalizedPlaneWave (k : ℝ) :
     TemperedDistribution.derivCLM ℂ (generalizedPlaneWave k) =
       (((2 * Real.pi * k : ℝ) : ℂ) * Complex.I) •
@@ -152,13 +153,14 @@ def distributionalMomentum (h : ℝ) : 𝓢'(ℝ, ℂ) →L[ℂ] 𝓢'(ℝ, ℂ)
     TemperedDistribution.derivCLM ℂ
 
 /-- Eq. (2)'s momentum mode, with frequency `p/h`. The nonzero hypothesis on
-`h` appears in its eigenvalue theorem. -/
+`h` appears in its eigenrelation theorem. -/
 def eprMomentumMode (h p : ℝ) : 𝓢'(ℝ, ℂ) :=
   generalizedPlaneWave (p / h)
 
-/-- Eq. (2) is a generalized momentum eigenstate with eigenvalue `p` when
-`h ≠ 0`; this does not make it an `L²` vector. -/
-theorem eprMomentumMode_eigenvalue {h p : ℝ} (hh : h ≠ 0) :
+/-- Eq. (2)'s mode satisfies the generalized momentum eigen-equation with
+coefficient `p` when `h ≠ 0`; this does not make it an `L²` vector or separately
+prove the distribution nonzero. -/
+theorem eprMomentumMode_eigenrelation {h p : ℝ} (hh : h ≠ 0) :
     distributionalMomentum h (eprMomentumMode h p) =
       (p : ℂ) • eprMomentumMode h p := by
   rw [distributionalMomentum, smul_apply, eprMomentumMode,
@@ -175,14 +177,14 @@ def eprShiftedOppositeMomentumMode (h p x₀ : ℝ) : 𝓢'(ℝ, ℂ) :=
   Complex.exp ((((2 * Real.pi * x₀ * p) / h : ℝ) : ℂ) * Complex.I) •
     eprMomentumMode h (-p)
 
-/-- The minus sign in Eq. (12) gives generalized momentum eigenvalue `-p`;
-the constant offset phase does not alter the eigenvalue. -/
-theorem eprShiftedOppositeMomentumMode_eigenvalue {h p x₀ : ℝ}
+/-- The minus sign in Eq. (12) gives the generalized momentum eigen-equation
+with coefficient `-p`; the constant offset phase does not alter the equation. -/
+theorem eprShiftedOppositeMomentumMode_eigenrelation {h p x₀ : ℝ}
     (hh : h ≠ 0) :
     distributionalMomentum h (eprShiftedOppositeMomentumMode h p x₀) =
       ((-p : ℝ) : ℂ) • eprShiftedOppositeMomentumMode h p x₀ := by
   rw [eprShiftedOppositeMomentumMode, map_smul,
-    eprMomentumMode_eigenvalue hh]
+    eprMomentumMode_eigenrelation hh]
   simp only [smul_smul]
   rw [mul_comm]
 
@@ -348,8 +350,9 @@ def relativePosition : ℝ × ℝ →L[ℝ] ℂ :=
   Complex.ofRealCLM.comp
     (ContinuousLinearMap.snd ℝ ℝ ℝ - ContinuousLinearMap.fst ℝ ℝ ℝ)
 
-/-- The affine-line delta has exact relative-position value `x₀`. This is the
-checked distributional position-correlation half of Eq. (9). -/
+/-- The affine-line delta satisfies the coefficient-`x₀` relative-position
+operator equation. This is the checked distributional position-correlation
+half of Eq. (9); nonzeroness is not part of this theorem. -/
 theorem affineLineDelta_relativePosition (x₀ : ℝ) :
     TemperedDistribution.smulLeftCLM ℂ relativePosition
         (affineLineDelta x₀) =

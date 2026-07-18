@@ -36,17 +36,17 @@ namespace EPR.Audit.ContinuumAxioms
 #check EPR.Continuum.deriv_generalizedPlaneWave
 #check EPR.Continuum.distributionalMomentum
 #check EPR.Continuum.eprMomentumMode
-#check EPR.Continuum.eprMomentumMode_eigenvalue
+#check EPR.Continuum.eprMomentumMode_eigenrelation
 #check EPR.Continuum.eprShiftedOppositeMomentumMode
-#check EPR.Continuum.eprShiftedOppositeMomentumMode_eigenvalue
+#check EPR.Continuum.eprShiftedOppositeMomentumMode_eigenrelation
 
 #print axioms EPR.Continuum.fourierInv_volume_eq_delta_zero
 #print axioms EPR.Continuum.generalizedPlaneWave_apply
 #print axioms EPR.Continuum.delta_position_eigenrelation
 #print axioms EPR.Continuum.lineDeriv_one_eq_deriv
 #print axioms EPR.Continuum.deriv_generalizedPlaneWave
-#print axioms EPR.Continuum.eprMomentumMode_eigenvalue
-#print axioms EPR.Continuum.eprShiftedOppositeMomentumMode_eigenvalue
+#print axioms EPR.Continuum.eprMomentumMode_eigenrelation
+#print axioms EPR.Continuum.eprShiftedOppositeMomentumMode_eigenrelation
 
 /-! ## Schwartz-domain operators -/
 

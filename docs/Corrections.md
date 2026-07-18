@@ -15,8 +15,9 @@ yet been formalized.
   `planeWave_not_integrable` prove the obstruction on `ℝ`.
   `generalizedPlaneWave` instead constructs the positive-phase mode as the
   inverse Fourier transform of a Dirac delta, and
-  `eprMomentumMode_eigenvalue` proves the paper's `p` eigenvalue only in
-  tempered distributions with explicit `h ≠ 0`.
+  `eprMomentumMode_eigenrelation` proves the paper's coefficient-`p`
+  eigen-equation only in tempered distributions with explicit `h ≠ 0`.
+  Nonzeroness of that generalized mode is not a separate checked theorem.
 
 ## C-002: Eq. (6) is not a normalized probability
 

@@ -8,7 +8,7 @@ distinguishes checked declarations from later obligations.
 | --- | --- | --- | --- |
 | Printed p. 777, §1 completeness condition | Every element of physical reality must have a counterpart in a complete physical theory. | `CompleteFor I theory r` yields only `TheoryCounterpart I theory q` for each context-indexed `ElementOfReality I r c q`. Definite-value joint representation is a further premise, `CompletenessRepresentationBridge`. | Checked in `EPR.Logic.EPR` by `theoryCounterpart_of_complete` and `joint_representation_of_complete`. |
 | Printed p. 777, §1 reality criterion | Prediction with certainty—probability one—without disturbance is a sufficient, not necessary, condition for an element of reality. | `OutcomeObtained`, `CertainPrediction`, and `NoOnticDisturbance` are separate antecedents of the supplied `RealityCriterion`; it concludes `ElementOfReality`. The separately supplied `RealityValueBridge` concludes `PossessesValue` for the predicted value. | Checked as a conditional interface in `EPR.Logic.EPR`; none of the criterion, actuality, ontic, or value premises is asserted as a fact of nature. |
-| Printed p. 778, Eqs. (2)–(4) | The positive-phase plane wave has exact momentum value `p₀` under `P = h/(2πi) d/dx`. | `planeWave_not_memLp_two` and `planeWave_not_integrable` reject normalized-state use. `generalizedPlaneWave` is `𝓕⁻δ`; with `h ≠ 0`, `eprMomentumMode_eigenvalue` proves the eigenvalue `p₀` in tempered distributions. | Generalized eigenrelation and nonnormalizability checked in `EPR.Continuum.Idealized`; no `PureState`/`DensityState` or Born-probability claim. |
+| Printed p. 778, Eqs. (2)–(4) | The positive-phase plane wave has exact momentum value `p₀` under `P = h/(2πi) d/dx`. | `planeWave_not_memLp_two` and `planeWave_not_integrable` reject normalized-state use. `generalizedPlaneWave` is `𝓕⁻δ`; with `h ≠ 0`, `eprMomentumMode_eigenrelation` proves the coefficient-`p₀` operator equation in tempered distributions. | Generalized eigen-equation and nonnormalizability checked in `EPR.Continuum.Idealized`; nonzeroness of the distribution is not a separate checked theorem, and no `PureState`/`DensityState` or Born-probability claim is made. |
 | Printed p. 778, Eqs. (5)–(6) | Multiplication by position is not sharp in the plane wave; integrating its unit modulus over `[a,b]` gives `b-a`, described as relative probability. | `unnormalizedIntervalWeight_eq` checks `b-a` only as oriented Lebesgue interval weight. `eq6_can_exceed_one` checks value two on `[0,2]`; the total real-line mass is infinite. | Calculation and normalization obstruction checked; it is deliberately not encoded as probability. |
 | Printed p. 778, paragraphs after Eq. (6) | The paper states a disjunction: the wave-function description is incomplete, or noncommuting quantities cannot have simultaneous reality. | Keep matrix noncommutation, common-eigenvector exclusion, and absence of a jointly sharp density state distinct. The final finite contradiction uses `NoJointSharpState`, not bare noncommutation. | `EPR.Quantum.Incompatibility` makes the distinctions; `EPR.Examples.PauliIncompatibility` proves `pauliXZ_noJointSharpState`; `EPR.Audit.Incompatibility` supplies a noncommuting pair with a common jointly sharp state. |
 | Printed p. 779, Eqs. (7)–(8) | Alternative measurements on system I select different relative states of system II after a source outcome is found. | Represent each selected coefficient by a raw subnormalized relative branch, normalize only for positive probability, and keep the possible branch distinct from the assertion `OutcomeObtained`. | `EPR.Quantum.Conditional` supplies conditioning; `EPR.Quantum.Steering` packages nonvacuous conditional certainty; `EPR.Examples.BellSteering` checks all four `bellPhiPlus` branches. Stage 8's Bell adapter keeps actuality separate. |
@@ -16,7 +16,7 @@ distinguishes checked declarations from later obligations.
 | Printed p. 779, paragraph after Eq. (8) | Because I and II no longer interact, the paper says that an operation on I causes no real change in II. | `NoOnticDisturbance s` means equality of the modeled prior and post realities. It is an explicit ontic premise, not a consequence of absent interaction or `OperationalNoSignallingAtoB`. | Checked as a separate predicate in `EPR.Logic.EPR`; `EPR.Audit.EPRLogic.operational_noSignalling_with_ontic_change` demonstrates operational no-signalling coexisting with its denial in a toy ontology. |
 | Printed p. 779, “two different wave functions … same reality” | Two alternative conditional wave functions are assigned to the same underlying reality of II. | `SamePriorReality s t`, together with `NoOnticDisturbance s` and `NoOnticDisturbance t`, transports the alternatives to `SamePostReality s t`. This transport is distinct from counterfactual aggregation. | Checked by `samePostReality_of_noOnticDisturbance`; the equality premises remain explicit. |
 | Printed pp. 779–780, Eq. (9) | The oscillatory momentum integral is intended as a two-particle object with exact relative-position and opposite-momentum correlations. | For physical `h > 0` its audited distributional target is `h δ(x₁-x₂+x₀)`, not an `L²(ℝ²)` wavefunction. `affineLineDelta` pairs tests as `∫f(t,t+x₀)dt`; `eprCorrelation_relativePosition` and `eprCorrelation_jointMomentumSum` prove `(Q₂-Q₁)Ψ=x₀Ψ` and `(P₁+P₂)Ψ=0`. | Affine-line pairing, scaling, and both algebraic correlation relations checked. The raw oscillatory-integral equality, topological-support/non-`L²` representability theorems, and continuous conditioning remain named extension obligations. |
-| Printed pp. 779–780, Eqs. (10)–(13) | Continuous momentum modes on I select an opposite-momentum coefficient mode on II. | Both signs are non-`L²`. `eprMomentumMode_eigenvalue` checks `+p`; `eprShiftedOppositeMomentumMode_eigenvalue` includes the `x₀` phase and checks `-p`, with `h ≠ 0`, as tempered-distribution eigenrelations. Eq. (11) is distributional, not a Bochner `L²` expansion. | Mode signs/eigenvalues and nonnormalizability checked. Delta normalization, direct-integral coefficient extraction, and spectral conditioning remain outside the current API. |
+| Printed pp. 779–780, Eqs. (10)–(13) | Continuous momentum modes on I select an opposite-momentum coefficient mode on II. | Both ordinary signs are non-`L²`. `eprMomentumMode_eigenrelation` checks the `+p` operator equation; `eprShiftedOppositeMomentumMode_eigenrelation` includes the `x₀` phase and checks `-p`, with `h ≠ 0`, in tempered distributions. Eq. (11) is distributional, not a Bochner `L²` expansion. | Mode signs/eigen-equations and ordinary-function nonnormalizability checked. Distribution nonzeroness, delta normalization, direct-integral coefficient extraction, and spectral conditioning remain outside the current API. |
 | Printed p. 780, Eqs. (14)–(17) | Dirac position modes yield the selected coefficient `hδ(x-x₂+x₀)` with value `x+x₀` for `Q₂`. | `delta_position_eigenrelation` proves the generalized delta eigenrelation; `affineLineDelta_apply` checks the joint affine-line pairing convention and the multiplier theorem checks the relative coordinate. Deltas remain distributions, never normalized vectors. | Generalized position relation and affine-line pairing checked. The full Eq. (15) distributional expansion, topological support/non-`L²` representability, and a continuous selected-state semantics remain extension obligations. |
 | Printed p. 780, Eq. (18) | `PQ-QP = h/(2πi)`. | `positionSchwartz` and `momentumSchwartz` act on the named common invariant domain `𝓢(ℝ,ℂ)`; `momentum_position_commutator` proves the source sign there. | Checked on Schwartz space only; no everywhere-defined bounded `L²` identity or self-adjoint/maximal-domain theorem is claimed. |
 | Printed p. 780, first final paragraph | Either remote choice permits a certainty claim and hence a context-specific element of reality; both alternatives are then treated as belonging to one reality. | Checked `CertainPrediction` plus supplied actuality, `NoOnticDisturbance`, and `RealityCriterion` produce each `ElementOfReality`; `RealityValueBridge` produces each `PossessesValue`; `CounterfactualStability` alone aggregates them into `SimultaneouslyReal`. | `simultaneous_reality_of_alternative_predictions` checks the full conditional chain without identifying any adjacent step. |
@@ -49,10 +49,10 @@ chains. Its declarations divide the source calculations into three types:
    it probability.
 2. `generalizedPlaneWave`, `eprMomentumMode`, deltas, `affineLineDelta`, and
    `eprCorrelation` are tempered distributions. Their theorems are equality or
-   generalized-eigenvalue statements in `𝓢'`, not Hilbert-vector norm or Born-
+   generalized eigen-equations in `𝓢'`, not Hilbert-vector norm or Born-
    probability statements. `generalizedPlaneWave_apply` fixes the positive
-   Fourier sign, while the two EPR mode theorems check eigenvalues `p` and
-   `-p`.
+   Fourier sign, while the two EPR mode theorems check coefficients `p` and
+   `-p` in the corresponding operator equations.
 3. `positionSchwartz` and `momentumSchwartz` act on `𝓢(ℝ,ℂ)`.
    `momentum_position_commutator` is therefore a common-domain identity; it
    does not assert an equality of everywhere-defined bounded `L²` operators.
@@ -62,7 +62,7 @@ The source audit uses `h > 0`, hence
 scaling factor is `|h|`. The checked `affineLineDelta` convention has no hidden
 Jacobian because it pairs a test function as `∫ f(t,t+x₀) dt`.
 
-Three groups of obligations remain visible rather than assumed:
+Four groups of obligations remain visible rather than assumed:
 
 - prove the paper's raw oscillatory `p`-integral equals the scaled affine-line
   distribution through an explicit partial-Fourier/change-of-variables
@@ -80,9 +80,9 @@ Pinned mathlib has no packaged partial Fourier transform/Schwartz kernel
 theorem, unbounded spectral theorem, or projection-valued-measure layer that
 discharges those obligations. A Gaussian or box regularization would instead
 prove finite-resolution, high-probability correlations and would require an
-  additional approximate or limiting reality premise. Stage 9 therefore neither
-  uses an approximant nor connects its distributions to the exact Stage 8
-  reality criterion.
+additional approximate or limiting reality premise. Stage 9 therefore neither
+uses an approximant nor connects its distributions to the exact Stage 8
+reality criterion.
 
 ## Target finite-dimensional analogue
 

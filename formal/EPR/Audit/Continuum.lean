@@ -38,7 +38,7 @@ theorem eq6_can_exceed_one (k : ℝ) :
   norm_num
 
 /-- Eq. (2)'s positive-sign paper frequency is not `L²`, for any supplied
-`h` and `p`; no normalization wrapper is available here. -/
+nonzero `h` and any `p`; no normalization wrapper is available here. -/
 theorem eq2_planeWave_not_memLp_two (h p : ℝ) (_hh : h ≠ 0) :
     ¬ MemLp (planeWave (p / h)) 2 (volume : Measure ℝ) :=
   planeWave_not_memLp_two _
@@ -55,13 +55,13 @@ theorem eq12_planeWave_not_memLp_two (h p : ℝ) (_hh : h ≠ 0) :
 theorem positive_momentum_sign :
     distributionalMomentum 2 (eprMomentumMode 2 3) =
       (3 : ℂ) • eprMomentumMode 2 3 := by
-  exact eprMomentumMode_eigenvalue (h := 2) (p := 3) (by norm_num)
+  exact eprMomentumMode_eigenrelation (h := 2) (p := 3) (by norm_num)
 
 /-- A concrete shifted instance checks Eq. (12)'s negative momentum sign. -/
 theorem opposite_momentum_sign :
     distributionalMomentum 2 (eprShiftedOppositeMomentumMode 2 3 5) =
       (-3 : ℂ) • eprShiftedOppositeMomentumMode 2 3 5 := by
-  simpa using eprShiftedOppositeMomentumMode_eigenvalue
+  simpa using eprShiftedOppositeMomentumMode_eigenrelation
     (h := 2) (p := 3) (x₀ := 5) (by norm_num)
 
 /-- A concrete delta checks the generalized position-eigenvalue convention. -/
@@ -85,7 +85,8 @@ theorem eprCorrelation_offset_five :
       (5 : ℂ) • eprCorrelation 2 5 :=
   eprCorrelation_relativePosition 2 5
 
-/-- The same concrete nonzero scale checks exact momentum anticorrelation. -/
+/-- The same concrete nonzero scale checks the total-momentum-zero operator
+relation. -/
 theorem eprCorrelation_total_momentum_zero :
     jointMomentumSum 2 (eprCorrelation 2 5) = 0 :=
   eprCorrelation_jointMomentumSum 2 5

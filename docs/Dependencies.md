@@ -420,15 +420,16 @@ The checked project surface contains four parts:
   derivative theorem fix mathlib's `±2πi` Fourier convention;
 - `distributionalMomentum`, `eprMomentumMode`, and
   `eprShiftedOppositeMomentumMode` prove the paper's `+p` and shifted `-p`
-  generalized eigenvalues with the required `h ≠ 0`; and
+  generalized eigen-equations with the required `h ≠ 0`; and
 - `affineLineDelta` constructs `δ(x₁-x₂+x₀)` by restriction/integration,
-  `eprCorrelation` applies the source factor `h`, and the exact relative-
+  `eprCorrelation` applies the source factor `h`, and the algebraic relative-
   position and total-momentum-zero relations are proved. Separately,
   `positionSchwartz` and `momentumSchwartz` prove Eq. (18) on `𝓢(ℝ,ℂ)`.
 
 `EPR.Audit.Continuum` adds the concrete Eq. (6) weight-two witness, both mode-
 sign sentinels, a delta position value, the affine-line action, the scaled
-relative-position relation, and a concrete commutator scale.
+relative-position relation, the total-momentum-zero relation, and a concrete
+commutator scale.
 `EPR.Audit.ContinuumAxioms` checks the complete Stage 9 surface. Both audit
 modules remain private, and the analytic module is intentionally not imported
 by the finite public root pending the Stage 10 API audit.
@@ -444,6 +445,8 @@ does not claim:
 - a literal spectral-probability or positive-probability exact-outcome model;
 - that the raw Eq. (9) oscillatory momentum integral has itself been converted
   to the scaled affine-line delta in Lean;
+- topological support, non-`L²` representability, or nonzeroness of the
+  affine-line distribution and its scaled correlation;
 - an instance of finite `PerfectConditionalPrediction`, Stage 8
   `CertainPrediction`, or the exact reality criterion.
 
@@ -488,7 +491,7 @@ exact branch semantics.
   representation.
 - Represent the paper's continuous idealizations only as ordinary functions
   for nonintegrability checks, tempered distributions for generalized
-  eigenstates/correlations, and Schwartz endomorphisms for the common-domain
+  modes/correlation equations, and Schwartz endomorphisms for the common-domain
   commutator. Never coerce this analytic leaf into the finite state or EPR
   logic APIs without new spectral and conditioning infrastructure.
 
