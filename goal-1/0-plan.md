@@ -206,7 +206,8 @@ argument.
   identifies absence of interaction with “no real change” and later says a
   remote measurement does not disturb system II “in any way.” These are ontic
   premises, not calculations of an outcome-forgotten density matrix or its
-  marginal, and remain Stage 8 obligations.
+  marginal. Stage 7 left them for Stage 8, which now represents them only as
+  explicit, independently rejectable premises.
 - `EPR.Quantum.Conditional` already supplies complete projective measurements
   and their same-space nonselective Lüders state, while
   `EPR.Quantum.Bipartite` supplies finite partial traces and normalized reduced
