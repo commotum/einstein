@@ -138,10 +138,167 @@
 
 ## Stage Results
 
-**Status:** In progress on 2026-07-17.
+**Status:** Complete on 2026-07-17.
 
-- Source comparison, pinned API inspection, baseline builds, initial scans, and
-  temporary warning-as-error proof probes are complete.
-- No Stage 9 project declaration has yet been added. The next action is to move
-  the stable probe fragment into the independent continuum implementation and
-  add its diagnostic leaves.
+### Source and representation audit
+
+- Direct comparison of the facsimile and transcription found no sign,
+  variable, or Fourier-factor error in Eqs. (2), (6), and (9)--(18). The
+  positive Fourier kernel is an inverse-Fourier kernel. For the paper's
+  physical `h > 0`, the audited Eq. (9) target is
+  `h δ(x₁-x₂+x₀)`; an arbitrary nonzero real scale would contribute `|h|`.
+- The chosen representation is a separate generalized-state leaf:
+  ordinary functions only for pointwise norm/integrability calculations,
+  tempered distributions for plane-wave/delta/correlation equations, and
+  Schwartz endomorphisms for the common-domain commutator.
+- Pinned mathlib has the exact Schwartz, tempered-distribution, Fourier,
+  multiplier, derivative, affine-composition, and integration primitives used
+  below. It has generic partially defined linear maps but no ready concrete
+  self-adjoint position/momentum pair, spectral PVM layer, unbounded spectral
+  theorem, partial Fourier transform/kernel theorem, or continuous projective-
+  conditioning API.
+
+### Implemented generalized-state and domain layer
+
+- `EPR.Continuum.Idealized` imports only
+  `Mathlib.Analysis.Distribution.TemperedDistribution` and adds no dependency
+  on any finite quantum, example, no-signalling, or logic module.
+- `planeWave_norm`, `planeWave_not_memLp_two`, and
+  `planeWave_not_integrable` check the constant-modulus function and exclude
+  normalized `L²(ℝ)` or ordinary integrable-state readings of Eq. (2).
+  `unnormalizedIntervalWeight_eq` proves Eq. (6)'s `b-a` calculation without
+  naming it a probability.
+- `fourierInv_volume_eq_delta_zero` checks the pinned Fourier convention.
+  `generalizedPlaneWave = 𝓕⁻δ` and `generalizedPlaneWave_apply` identify its
+  positive-phase pairing. `deriv_generalizedPlaneWave`,
+  `eprMomentumMode_eigenrelation`, and
+  `eprShiftedOppositeMomentumMode_eigenrelation` prove the derivative, `+p`,
+  and shifted `-p` operator equations; source-facing ratio claims require
+  `h ≠ 0`.
+- `positionSchwartz` and `momentumSchwartz` are endomorphisms of the explicitly
+  named common invariant domain `𝓢(ℝ,ℂ)`.
+  `momentum_position_commutator` proves Eq. (18) with the paper's exact sign,
+  `[P,Q]f = (h/(2πi))f`, only on that domain.
+- `affineLineDelta` pairs a two-variable Schwartz test as
+  `∫t, f(t,t+x₀)`, and `eprCorrelation` applies the source factor `h`.
+  `eprCorrelation_relativePosition` proves the algebraic relation
+  `(Q₂-Q₁)Ψ=x₀Ψ`. A direct chain-rule/Fourier-at-zero argument proves affine-
+  line tangent invariance and then
+  `eprCorrelation_jointMomentumSum : (P₁+P₂)Ψ=0`.
+- These correlation theorems are algebraic distribution equations. The module
+  explicitly notes that `eprCorrelation 0 x₀ = 0`; no theorem here proves
+  nonzeroness, topological support, or lack of an `L²` regular representative
+  for the affine-line distribution.
+
+### Diagnostics and trust boundary
+
+- `EPR.Audit.Continuum` checks the concrete Eq. (6) value two on `[0,2]` and
+  its strict excess over one, both non-`L²` paper frequencies with `h ≠ 0`,
+  concrete `+3` and `-3` mode equations, a delta position relation, the affine-
+  line pairing, both correlation equations at nonzero scale two, and Eq. (18)
+  at the same scale.
+- `EPR.Audit.ContinuumAxioms` contains 50 `#check` commands and 35
+  `#print axioms` commands. Every printed theorem reports exactly
+  `[propext, Classical.choice, Quot.sound]`; no project-specific axiom occurs.
+- The public `EPR` root remains byte-for-byte unchanged from the Stage 9
+  baseline. Neither audit leaf is public, no finite module imports continuum,
+  and the continuum implementation imports no finite or interpretative layer.
+  Stage 10 owns the final decision whether the analytic leaf should be
+  re-exported.
+- `docs/PaperMap.md` now maps Eqs. (2), (6), and (9)--(18) at equation-group
+  granularity. `docs/Corrections.md` marks C-001, C-002, C-007, and C-008 with
+  checked Stage 9 status and adds C-011 for the generalized-state versus Born-
+  branch boundary. `docs/Dependencies.md` records the exact pinned surface,
+  module direction, and missing infrastructure.
+
+### Verification evidence
+
+All commands below were run from `formal/` unless stated otherwise:
+
+```text
+lake build -KwarningAsError=true EPR.Continuum.Idealized
+  -> success, 3072 jobs
+lake build -KwarningAsError=true EPR.Audit.Continuum
+  -> success, 3600 jobs
+lake build -KwarningAsError=true EPR.Audit.ContinuumAxioms
+  -> success, 3601 jobs; all 35 axiom prints have the standard footprint
+lake build -KwarningAsError=true EPR
+  -> success, 3210 jobs
+lake build -KwarningAsError=true EPR EPR.Continuum.Idealized \
+  EPR.Audit.Continuum EPR.Audit.ContinuumAxioms
+  -> success, 3616 jobs
+lake build
+  -> success, 3210 jobs
+```
+
+The default target is only `EPR`, which intentionally does not import the
+continuum branch. The explicit 3616-job command is therefore the Stage 9-wide
+build; the plain default build is retained as the public regression check.
+
+The following negative scans all returned no output with exit status 1:
+
+```text
+rg -n '\b(sorry|admit|sorryAx)\b' EPR EPR.lean
+rg -n '^[[:space:]]*(axiom|opaque|unsafe|partial[[:space:]]+def)[[:space:]]|implemented_by' EPR EPR.lean
+rg -n '\b(PureState|DensityState|BipartiteState|SubnormalizedState|PerfectConditionalPrediction|CertainPrediction|ElementOfReality|RealityCriterion|OutcomeObtained|NoOnticDisturbance|CounterfactualStability|CompleteFor)\b' EPR/Continuum EPR/Audit/Continuum.lean EPR/Audit/ContinuumAxioms.lean
+rg -n '^(public )?import EPR\.(Continuum|Audit\.Continuum)' EPR.lean EPR/Foundations.lean EPR/Quantum EPR/Examples EPR/Logic -g '*.lean'
+rg -n '^(public )?import EPR\.(Quantum|Examples|Logic|Foundations)' EPR/Continuum EPR/Audit/Continuum.lean EPR/Audit/ContinuumAxioms.lean -g '*.lean'
+rg -n 'EPR\.Audit' EPR.lean
+```
+
+From the repository root:
+
+```text
+git diff --exit-code 087f622 -- formal/EPR.lean formal/EPR/Foundations.lean \
+  formal/EPR/Quantum formal/EPR/Examples formal/EPR/Logic
+  -> success; the finite/public tree is unchanged
+git diff --check 087f622
+  -> success
+git diff --name-only 087f622
+  -> exactly the three Stage 9 Lean files, three living docs, master plan,
+     and this stage record
+git status --short --branch
+  -> clean autosave-managed `master...origin/master`
+```
+
+### Failures and corrections during implementation
+
+- Direct `fun_prop` automation did not establish temperate growth of the
+  complex exponential. Defining `generalizedPlaneWave` as `𝓕⁻δ` instead gave
+  a shorter checked construction and fixed the Fourier sign by definition.
+- The first commutator product-rule proof encountered duplicate real/complex
+  scalar-instance terms. Expressing position as real scalar multiplication on
+  the Schwartz function produced a stable derivative proof.
+- Automation did not recognize raw product projections as temperate-growth
+  functions. Packaging the relative coordinate as a continuous real-linear
+  map and the affine embedding as a diagonal continuous linear map plus a
+  constant resolved the instance boundary.
+- The initial scope left total momentum zero as a documented obligation.
+  A later direct proof used restriction-chain differentiation and the fact that
+  a Schwartz derivative integrates to zero, so both correlation equations are
+  now checked.
+- Independent reviews caught totalized division at `h = 0` in the first paper-
+  named diagnostics and wording that could conflate an operator equation with
+  a proved nonzero eigen-distribution. The diagnostics now require `h ≠ 0`,
+  use nonzero concrete correlation scales, and the code/docs explicitly record
+  the remaining nonzeroness/support/non-`L²` gap.
+- The default Lake build was discovered to cover only the finite public root.
+  Completion therefore uses the explicit combined target command above.
+
+### Remaining analytic obligations
+
+- Prove in Lean that the paper's raw oscillatory momentum integral, understood
+  distributionally and with `h > 0`, equals `h • affineLineDelta x₀`. This
+  needs an explicit scaled partial-Fourier/change-of-variables construction;
+  no ordinary convergent integral claim is acceptable.
+- If stronger classification is needed, prove `affineLineDelta` nonzero, prove
+  its topological support, and exclude an `L²` regular representative.
+- Construct concrete self-adjoint position/momentum realizations, maximal
+  domains, and spectral PVMs before assigning continuous Born measures.
+- Develop measurable continuous-outcome conditioning before claiming a
+  positive-probability exact branch. A normalized Gaussian/box approximation
+  would instead need finite-resolution error bounds and a separately stated
+  approximate or limiting reality premise.
+
+Stage 10 is the first incomplete stage. No Stage 10 implementation or public-
+API decision was begun in this turn.
