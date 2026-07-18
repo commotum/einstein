@@ -194,6 +194,21 @@ theorem outcomeProbability_eq_zero_iff_ludersBranchMatrix_eq_zero
     ← trace_ludersBranchMatrix_eq_bornWeight,
     (ludersBranchMatrix_posSemidef ρ P).trace_eq_zero_iff]
 
+/-- Strictly positive conditioning evidence exists exactly for a nonzero
+selected branch. -/
+theorem outcomeProbability_pos_iff_ludersBranchMatrix_ne_zero
+    (ρ : DensityState ι) (P : Projection ι) :
+    0 < outcomeProbability ρ P ↔ ludersBranchMatrix ρ P ≠ 0 := by
+  constructor
+  · intro hp hbranch
+    exact hp.ne' <|
+      outcomeProbability_eq_zero_iff_ludersBranchMatrix_eq_zero ρ P |>.mpr hbranch
+  · intro hbranch
+    have hp : outcomeProbability ρ P ≠ 0 := fun hzero ↦
+      hbranch <|
+        outcomeProbability_eq_zero_iff_ludersBranchMatrix_eq_zero ρ P |>.mp hzero
+    exact lt_of_le_of_ne (outcomeProbability_nonneg ρ P) hp.symm
+
 /-- Normalize a selected Lüders branch. Strict positivity is explicit in the
 type, so a zero-probability branch cannot be conditioned. -/
 noncomputable def conditionalState (ρ : DensityState ι) (P : Projection ι)
@@ -474,6 +489,46 @@ def localBLudersBranch (ρ : BipartiteState ι κ)
     (P : LocalProjectionB ι κ) : SubnormalizedState (BipartiteIndex ι κ) :=
   ludersBranch ρ P.lift
 
+/-- The subnormalized relative branch of `B` obtained from an A-side selected
+projection, before division by its probability. -/
+def localARelativeBBranch (ρ : BipartiteState ι κ)
+    (P : LocalProjectionA ι κ) : SubnormalizedState κ where
+  matrix := traceOutA (ludersBranchMatrix ρ P.lift)
+  posSemidef := traceOutA_posSemidef
+    (ludersBranchMatrix_posSemidef ρ P.lift)
+  trace_le_one := by
+    rw [trace_traceOutA, trace_ludersBranchMatrix_eq_bornWeight]
+    simpa [outcomeProbability] using outcomeProbability_le_one ρ P.lift
+
+/-- The subnormalized relative branch of `A` obtained from a B-side selected
+projection, before division by its probability. -/
+def localBRelativeABranch (ρ : BipartiteState ι κ)
+    (P : LocalProjectionB ι κ) : SubnormalizedState ι where
+  matrix := traceOutB (ludersBranchMatrix ρ P.lift)
+  posSemidef := traceOutB_posSemidef
+    (ludersBranchMatrix_posSemidef ρ P.lift)
+  trace_le_one := by
+    rw [trace_traceOutB, trace_ludersBranchMatrix_eq_bornWeight]
+    simpa [outcomeProbability] using outcomeProbability_le_one ρ P.lift
+
+omit [DecidableEq ι] in
+@[simp]
+theorem localARelativeBBranch_weight (ρ : BipartiteState ι κ)
+    (P : LocalProjectionA ι κ) :
+    (localARelativeBBranch ρ P).weight = localAOutcomeProbability ρ P := by
+  unfold SubnormalizedState.weight localARelativeBBranch
+    localAOutcomeProbability outcomeProbability
+  rw [trace_traceOutA, trace_ludersBranchMatrix_eq_bornWeight]
+
+omit [DecidableEq κ] in
+@[simp]
+theorem localBRelativeABranch_weight (ρ : BipartiteState ι κ)
+    (P : LocalProjectionB ι κ) :
+    (localBRelativeABranch ρ P).weight = localBOutcomeProbability ρ P := by
+  unfold SubnormalizedState.weight localBRelativeABranch
+    localBOutcomeProbability outcomeProbability
+  rw [trace_traceOutB, trace_ludersBranchMatrix_eq_bornWeight]
+
 /-- The normalized selected joint state after an A-side outcome. -/
 noncomputable def localAConditionalJointState (ρ : BipartiteState ι κ)
     (P : LocalProjectionA ι κ) (h : 0 < localAOutcomeProbability ρ P) :
@@ -497,6 +552,38 @@ noncomputable def localBConditionalAState (ρ : BipartiteState ι κ)
     (P : LocalProjectionB ι κ) (h : 0 < localBOutcomeProbability ρ P) :
     DensityState ι :=
   reducedA (localBConditionalJointState ρ P h)
+
+omit [DecidableEq ι] in
+/-- Normalizing the relative B branch agrees with reducing the normalized
+selected joint state. -/
+theorem normalize_localARelativeBBranch
+    (ρ : BipartiteState ι κ) (P : LocalProjectionA ι κ)
+    (h : 0 < localAOutcomeProbability ρ P) :
+    (localARelativeBBranch ρ P).normalize (by simpa using h) =
+      localAConditionalBState ρ P h := by
+  apply DensityState.ext
+  rw [SubnormalizedState.normalize_matrix, localAConditionalBState,
+    reducedB_matrix, localAConditionalJointState, conditionalState_matrix,
+    localARelativeBBranch_weight]
+  exact (map_smul (traceOutALinear (ι := ι) (κ := κ))
+    (localAOutcomeProbability ρ P : ℂ)⁻¹
+    (ludersBranchMatrix ρ P.lift)).symm
+
+omit [DecidableEq κ] in
+/-- Normalizing the relative A branch agrees with reducing the normalized
+selected joint state. -/
+theorem normalize_localBRelativeABranch
+    (ρ : BipartiteState ι κ) (P : LocalProjectionB ι κ)
+    (h : 0 < localBOutcomeProbability ρ P) :
+    (localBRelativeABranch ρ P).normalize (by simpa using h) =
+      localBConditionalAState ρ P h := by
+  apply DensityState.ext
+  rw [SubnormalizedState.normalize_matrix, localBConditionalAState,
+    reducedA_matrix, localBConditionalJointState, conditionalState_matrix,
+    localBRelativeABranch_weight]
+  exact (map_smul (traceOutBLinear (ι := ι) (κ := κ))
+    (localBOutcomeProbability ρ P : ℂ)⁻¹
+    (ludersBranchMatrix ρ P.lift)).symm
 
 omit [DecidableEq ι] in
 @[simp]
