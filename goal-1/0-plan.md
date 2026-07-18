@@ -9,11 +9,12 @@
   `goal-1/2-QUANTUM-CORE.md`.
 - Stage `3-BIPARTITE` completed on 2026-07-17; its evidence is recorded in
   `goal-1/3-BIPARTITE.md`.
-- Stage `4-CONDITIONALS` is in progress; its working record is
-  `goal-1/4-CONDITIONALS.md`.
-- The pinned project has reusable finite-dimensional quantum-core and
-  bipartite layers. No conditional state, philosophical premise, or target EPR
-  proof exists yet.
+- Stage `4-CONDITIONALS` completed on 2026-07-17; its implementation and audit
+  evidence are recorded in `goal-1/4-CONDITIONALS.md`.
+- Stage `5-STEERING` is the first incomplete stage.
+- The pinned project has reusable finite-dimensional quantum-core, bipartite,
+  and checked projective-conditioning layers. No Bell/Pauli steering package,
+  philosophical premise, or target EPR proof exists yet.
 - The local primary source is
   `einstein-1935/einstein-1935.md`, transcribed from the accompanying PDF.
 
@@ -97,7 +98,8 @@ not an ordinary Hilbert-space-vector example.
   `Quot.sound`.
 - General `[0, 1]` bounds for every projective Born probability are not encoded
   as fields or assumed. Stage 2 proves the probability-one support case needed
-  by its sharpness API; later measurement work may add general bounds if used.
+  by its sharpness API; Stage 4 derives the general bounds from a positive
+  Lüders branch and the complementary projection.
 - A pinned-source declaration search found no ready-made density-matrix,
   quantum-measurement, POVM/Kraus, or partial-trace abstraction. Later stages
   must provide narrow project-owned definitions and recheck before doing so.
@@ -106,7 +108,7 @@ not an ordinary Hilbert-space-vector example.
   implementation are `Matrix.kronecker`, its multiplication/conjugate-
   transpose/trace laws, `Matrix.PosSemidef.kronecker`, principal-submatrix
   positivity, finite indexed sums, and `Matrix.posSemidef_sum`.
-- Stage 3 will use separately tagged A-side and B-side local operator and
+- Stage 3 uses separately tagged A-side and B-side local operator and
   observable types. This prevents accidental subsystem interchange even when
   the two basis-index types happen to be definitionally equal.
 - `EPR.Quantum.Bipartite` implements ordered bipartite pure/density state
@@ -124,11 +126,21 @@ not an ordinary Hilbert-space-vector example.
   conditional-state abstraction. The checked finite ingredients include
   positive-semidefinite matrix sandwiches, trace cyclicity, positive trace,
   and the Stage 3 partial traces.
-- Stage 4 will use the projective Lüders branch `PρP`, prove its probability
-  bounds rather than add them as fields to `outcomeProbability`, and require
-  strict positive-probability evidence before normalization. A full
-  projective measurement will separately support a normalized nonselective
-  state; neither API will be identified with an unconditioned reduced state.
+- `EPR.Quantum.Conditional` now implements the projective Lüders branch `PρP`
+  as a checked subnormalized state, derives its Born-probability bounds, and
+  requires strict positive-probability evidence before normalization. It
+  separately implements complete projective measurements and their normalized
+  nonselective state, pure/density and phase bridges, and symmetric bipartite
+  conditional marginals; none is identified with an unconditioned reduced
+  state.
+- The Stage 4 `Fin 3` audit checks a proper degenerate projection, a nonzero
+  zero-probability outcome, both positive branches, nonselective dephasing,
+  preserved within-range coherence, and phase invariance. A nonmaximally
+  correlated bipartite example also proves that a selected B conditional state
+  differs from the original B marginal without introducing Stage 5's
+  Bell/Pauli scenario.
+- Stage 4's axiom audit reports only `propext`, `Classical.choice`, and
+  `Quot.sound` for the checked generic declarations and executable witnesses.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -141,7 +153,7 @@ not an ordinary Hilbert-space-vector example.
 | Eqs. (1)–(5) | Eigenstate-eigenvalue reasoning for momentum and position. | Plane wave in Eq. (2) is not normalized in `L²(ℝ)`. Preserve only as a generalized-state calculation or replace with finite-dimensional sharpness. |
 | Eq. (6) | A plane wave gives a uniform position “probability.” | As written, the state is unnormalizable and the displayed quantity is not a normalized probability distribution on `ℝ`. Record as an idealized relative density, not an ordinary Born probability. |
 | Sec. 1 after Eq. (6) | Noncommuting observables cannot both be precisely known. | Too broad for arbitrary finite-dimensional operators: noncommuting operators may share some eigenvectors. Use a pair with no common sharp state, or state the precise hypotheses under which the conclusion holds. |
-| Eqs. (7)–(8) | A bipartite state has different expansions; a selected outcome leaves system II in a conditional state. | Finite-dimensional version is clean. Account for basis choice, normalization, outcome probability, degeneracy, and selective versus nonselective measurement. |
+| Eqs. (7)–(8) | A bipartite state has different expansions; a selected outcome leaves system II in a conditional state. | Stage 4 completes the generic finite Lüders branch, raw relative branch, and positive-probability normalization while separating selective, nonselective, and reduced states. Lüders degeneracy and the nonselective state are explicit modern modeling additions; concrete alternative-setting steering remains Stage 5. |
 | Sec. 2 after Eq. (8) | Operations on I cause no real change in II once interaction ends. | Strong locality/ontic no-disturbance premise. It is not merely absence of a Hamiltonian interaction and is not implied by operational no-signalling. |
 | “two different wave functions … same reality” | Alternative measurements on I steer II to different relative states while II's underlying reality is fixed. | Requires a framework relating operational conditional states, measurement choice, outcomes, and an underlying reality/ontic state. Treat as a conditional interpretative bridge. |
 | Eqs. (9)–(18) | Perfect position/momentum correlations and noncommutation. | Eq. (9) is distributional (proportional to a delta constraint), not a normalizable bipartite `L²` vector; plane waves and deltas are generalized eigenvectors. A rigorous version needs a rigged Hilbert space, distributions/spectral measures, or normalized approximants plus limit/error bounds. |
@@ -424,8 +436,9 @@ subsystem typing.
 
 ### 4-CONDITIONALS
 
-**Status:** In progress on 2026-07-17. See `goal-1/4-CONDITIONALS.md` for the
-current source audit, design constraints, and required evidence.
+**Status:** Complete on 2026-07-17. See `goal-1/4-CONDITIONALS.md` for the
+implementation record, edge-case diagnostics, failures, scans, and axiom
+evidence.
 
 #### Big Picture Objective
 

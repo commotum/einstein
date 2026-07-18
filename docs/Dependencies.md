@@ -53,10 +53,10 @@ nondegenerate outcomes. `EPR.Audit.QuantumCoreAxioms` records that the main
 Stage 2 declarations depend only on `propext`, `Classical.choice`, and
 `Quot.sound`, the standard Lean/mathlib footprint.
 
-The current core proves the probability-one case needed for sharpness.  A
-general theorem that every projective Born probability lies in `[0, 1]` is not
-silently built into the definition and remains available as a later API
-strengthening when the measurement layer needs it.
+The core proves the probability-one case needed for sharpness. General
+projective Born-probability bounds are not silently built into that definition;
+the Stage 4 measurement layer now derives them from positivity and projection
+complementation.
 
 ## Stage 3 checked bipartite layer
 
@@ -100,7 +100,53 @@ claimed to be normalized state transformations, trace-preserving channels,
 operational no-signalling maps, or evidence of ontic no-disturbance. Reduced
 states are unconditioned marginals, not selected conditional states.
 
-## Provisional representation choice
+## Stage 4 checked conditional layer
+
+`EPR.Quantum.Conditional` uses the density-first projective Lüders rule. For a
+density state `ρ` and an orthogonal projection `P`, the raw selected branch is
+`PρP`. This is a finite measurement-model choice, especially for a degenerate
+projection; it is not attributed to the 1935 paper as its unique measurement
+formalism.
+
+The checked surface provides:
+
+- `SubnormalizedState`, carrying positive semidefiniteness and real trace at
+  most one while permitting the zero operator;
+- a real trace weight, its nonnegativity and zero-matrix characterization, and
+  normalization only from a proof that the weight is strictly positive;
+- `ludersBranchMatrix` and `ludersBranch`, with sandwich positivity, trace/Born
+  equality, outcome probabilities in `[0, 1]`, and zero/positive branch
+  characterizations;
+- `conditionalState`, whose signature requires positive outcome probability,
+  together with its matrix, selected support, and repeat-probability-one laws;
+- finite `ProjectiveMeasurement`s with nonzero projections, pairwise
+  orthogonality, identity resolution, normalized outcome probabilities, and a
+  positive trace-one `nonselectiveState` formed from the sum of all raw
+  branches;
+- projected pure kets and a normalized pure conditional state, with proofs
+  that pure and density branch descriptions agree and density-level
+  conditioning is invariant under global phase; and
+- separately typed A→B and B→A local selected joint states, subnormalized
+  remote relative branches, and normalized conditional marginals. Normalizing
+  the remote branch agrees with reducing the normalized selected joint state.
+
+Three operations are deliberately not identified:
+
+1. `conditionalState`/`localAConditionalBState` select and normalize one
+   positive-probability branch;
+2. `ProjectiveMeasurement.nonselectiveState` sums every raw branch; and
+3. `reducedA`/`reducedB` discard a subsystem from the unconditioned input.
+
+`EPR.Audit.Conditional` checks a proper rank-two `Fin 3` projection and its
+complement, a nonzero zero-probability outcome, normalization of both positive
+branches, nonselective dephasing, preservation of coherence within the
+degenerate range, global-phase invariance, and a nonmaximally correlated
+bipartite conditional state distinct from its original marginal. It does not
+define Stage 5's Bell/Pauli steering scenario. `EPR.Audit.ConditionalAxioms`
+records only `propext`, `Classical.choice`, and `Quot.sound` for the selected
+generic declarations and concrete checks.
+
+## Checked representation choice
 
 - Use generic finite basis index types `ι`, `κ` with `[Fintype]` and
   `[DecidableEq]` only where operations require them.
@@ -111,10 +157,10 @@ states are unconditioned marginals, not selected conditional states.
   distinct invariant-carrying structures in Stage 2.
 - Use the Stage 3 finite partial traces, implemented as principal-block sums
   with proved positivity, trace preservation, and product laws.
-- Begin with projective measurements. General POVMs/instruments are optional
+- Use projective measurements for the finite core. General POVMs/instruments are optional
   extensions unless later proof obligations require them.
-- Use subnormalized selective branches internally; normalize only with explicit
-  nonzero outcome-probability evidence.
+- Use checked subnormalized selective branches and normalize only with explicit
+  strictly positive outcome-probability evidence.
 
 This basis-level choice is intentional for the finite core. It keeps Bell-state
 calculations executable and aligns subsystem order with matrix Kronecker

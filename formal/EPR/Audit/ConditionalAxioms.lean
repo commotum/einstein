@@ -23,6 +23,7 @@ the public `EPR` root.
 
 #print axioms EPR.Quantum.ludersBranchMatrix_posSemidef
 #print axioms EPR.Quantum.outcomeProbability_mem_Icc
+#print axioms EPR.Quantum.outcomeProbability_eq_zero_iff_ludersBranchMatrix_eq_zero
 #print axioms EPR.Quantum.outcomeProbability_pos_iff_ludersBranchMatrix_ne_zero
 #print axioms EPR.Quantum.SubnormalizedState.normalize
 #print axioms EPR.Quantum.conditionalState
