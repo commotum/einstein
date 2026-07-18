@@ -270,8 +270,8 @@ and stale-text scans returned exit status 1 with no matches. The boundary scan
 returned only lines 16, 18, and 19 of `Conditional.lean`, all within its
 negative module disclaimer. The import scan returned only the intended public
 chain plus the two diagnostic-leaf imports. The stage-file listing ended at
-`4-CONDITIONALS.md`, confirming no Stage 5 record was created. `git diff
---check` returned status 0 with no output.
+`4-CONDITIONALS.md`, confirming no Stage 5 record was created.
+`git diff --check` returned status 0 with no output.
 
 ### Failures encountered and what changed
 
