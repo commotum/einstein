@@ -11,11 +11,11 @@
   `goal-1/3-BIPARTITE.md`.
 - Stage `4-CONDITIONALS` completed on 2026-07-17; its implementation and audit
   evidence are recorded in `goal-1/4-CONDITIONALS.md`.
-- Stage `5-STEERING` is in progress; its working record is
-  `goal-1/5-STEERING.md`.
+- Stage `5-STEERING` completed on 2026-07-17; its implementation and exhaustive
+  four-branch audit evidence are recorded in `goal-1/5-STEERING.md`.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
-  and checked projective-conditioning layers. No Bell/Pauli steering package,
-  philosophical premise, or target EPR proof exists yet.
+  checked projective-conditioning, generic steering, and concrete Bell/Pauli
+  example layers. No philosophical premise or target EPR proof exists yet.
 - The local primary source is
   `einstein-1935/einstein-1935.md`, transcribed from the accompanying PDF.
 
@@ -28,12 +28,13 @@ The library must verify the quantum-mechanical calculations it formalizes and
 must expose every philosophical or locality premise as an explicit definition,
 structure field, or theorem hypothesis.
 
-The first constructive target is a finite-dimensional bipartite steering
-example, provisionally a two-qubit Bell state with Pauli `X` and `Z`. The EPR
-reality and completeness criteria will be represented abstractly, and the
-incompleteness conclusion will be a conditional theorem. The paper's original
-position-momentum construction is a later analytic or distributional extension,
-not an ordinary Hilbert-space-vector example.
+The first constructive target is now complete as a finite-dimensional
+two-qubit `|Φ⁺⟩` steering example with Pauli `X` and `Z`. The next
+mathematical target is the exact incompatibility obstruction for those
+observables. The EPR reality and completeness criteria will be represented
+abstractly, and the incompleteness conclusion will be a conditional theorem.
+The paper's original position-momentum construction is a later analytic or
+distributional extension, not an ordinary Hilbert-space-vector example.
 
 ## Non-Negotiable Constraints and No-Cheating Rules
 
@@ -152,13 +153,18 @@ not an ordinary Hilbert-space-vector example.
   predictions. The intervening “no real change” and “same reality” claims are
   interpretative premises and are outside the steering example.
 - A pinned mathlib search found no Pauli-matrix, Bell-state, or quantum
-  steering abstraction. Stage 5 will therefore add explicit example-owned
-  qubit data over the checked generic APIs rather than alter their semantics.
-- The selected finite convention is provisionally
+  steering abstraction. Stage 5 therefore added explicit example-owned qubit
+  data over the checked project APIs rather than alter their semantics.
+- `EPR.Quantum.Steering` now packages nonvacuous positive-branch conditional
+  certainty and tagged setting-wide steering scenarios without fixing any
+  example state, setting, outcome type, or response convention.
+- `EPR.Examples.BellSteering` fixes
   `|Φ⁺⟩ = (|00⟩ + |11⟩)/√2`, subsystem order `A × B`, Pauli `Z`
   outcomes `|0⟩/|1⟩` with values `+1/-1`, and Pauli `X` outcomes
-  `|+⟩/|-⟩` with values `+1/-1`. Every one of the four A-side branches must
-  be checked independently or by an exhaustive quantified theorem.
+  `|+⟩/|-⟩` with values `+1/-1`. Uniform theorems and an exhaustive audit
+  check all four A-side branches, raw weight-`1/2` relative states, normalized
+  conditional states, matching certainty, opposite exclusion, and signed
+  sharp values.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -171,7 +177,7 @@ not an ordinary Hilbert-space-vector example.
 | Eqs. (1)–(5) | Eigenstate-eigenvalue reasoning for momentum and position. | Plane wave in Eq. (2) is not normalized in `L²(ℝ)`. Preserve only as a generalized-state calculation or replace with finite-dimensional sharpness. |
 | Eq. (6) | A plane wave gives a uniform position “probability.” | As written, the state is unnormalizable and the displayed quantity is not a normalized probability distribution on `ℝ`. Record as an idealized relative density, not an ordinary Born probability. |
 | Sec. 1 after Eq. (6) | Noncommuting observables cannot both be precisely known. | Too broad for arbitrary finite-dimensional operators: noncommuting operators may share some eigenvectors. Use a pair with no common sharp state, or state the precise hypotheses under which the conclusion holds. |
-| Eqs. (7)–(8) | A bipartite state has different expansions; a selected outcome leaves system II in a conditional state. | Stage 4 completes the generic finite Lüders branch, raw relative branch, and positive-probability normalization while separating selective, nonselective, and reduced states. Lüders degeneracy and the nonselective state are explicit modern modeling additions; concrete alternative-setting steering remains Stage 5. |
+| Eqs. (7)–(8) | A bipartite state has different expansions; a selected outcome has an associated conditional state of system II. | Stages 4–5 complete the generic finite Lüders/relative-state API, positive-probability normalization, and the concrete four-branch Bell/Pauli steering analogue. Lüders degeneracy and the nonselective state are explicit modern modeling additions. |
 | Sec. 2 after Eq. (8) | Operations on I cause no real change in II once interaction ends. | Strong locality/ontic no-disturbance premise. It is not merely absence of a Hamiltonian interaction and is not implied by operational no-signalling. |
 | “two different wave functions … same reality” | Alternative measurements on I steer II to different relative states while II's underlying reality is fixed. | Requires a framework relating operational conditional states, measurement choice, outcomes, and an underlying reality/ontic state. Treat as a conditional interpretative bridge. |
 | Eqs. (9)–(18) | Perfect position/momentum correlations and noncommutation. | Eq. (9) is distributional (proportional to a delta constraint), not a normalizable bipartite `L²` vector; plane waves and deltas are generalized eigenvectors. A rigorous version needs a rigged Hilbert space, distributions/spectral measures, or normalized approximants plus limit/error bounds. |
@@ -240,12 +246,12 @@ identified with item 4.
 
 ### Finite-dimensional core
 
-- Start with a two-qubit Bell state such as `|Φ⁺⟩`.
-- Measuring Pauli `Z` on A permits a probability-one prediction of Pauli `Z`
-  on B; measuring Pauli `X` on A permits a probability-one prediction of Pauli
-  `X` on B, with correlations/signs fixed by the selected Bell state.
-- Use the checked selective conditional/relative states from Stage 4, kept
-  distinct from the unconditioned reduced state.
+- Stage 5 fixes the two-qubit Bell state
+  `|Φ⁺⟩ = (|00⟩ + |11⟩)/√2` and proves that either Pauli `Z` or Pauli
+  `X` on A gives the checked same-label probability-one prediction on B in
+  every positive-probability branch.
+- Its checked selective conditional/relative states remain distinct from the
+  unconditioned reduced state.
 - Prove that Pauli `X` and `Z` have no common nonzero eigenvector/common sharp
   density state and separately prove that they do not commute.
 - Instantiate an abstract EPR scenario with the verified steering results, then
@@ -256,20 +262,21 @@ identified with item 4.
 
 - Mathematical layer: established `BipartiteState`, `ProjectiveMeasurement`,
   `conditionalState`, `localAConditionalBState`, `SharpValue`, and
-  `JointlySharp`, followed by planned `PerfectlyPredicts` and
-  `OperationalNoSignalling` declarations.
+  `JointlySharp`, plus established `PerfectConditionalPrediction` and
+  `SteeringScenario`; `OperationalNoSignalling` remains planned for Stage 7.
 - Interpretative layer: `PhysicalSituation`, `ElementOfReality`,
   `NoOnticDisturbance`, `SimultaneouslyReal`, `TheoryCounterpart`,
   `CompleteFor`, `RealityCriterion`, `CounterfactualStability`.
-- Example/results layer: `bellPhiPlus`, `bell_z_perfectPrediction`,
-  `bell_x_perfectPrediction`, `pauliXZ_not_commute`,
-  `pauliXZ_not_jointlySharp`, `local_measurement_noSignalling`.
+- Established example/results layer: `bellPhiPlus`,
+  `bellPhiPlus_perfectPrediction`, and `bellPhiPlusSteeringScenario`.
+- Planned Stage 6/7 results: `pauliXZ_not_commute`,
+  `pauliXZ_not_jointlySharp`, and `local_measurement_noSignalling`.
 - Logic layer: `reality_of_perfect_prediction`,
   `simultaneous_reality_of_alternative_predictions`,
   `not_complete_of_no_joint_sharp_representation`, and a top-level
   `epr_incompleteness` theorem whose hypotheses reveal the full dependency.
 
-Names already established in Stages 1–4 follow the checked pinned APIs. Later
+Names already established in Stages 1–5 follow the checked pinned APIs. Later
 names and representations must continue to follow compiled infrastructure
 rather than forcing this sketch onto unsuitable abstractions.
 
@@ -486,8 +493,9 @@ them distinct from nonselective post-measurement and reduced states.
 
 ### 5-STEERING
 
-**Status:** In progress on 2026-07-17. See `goal-1/5-STEERING.md` for the
-source audit, conventions, proof obligations, and verification plan.
+**Status:** Complete on 2026-07-17. See `goal-1/5-STEERING.md` for the source
+audit, exact conventions, four-branch theorem inventory, failures, scans,
+builds, and axiom evidence.
 
 #### Big Picture Objective
 
