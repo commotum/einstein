@@ -297,7 +297,7 @@ This is a directional A-to-B result for complete projective Lüders
 measurements, not a theorem about arbitrary channels, communication protocols,
 spacetime separation, absence of interaction, or ontic locality. It does not
 assert an actual outcome and does not turn a selected conditional state into an
-unconditioned marginal. The paper's printed-p. 779 claim that absence of
+unconditioned marginal. The paper's printed p. 779 claim that absence of
 interaction means no real change in system II is represented in Stage 8 only
 as an explicit premise, not a consequence of `OperationalNoSignallingAtoB`.
 
@@ -383,10 +383,11 @@ of the other. `EPR.Audit.EPRLogic` imports those two public example modules and
 valued sentinels independently reject actuality, the reality criterion, the
 value bridge, counterfactual aggregation, and the completeness representation
 bridge. In particular,
-`operational_noSignalling_with_ontic_change` proves the conjunction
-`OperationalNoSignallingAtoB bellPhiPlus.toDensity pauliZMeasurement ∧
-¬ NoOnticDisturbance onticallyChangedBellSituation`, so the checked operational
-theorem coexists with explicit toy ontic change. `EPR.Audit.EPRLogicAxioms`
+`operational_noSignalling_with_ontic_change` proves operational no-signalling
+for `bellPhiPlus.toDensity` and `pauliZMeasurement` together with
+`¬ NoOnticDisturbance onticallyChangedBellSituation`, so the checked
+operational theorem coexists with explicit toy ontic change.
+`EPR.Audit.EPRLogicAxioms`
 imports only `EPR.Audit.EPRLogic`, checks every Stage 8 public and diagnostic
 declaration, and prints their axiom dependencies. It too remains outside the
 public `EPR` import chain.

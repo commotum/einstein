@@ -61,9 +61,9 @@ following explicit boundary sequence:
    `CertainPrediction I s q v` says its target value is predictable with
    certainty. Neither predicate implies the other.
 2. The supplied `RealityCriterion I` consumes actuality, certainty, and
-   `NoOnticDisturbance s` to produce `ElementOfReality I s.postReality
-   s.context q`. It is sufficient-only. The supplied `RealityValueBridge I`
-   separately produces `PossessesValue I s.postReality s.context q v`.
+   `NoOnticDisturbance s` to produce a context-indexed `ElementOfReality`. It
+   is sufficient-only. The supplied `RealityValueBridge I` separately produces
+   `PossessesValue I s.postReality s.context q v`.
 3. `SamePriorReality s t` plus ontic stability in both alternative situations
    gives `SamePostReality s t` through
    `samePostReality_of_noOnticDisturbance`. This is same-reality transport, not
@@ -157,7 +157,7 @@ This result is directional from A to B and is limited to finite complete
 projective Lüders measurements. It establishes no theorem about arbitrary
 channels, communication protocols, spacetime separation, absence of
 interaction, physical reality, or ontic disturbance. In particular, the
-paper's printed-p. 779 inference from no interaction to “no real change” is
+paper's printed p. 779 inference from no interaction to “no real change” is
 encoded in Stage 8 only as the explicit `NoOnticDisturbance` premise.
 
 This construction is a normalized finite role analogue of the alternative-
