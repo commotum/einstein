@@ -24,8 +24,13 @@
   recorded in `goal-1/8-EPR-LOGIC.md`.
 - Stage `9-CONTINUUM` completed on 2026-07-17; its generalized-state,
   common-domain, normalization-obstruction, dependency-boundary, and trust-
-  audit evidence are recorded in `goal-1/9-CONTINUUM.md`. Stage `10-AUDIT` is
-  the first incomplete stage.
+  audit evidence are recorded in `goal-1/9-CONTINUUM.md`.
+- Stage `10-AUDIT` completed on 2026-07-18; its public-surface, source-map,
+  correction, premise-example, declaration-complete trust, and final
+  verification evidence are recorded in `goal-1/10-AUDIT.md`.
+- All indexed stages and all success metrics in this plan are complete for the
+  bounded formalization described below. The remaining analytic and modeling
+  extensions are explicit and are not claims marked complete.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
   checked projective-conditioning, generic steering, concrete Bell/Pauli
   example, checked incompatibility/no-signalling layers, and a conditional EPR
@@ -49,8 +54,8 @@ conditional EPR logic reconstruction, and generalized-state audit of the
 paper's original position-momentum construction are now complete. The
 continuum construction is an analytic/distributional extension, not an
 ordinary Hilbert-space-vector example and not a dependency of the completed
-finite argument. Stage 10 is auditing the whole library's public API, source
-traceability, correction record, and trust boundary.
+finite argument. Stage 10 completed the whole-library public API, source
+traceability, correction record, and trust-boundary audit.
 
 ## Non-Negotiable Constraints and No-Cheating Rules
 
@@ -341,6 +346,23 @@ traceability, correction record, and trust boundary.
   independently decline the reality/value/counterfactual/representation
   bridges and that combine operational no-signalling with ontic change. It
   does not yet have a positive premise-instantiation witness.
+- Stage 10 now documents and re-exports all three stable branches from `EPR`.
+  A root-only 65-check public sentinel compiles, while source scans and compiler
+  inventory confirm that the 14-module public closure reaches no audit module
+  and preserves both finite/continuum directions of independence.
+- `EPR.Audit.EPRLogic` now also contains coherent positive bridge models and a
+  toy invocation of `epr_incompleteness` with every premise explicit. The
+  README, 21-row line-anchored PaperMap, 14-entry correction log, dependency
+  record, and supplied-PDF links state the exact checked scope and limits.
+- The eight stage axiom leaves contain 288 unique prints and cover 132 public
+  theorems. The complementary audit covers the remaining 71 of 203 plus three
+  interface declarations. `FinalAxioms` reaches all 20 audit modules; its 379
+  reports contain 45 axiom-free results and otherwise only `propext`,
+  `Classical.choice`, and/or `Quot.sound`.
+- Final warning-as-error builds pass with 3614 jobs for the default public
+  target, 3633 for `EPR.Audit.FinalAxioms`, and 3634 for the combined public/
+  API/final target. Hole, forbidden-declaration, shortcut, import, dependency,
+  theorem-body, table, pin, whitespace, and baseline-diff checks pass.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -598,6 +620,36 @@ The original objective is achieved only when all of the following hold:
   project-specific `axiom` declarations.
 - Focused builds, the full build, source scans, `git diff --check`, and
   `#print axioms` audits for the main results all pass and are recorded.
+
+### Stage 10 final success-metric audit
+
+All ten requirements above are satisfied, with exact commands and counts in
+`goal-1/10-AUDIT.md`:
+
+1. Lean `v4.31.0`, mathlib
+   `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`, the manifest, and the documented
+   warning-as-error default/aggregate builds agree.
+2. The generic public state, bipartite, measurement, conditioning, steering,
+   incompatibility, no-signalling, logic, example, and continuum layers are
+   reachable through a root-only surface sentinel without diagnostic imports.
+3. The finite Bell/Pauli example and the stronger no-joint-sharp obstruction
+   are completely checked, including every branch and the bare-noncommutation
+   counterexample.
+4. Operational no-signalling remains mathematically and dependency-wise
+   separate from the explicit ontic no-disturbance premise.
+5. Every interpretative judgment and bridge remains explicit, documented, and
+   both positively instantiable and independently rejectable in diagnostics.
+6. The main conclusion remains conditional and is tied to the checked steering
+   and Pauli obstruction, with no unconditional philosophical premise.
+7. The source map and correction log disposition every material paper claim as
+   checked, analogous, premised, corrected, out of scope, or precisely open.
+8. The continuum fragment is rigorously distributional/common-domain and never
+   masquerades as a normalized `L²` state; stronger obligations remain named.
+9. Source scans and complete 203/203 public theorem axiom coverage find no hole,
+   project-specific axiom, or forbidden shortcut.
+10. Focused/default/aggregate builds, 14-module public and 20-module audit
+    inventories, 379 axiom reports, dependency/body/table/pin scans,
+    `git diff --check`, and autosave-managed final status are recorded.
 
 ## Indexed Stages
 
@@ -891,8 +943,9 @@ the strongest feasible formal reconstruction.
 
 ### 10-AUDIT
 
-**Status:** In progress on 2026-07-17. See `goal-1/10-AUDIT.md` for the baseline,
-implementation decisions, and accumulating verification evidence.
+**Status:** Complete on 2026-07-18. See `goal-1/10-AUDIT.md` for the baseline,
+implementation decisions, failures corrected, exact verification evidence,
+and requirement-by-requirement whole-goal audit.
 
 #### Big Picture Objective
 
