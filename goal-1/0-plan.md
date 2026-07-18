@@ -13,6 +13,9 @@
   evidence are recorded in `goal-1/4-CONDITIONALS.md`.
 - Stage `5-STEERING` completed on 2026-07-17; its implementation and exhaustive
   four-branch audit evidence are recorded in `goal-1/5-STEERING.md`.
+- Stage `6-INCOMPATIBILITY` is in progress; its source audit, exact obstruction
+  design, and verification plan are recorded in
+  `goal-1/6-INCOMPATIBILITY.md`.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
   checked projective-conditioning, generic steering, and concrete Bell/Pauli
   example layers. No philosophical premise or target EPR proof exists yet.
@@ -165,6 +168,22 @@ distributional extension, not an ordinary Hilbert-space-vector example.
   check all four A-side branches, raw weight-`1/2` relative states, normalized
   conditional states, matching certainty, opposite exclusion, and signed
   sharp values.
+- At Stage 6 start, `lake build EPR.Examples.BellSteering` and full
+  `lake build` succeed with 3202 and 3204 jobs. Proof-hole and
+  declaration-level project-axiom scans have no matches. The only preexisting
+  working-tree change is the completed Stage 5 evidence record, which must be
+  preserved.
+- The original facsimile was reinspected directly at page 778. Its general
+  statement that noncommuting operators preclude simultaneous precise
+  knowledge is stronger than is valid for arbitrary finite-dimensional
+  observables. Stage 6 will separately check matrix noncommutation and the
+  stronger no-common-eigenvector/no-joint-sharp-state obstruction for the
+  selected Pauli pair.
+- Pinned Lean/mathlib already supplies the algebraic predicate `Commute`; the
+  project supplies `PureState.IsEigenstate`, `DensityState.SharpValue`, and
+  `DensityState.JointlySharp`. No checked project theorem yet connects a
+  jointly sharp mixed state to a common nonzero eigenvector, and no Pauli
+  incompatibility result exists.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -522,6 +541,10 @@ Verify a finite-dimensional EPR steering example completely.
 - Focused and adjacent builds, scans, and diff check pass.
 
 ### 6-INCOMPATIBILITY
+
+**Status:** In progress on 2026-07-17. See
+`goal-1/6-INCOMPATIBILITY.md` for the source boundary, generic bridge design,
+concrete Pauli obligations, counterexample requirement, and verification plan.
 
 #### Big Picture Objective
 
