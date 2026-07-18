@@ -423,8 +423,8 @@ The checked project surface contains four parts:
   generalized eigenvalues with the required `h ≠ 0`; and
 - `affineLineDelta` constructs `δ(x₁-x₂+x₀)` by restriction/integration,
   `eprCorrelation` applies the source factor `h`, and the exact relative-
-  position relation is proved. Separately, `positionSchwartz` and
-  `momentumSchwartz` prove Eq. (18) on `𝓢(ℝ,ℂ)`.
+  position and total-momentum-zero relations are proved. Separately,
+  `positionSchwartz` and `momentumSchwartz` prove Eq. (18) on `𝓢(ℝ,ℂ)`.
 
 `EPR.Audit.Continuum` adds the concrete Eq. (6) weight-two witness, both mode-
 sign sentinels, a delta position value, the affine-line action, the scaled
@@ -444,7 +444,6 @@ does not claim:
 - a literal spectral-probability or positive-probability exact-outcome model;
 - that the raw Eq. (9) oscillatory momentum integral has itself been converted
   to the scaled affine-line delta in Lean;
-- the companion joint momentum equation `(P₁+P₂)Ψ=0`; or
 - an instance of finite `PerfectConditionalPrediction`, Stage 8
   `CertainPrediction`, or the exact reality criterion.
 

@@ -15,9 +15,9 @@ distinguishes checked declarations from later obligations.
 | Modern finite operational result, not a separate paper claim | Discarding the outcome of a complete projective Lüders measurement on A leaves B's unconditioned reduced density and every projective Born statistic unchanged. | Sum the raw weighted local branches, prove directional A-to-B reduced-state equality, and keep this outcome-forgotten state distinct from every selected conditional state. | `EPR.Quantum.NoSignalling` proves the generic finite result; `EPR.Examples.BellNoSignalling` checks both Bell/Pauli source settings and their selected-state contrast. |
 | Printed p. 779, paragraph after Eq. (8) | Because I and II no longer interact, the paper says that an operation on I causes no real change in II. | `NoOnticDisturbance s` means equality of the modeled prior and post realities. It is an explicit ontic premise, not a consequence of absent interaction or `OperationalNoSignallingAtoB`. | Checked as a separate predicate in `EPR.Logic.EPR`; `EPR.Audit.EPRLogic.operational_noSignalling_with_ontic_change` demonstrates operational no-signalling coexisting with its denial in a toy ontology. |
 | Printed p. 779, “two different wave functions … same reality” | Two alternative conditional wave functions are assigned to the same underlying reality of II. | `SamePriorReality s t`, together with `NoOnticDisturbance s` and `NoOnticDisturbance t`, transports the alternatives to `SamePostReality s t`. This transport is distinct from counterfactual aggregation. | Checked by `samePostReality_of_noOnticDisturbance`; the equality premises remain explicit. |
-| Printed pp. 779–780, Eq. (9) | The oscillatory momentum integral defines a two-particle state with exact relative-position support. | For physical `h > 0` its audited distributional value is exactly `h δ(x₁-x₂+x₀)`, not an `L²(ℝ²)` wavefunction. `affineLineDelta` integrates Schwartz tests along `x₂=x₁+x₀`; `eprCorrelation` supplies the `h` scaling and `eprCorrelation_relativePosition` proves `(Q₂-Q₁)Ψ=x₀Ψ`. | Affine-line distribution, action, scaling, and relative-position relation checked. The raw oscillatory-integral equality and `(P₁+P₂)Ψ=0` remain named extension obligations. |
+| Printed pp. 779–780, Eq. (9) | The oscillatory momentum integral is intended as a two-particle object with exact relative-position and opposite-momentum correlations. | For physical `h > 0` its audited distributional target is `h δ(x₁-x₂+x₀)`, not an `L²(ℝ²)` wavefunction. `affineLineDelta` pairs tests as `∫f(t,t+x₀)dt`; `eprCorrelation_relativePosition` and `eprCorrelation_jointMomentumSum` prove `(Q₂-Q₁)Ψ=x₀Ψ` and `(P₁+P₂)Ψ=0`. | Affine-line pairing, scaling, and both algebraic correlation relations checked. The raw oscillatory-integral equality, topological-support/non-`L²` representability theorems, and continuous conditioning remain named extension obligations. |
 | Printed pp. 779–780, Eqs. (10)–(13) | Continuous momentum modes on I select an opposite-momentum coefficient mode on II. | Both signs are non-`L²`. `eprMomentumMode_eigenvalue` checks `+p`; `eprShiftedOppositeMomentumMode_eigenvalue` includes the `x₀` phase and checks `-p`, with `h ≠ 0`, as tempered-distribution eigenrelations. Eq. (11) is distributional, not a Bochner `L²` expansion. | Mode signs/eigenvalues and nonnormalizability checked. Delta normalization, direct-integral coefficient extraction, and spectral conditioning remain outside the current API. |
-| Printed p. 780, Eqs. (14)–(17) | Dirac position modes yield the selected coefficient `hδ(x-x₂+x₀)` with value `x+x₀` for `Q₂`. | `delta_position_eigenrelation` proves the generalized delta eigenrelation; `affineLineDelta_apply` and the relative-position theorem check the joint support convention. Deltas remain distributions, never normalized vectors. | Generalized position relation and joint affine support checked. The full Eq. (15) distributional expansion and a continuous selected-state semantics remain extension obligations. |
+| Printed p. 780, Eqs. (14)–(17) | Dirac position modes yield the selected coefficient `hδ(x-x₂+x₀)` with value `x+x₀` for `Q₂`. | `delta_position_eigenrelation` proves the generalized delta eigenrelation; `affineLineDelta_apply` checks the joint affine-line pairing convention and the multiplier theorem checks the relative coordinate. Deltas remain distributions, never normalized vectors. | Generalized position relation and affine-line pairing checked. The full Eq. (15) distributional expansion, topological support/non-`L²` representability, and a continuous selected-state semantics remain extension obligations. |
 | Printed p. 780, Eq. (18) | `PQ-QP = h/(2πi)`. | `positionSchwartz` and `momentumSchwartz` act on the named common invariant domain `𝓢(ℝ,ℂ)`; `momentum_position_commutator` proves the source sign there. | Checked on Schwartz space only; no everywhere-defined bounded `L²` identity or self-adjoint/maximal-domain theorem is claimed. |
 | Printed p. 780, first final paragraph | Either remote choice permits a certainty claim and hence a context-specific element of reality; both alternatives are then treated as belonging to one reality. | Checked `CertainPrediction` plus supplied actuality, `NoOnticDisturbance`, and `RealityCriterion` produce each `ElementOfReality`; `RealityValueBridge` produces each `PossessesValue`; `CounterfactualStability` alone aggregates them into `SimultaneouslyReal`. | `simultaneous_reality_of_alternative_predictions` checks the full conditional chain without identifying any adjacent step. |
 | Printed p. 780, incompleteness paragraph | Assuming completeness and simultaneous reality conflicts with the wave-function description. | `CompleteFor` supplies two `TheoryCounterpart`s; `CompletenessRepresentationBridge` turns those counterparts and `SimultaneouslyReal` into `JointlyRepresents`; a separate no-joint-representation fact refutes relative completeness. | `epr_incompleteness` proves the abstract conditional result. `bellPhiPlus_epr_incompleteness` specializes it using the bundled four-branch Bell scenario and the `pauliXZ_noJointSharpState` contradiction. |
@@ -62,12 +62,14 @@ The source audit uses `h > 0`, hence
 scaling factor is `|h|`. The checked `affineLineDelta` convention has no hidden
 Jacobian because it pairs a test function as `∫ f(t,t+x₀) dt`.
 
-Four obligations remain visible rather than assumed:
+Three groups of obligations remain visible rather than assumed:
 
 - prove the paper's raw oscillatory `p`-integral equals the scaled affine-line
   distribution through an explicit partial-Fourier/change-of-variables
   construction;
-- prove the companion joint momentum relation `(P₁+P₂)Ψ=0` distributionally;
+- prove topological support/non-`L²` representability of the affine-line
+  distribution if those stronger classifications are needed beyond its
+  checked pairing and multiplier/derivative relations;
 - construct concrete self-adjoint position and momentum operators, their
   maximal domains and spectral PVMs, if literal continuous Born probabilities
   are required; and
@@ -78,9 +80,9 @@ Pinned mathlib has no packaged partial Fourier transform/Schwartz kernel
 theorem, unbounded spectral theorem, or projection-valued-measure layer that
 discharges those obligations. A Gaussian or box regularization would instead
 prove finite-resolution, high-probability correlations and would require an
-additional approximate or limiting reality premise. Stage 9 therefore neither
-uses an approximant nor connects its distributions to the exact Stage 8
-reality criterion.
+  additional approximate or limiting reality premise. Stage 9 therefore neither
+  uses an approximant nor connects its distributions to the exact Stage 8
+  reality criterion.
 
 ## Target finite-dimensional analogue
 

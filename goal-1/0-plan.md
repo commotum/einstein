@@ -277,7 +277,7 @@ argument.
   axioms; all remaining declarations use at most the established standard
   `propext`, `Classical.choice`, and `Quot.sound` footprint.
 - At Stage 9 start the worktree is clean at autosave commit `087f622`.
-  `lake build EPR` and full `lake build` both succeed with 3210 jobs;
+  `lake build EPR` and the default `lake build` both succeed with 3210 jobs;
   proof-hole and declaration-level project-axiom scans return no matches.
 - The four-page facsimile and its transcription were compared directly for
   Eqs. (2), (6), and (9)--(18). No transcription, sign, variable, or Fourier-
@@ -518,9 +518,9 @@ verified example and the abstract logic.
   approximant proves only finite-resolution, high-probability correlation and
   cannot instantiate the unmodified exact reality criterion without a new
   limiting or approximate-reality premise. Concrete self-adjoint operators,
-  spectral PVMs, both distributional correlation equations, and a rigorous
-  continuous conditional-measurement semantics remain explicit extension
-  obligations unless proved in this stage.
+  spectral PVMs and a rigorous continuous conditional-measurement semantics
+  remain explicit extension obligations. Stage 9's direct affine-line proof
+  now checks both distributional correlation equations.
 - **Constructive/classical footprint:** completed finite layers use the audited
   standard footprint `propext`, `Classical.choice`, and `Quot.sound`. Continue
   to record, not conceal, the footprint of later main declarations.

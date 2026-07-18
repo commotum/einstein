@@ -69,18 +69,27 @@ namespace EPR.Audit.ContinuumAxioms
 #check EPR.Continuum.affineLineRestriction
 #check EPR.Continuum.affineLineDelta
 #check EPR.Continuum.affineLineDelta_apply
+#check EPR.Continuum.integral_lineDeriv_schwartz_eq_zero
+#check EPR.Continuum.affineLineRestriction_lineDeriv
+#check EPR.Continuum.affineLineDelta_diagonalDerivative
+#check EPR.Continuum.jointMomentumSum
 #check EPR.Continuum.relativePosition
 #check EPR.Continuum.affineLineDelta_relativePosition
 #check EPR.Continuum.eprCorrelation
 #check EPR.Continuum.eprCorrelation_apply
 #check EPR.Continuum.eprCorrelation_relativePosition
+#check EPR.Continuum.eprCorrelation_jointMomentumSum
 
 #print axioms EPR.Continuum.affineLineEmbedding_hasTemperateGrowth
 #print axioms EPR.Continuum.affineLineEmbedding_antilipschitz
 #print axioms EPR.Continuum.affineLineDelta_apply
+#print axioms EPR.Continuum.integral_lineDeriv_schwartz_eq_zero
+#print axioms EPR.Continuum.affineLineRestriction_lineDeriv
+#print axioms EPR.Continuum.affineLineDelta_diagonalDerivative
 #print axioms EPR.Continuum.affineLineDelta_relativePosition
 #print axioms EPR.Continuum.eprCorrelation_apply
 #print axioms EPR.Continuum.eprCorrelation_relativePosition
+#print axioms EPR.Continuum.eprCorrelation_jointMomentumSum
 
 /-! ## Executable and symbolic sentinels -/
 
@@ -93,6 +102,7 @@ namespace EPR.Audit.ContinuumAxioms
 #check EPR.Audit.Continuum.delta_position_value_three
 #check EPR.Audit.Continuum.affineLineDelta_offset_apply
 #check EPR.Audit.Continuum.eprCorrelation_offset_five
+#check EPR.Audit.Continuum.eprCorrelation_total_momentum_zero
 #check EPR.Audit.Continuum.commutator_scale_two
 
 #print axioms EPR.Audit.Continuum.eq6_zero_two
@@ -104,6 +114,7 @@ namespace EPR.Audit.ContinuumAxioms
 #print axioms EPR.Audit.Continuum.delta_position_value_three
 #print axioms EPR.Audit.Continuum.affineLineDelta_offset_apply
 #print axioms EPR.Audit.Continuum.eprCorrelation_offset_five
+#print axioms EPR.Audit.Continuum.eprCorrelation_total_momentum_zero
 #print axioms EPR.Audit.Continuum.commutator_scale_two
 
 end EPR.Audit.ContinuumAxioms

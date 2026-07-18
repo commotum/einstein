@@ -5,7 +5,7 @@
 - Stage 9 is the first incomplete stage in `goal-1/0-plan.md`; Stages 1--8 and
   their evidence records are preserved, and Stage 10 has not begun.
 - The Stage 9 start worktree is clean at autosave commit `087f622`.
-- From `formal/`, baseline `lake build EPR` and full `lake build` both succeed
+- From `formal/`, baseline `lake build EPR` and default `lake build` both succeed
   with 3210 jobs. Initial proof-hole and declaration-level project-axiom scans
   return no matches.
 - Lean remains pinned to `v4.31.0`; mathlib remains pinned to
@@ -51,11 +51,11 @@
 - Position and momentum will act on `𝓢(ℝ, ℂ)`, making the common invariant
   domain explicit. No everywhere-defined bounded-operator claim on `L²` will
   be made.
-- The exact affine-line relative-position relation is within scope. A complete
-  formal proof of the companion momentum anticorrelation, the paper-specific
-  scaled Fourier identity, self-adjoint closures/spectra, and conditional
-  measurement semantics remains optional only if it compiles without
-  distorting the model; otherwise each is a precise future obligation.
+- Both affine-line correlation relations are within scope and now have checked
+  direct proofs. The paper-specific raw scaled Fourier-integral identity,
+  self-adjoint closures/spectra, topological-support/non-`L²` classification of
+  the affine-line distribution, and conditional measurement semantics remain
+  precise future obligations.
 - Normalized Gaussian or box regularizations would change exact correlations
   into finite-resolution/high-probability claims. Stage 9 will document that
   boundary rather than silently use the exact EPR reality criterion on an
@@ -79,8 +79,9 @@
   - position and momentum maps on Schwartz space and the exact Eq. (18)
     commutator there;
   - the delta generalized position-eigenrelation;
-  - the affine-line tempered distribution representing the support relation in
-    Eq. (9), its pairing formula, and its exact relative-position relation.
+  - the affine-line tempered distribution representing Eq. (9), its pairing
+    formula, its relative-position relation, and its total-momentum-zero
+    relation.
 - Add a private continuum audit module with executable/symbolic sentinels that
   Eq. (6) can exceed one, both momentum-sign plane waves are non-`L²`, and the
   checked generalized identities have the intended signatures.
@@ -109,8 +110,8 @@
 - Keep every audit/axiom module outside the public `EPR` import chain.
 - Check the Eq. (6) diagnostic produces a value greater than one, so its name
   and use cannot masquerade as a normalized probability.
-- Record any unproved scaled-delta, momentum-correlation, spectral, or
-  conditional-semantics claim as an obligation rather than an axiom.
+- Record any unproved raw scaled-Fourier-integral, support/non-`L²`, spectral,
+  or conditional-semantics claim as an obligation rather than an axiom.
 - Run warning-as-error focused builds, full build, source/import/signature
   scans, whitespace checks, and an autosave-history diff review.
 

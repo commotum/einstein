@@ -393,7 +393,10 @@ theorem eprCorrelation_apply (h x₀ : ℝ) (f : 𝓢(ℝ × ℝ, ℂ)) :
   simp [eprCorrelation, affineLineDelta_apply]
 
 /-- Scaling by the paper's factor `h` preserves the exact relative-position
-correlation. -/
+operator relation. This algebraic equality also holds at `h = 0`, where
+`eprCorrelation` is zero; interpreting it as a nonzero generalized state uses
+the source's physical `h > 0` and would additionally require a nonzeroness
+proof not supplied here. -/
 theorem eprCorrelation_relativePosition (h x₀ : ℝ) :
     TemperedDistribution.smulLeftCLM ℂ relativePosition
         (eprCorrelation h x₀) =
@@ -403,7 +406,9 @@ theorem eprCorrelation_relativePosition (h x₀ : ℝ) :
   rw [mul_comm]
 
 /-- The paper-scaled affine-line correlation has exact total momentum zero:
-`(P₁ + P₂) Ψ = 0` as a tempered-distribution equality. -/
+`(P₁ + P₂) Ψ = 0` as a tempered-distribution equality. As above, the theorem
+is an algebraic relation for every `h`, not a separate proof that the
+distribution is nonzero. -/
 theorem eprCorrelation_jointMomentumSum (h x₀ : ℝ) :
     jointMomentumSum h (eprCorrelation h x₀) = 0 := by
   rw [jointMomentumSum, smul_apply, eprCorrelation, map_smul,

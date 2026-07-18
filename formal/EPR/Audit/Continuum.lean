@@ -39,13 +39,13 @@ theorem eq6_can_exceed_one (k : ℝ) :
 
 /-- Eq. (2)'s positive-sign paper frequency is not `L²`, for any supplied
 `h` and `p`; no normalization wrapper is available here. -/
-theorem eq2_planeWave_not_memLp_two (h p : ℝ) :
+theorem eq2_planeWave_not_memLp_two (h p : ℝ) (_hh : h ≠ 0) :
     ¬ MemLp (planeWave (p / h)) 2 (volume : Measure ℝ) :=
   planeWave_not_memLp_two _
 
 /-- Eq. (12)'s negative-sign frequency is equally non-`L²`; its constant phase
 cannot repair normalization. -/
-theorem eq12_planeWave_not_memLp_two (h p : ℝ) :
+theorem eq12_planeWave_not_memLp_two (h p : ℝ) (_hh : h ≠ 0) :
     ¬ MemLp (planeWave (-p / h)) 2 (volume : Measure ℝ) :=
   planeWave_not_memLp_two _
 
@@ -77,12 +77,18 @@ theorem affineLineDelta_offset_apply (f : 𝓢(ℝ × ℝ, ℂ)) :
     affineLineDelta 5 f = ∫ t : ℝ, f (t, t + 5) :=
   affineLineDelta_apply 5 f
 
-/-- The paper-scaled correlation has exact relative-position value five. -/
-theorem eprCorrelation_offset_five (h : ℝ) :
+/-- At the concrete nonzero scale two, the paper-scaled correlation obeys the
+relative-position value-five operator relation. -/
+theorem eprCorrelation_offset_five :
     TemperedDistribution.smulLeftCLM ℂ relativePosition
-        (eprCorrelation h 5) =
-      (5 : ℂ) • eprCorrelation h 5 :=
-  eprCorrelation_relativePosition h 5
+        (eprCorrelation 2 5) =
+      (5 : ℂ) • eprCorrelation 2 5 :=
+  eprCorrelation_relativePosition 2 5
+
+/-- The same concrete nonzero scale checks exact momentum anticorrelation. -/
+theorem eprCorrelation_total_momentum_zero :
+    jointMomentumSum 2 (eprCorrelation 2 5) = 0 :=
+  eprCorrelation_jointMomentumSum 2 5
 
 /-! ## Eq. (18) common-domain sentinel -/
 

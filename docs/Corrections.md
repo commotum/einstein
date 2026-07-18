@@ -133,10 +133,11 @@ yet been formalized.
   `δ(x₁ - x₂ + x₀)` by integration along `x₂ = x₁ + x₀`, and
   `eprCorrelation` records its source-scaled `hδ` form.
   `eprCorrelation_relativePosition` proves
-  `(Q₂-Q₁)Ψ = x₀Ψ`. The raw oscillatory `p`-integral-to-`hδ` equality, the
-  companion `(P₁+P₂)Ψ = 0` relation, and continuous conditional-measurement
-  semantics remain explicit extension obligations because pinned mathlib has
-  no partial Fourier transform/kernel theorem or unbounded spectral PVM layer.
+  `(Q₂-Q₁)Ψ = x₀Ψ`, while `eprCorrelation_jointMomentumSum` proves
+  `(P₁+P₂)Ψ = 0`. The raw oscillatory `p`-integral-to-`hδ` equality remains an
+  explicit scaled partial-Fourier/change-of-variables obligation. Continuous
+  conditional-measurement semantics separately require a self-adjoint/
+  spectral-PVM and measurable-conditioning layer absent from pinned mathlib.
 
 ## C-008: Commutator domain
 
