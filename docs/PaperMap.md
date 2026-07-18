@@ -214,9 +214,10 @@ encoded in Stage 8 only as the explicit `NoOnticDisturbance` premise.
 This construction is a normalized finite role analogue of the alternative-
 expansion and conditional-certainty steps. It neither digitizes nor
 approximates Eq. (9), does not identify Pauli `X` or `Z` with the paper's
-position or momentum operators, and does not reproduce the `-p` momentum
-relation, the `x + x₀` position offset, or the unbounded-operator commutator in
-Eq. (18). Those analytic claims remain Stage 9 obligations. Stage 7 checks
-only the finite operational result above; Stage 8 checks the conditional EPR
-inference while leaving actuality, ontic stability, reality, value,
-counterfactual, and completeness-representation claims as named premises.
+position or momentum operators, and does not consume the generalized `-p`
+mode, relative-position offset, or Schwartz commutator checked separately in
+Stage 9. No theorem bridges those distributions to the finite conditional-
+probability API. Stage 7 checks only the finite operational result above;
+Stage 8 checks the conditional EPR inference while leaving actuality, ontic
+stability, reality, value, counterfactual, and completeness-representation
+claims as named premises.

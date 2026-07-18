@@ -392,6 +392,68 @@ imports only `EPR.Audit.EPRLogic`, checks every Stage 8 public and diagnostic
 declaration, and prints their axiom dependencies. It too remains outside the
 public `EPR` import chain.
 
+## Stage 9 checked continuum leaf
+
+`EPR.Continuum.Idealized` imports only
+`Mathlib.Analysis.Distribution.TemperedDistribution`. That pinned module
+transitively supplies the exact facilities used here:
+
+- `SchwartzMap`, `SchwartzMap.derivCLM`, polynomial multiplication through
+  `SchwartzMap.smulLeftCLM`, Schwartz integration, and affine precomposition
+  through `SchwartzMap.compCLMOfAntilipschitz`;
+- `TemperedDistribution`, `TemperedDistribution.delta`, distributional
+  derivatives/multipliers, the Fourier and inverse-Fourier transforms, and
+  `TemperedDistribution.fourier_delta_zero`;
+- measure-to-tempered-distribution conversion and the pointwise-convergence
+  continuous-linear-map construction used to integrate along an affine line;
+  and
+- the ordinary `MemLp`, integrability, interval-integral, and complex-
+  exponential facts used to prove the plane-wave obstruction.
+
+The checked project surface contains four parts:
+
+- `planeWave_not_memLp_two` and `planeWave_not_integrable` prove that the
+  source modes are not normalized `L²` vectors, while
+  `unnormalizedIntervalWeight_eq` retains Eq. (6) only as Lebesgue interval
+  weight;
+- `generalizedPlaneWave = 𝓕⁻δ`, its action theorem, and the distributional
+  derivative theorem fix mathlib's `±2πi` Fourier convention;
+- `distributionalMomentum`, `eprMomentumMode`, and
+  `eprShiftedOppositeMomentumMode` prove the paper's `+p` and shifted `-p`
+  generalized eigenvalues with the required `h ≠ 0`; and
+- `affineLineDelta` constructs `δ(x₁-x₂+x₀)` by restriction/integration,
+  `eprCorrelation` applies the source factor `h`, and the exact relative-
+  position relation is proved. Separately, `positionSchwartz` and
+  `momentumSchwartz` prove Eq. (18) on `𝓢(ℝ,ℂ)`.
+
+`EPR.Audit.Continuum` adds the concrete Eq. (6) weight-two witness, both mode-
+sign sentinels, a delta position value, the affine-line action, the scaled
+relative-position relation, and a concrete commutator scale.
+`EPR.Audit.ContinuumAxioms` checks the complete Stage 9 surface. Both audit
+modules remain private, and the analytic module is intentionally not imported
+by the finite public root pending the Stage 10 API audit.
+
+The pinned tree also contains generic `LinearPMap` infrastructure and dense
+Schwartz-to-`L²` embeddings, but it has no packaged concrete self-adjoint
+position/momentum pair, projection-valued measure, unbounded spectral theorem,
+partial Fourier transform, distribution tensor product/Schwartz kernel
+theorem, or continuous projective-conditioning API. Consequently this stage
+does not claim:
+
+- the maximal domains, closures, or self-adjointness of `P` and `Q` on `L²`;
+- a literal spectral-probability or positive-probability exact-outcome model;
+- that the raw Eq. (9) oscillatory momentum integral has itself been converted
+  to the scaled affine-line delta in Lean;
+- the companion joint momentum equation `(P₁+P₂)Ψ=0`; or
+- an instance of finite `PerfectConditionalPrediction`, Stage 8
+  `CertainPrediction`, or the exact reality criterion.
+
+Those are explicit future analytic obligations, not project axioms. Available
+Gaussian Fourier/integrability results could support a later normalized
+regularization, but no bundled Gaussian Schwartz map or ready `L²` EPR error
+bound was found; any such regularization would produce approximate rather than
+exact branch semantics.
+
 ## Checked representation choice
 
 - Use generic finite basis index types `ι`, `κ` with `[Fintype]` and
@@ -425,6 +487,11 @@ public `EPR` import chain.
 - Let `CompleteFor` supply only theory counterparts; require an explicit
   `CompletenessRepresentationBridge` before concluding exact joint
   representation.
+- Represent the paper's continuous idealizations only as ordinary functions
+  for nonintegrability checks, tempered distributions for generalized
+  eigenstates/correlations, and Schwartz endomorphisms for the common-domain
+  commutator. Never coerce this analytic leaf into the finite state or EPR
+  logic APIs without new spectral and conditioning infrastructure.
 
 This basis-level choice is intentional for the finite core. It keeps Bell-state
 calculations executable and aligns subsystem order with matrix Kronecker
@@ -462,11 +529,18 @@ EPR.Logic.EPR + EPR.Examples.PauliIncompatibility
 EPR.Examples.BellNoSignalling + EPR.Examples.BellEPR
   -> EPR (public root)
 
+Mathlib.Analysis.Distribution.TemperedDistribution
+  -> EPR.Continuum.Idealized
+       -> EPR.Audit.Continuum
+            -> EPR.Audit.ContinuumAxioms
+
 EPR.Examples.BellEPR + EPR.Examples.BellNoSignalling + Mathlib.Tactic
   -> EPR.Audit.EPRLogic
        -> EPR.Audit.EPRLogicAxioms
 
-All EPR.Audit.* modules remain diagnostic leaves outside the public root.
+All `EPR.Audit.*` modules remain diagnostic leaves outside the public root.
+The continuum branch is also independent and is not re-exported by `EPR`
+during Stage 9; Stage 10 owns the final thin-public-API decision.
 ```
 
 The import graph therefore enforces the semantic boundary: the lightweight
