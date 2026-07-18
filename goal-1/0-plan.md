@@ -15,8 +15,10 @@
   four-branch audit evidence are recorded in `goal-1/5-STEERING.md`.
 - Stage `6-INCOMPATIBILITY` completed on 2026-07-17; its implementation,
   counterexample, and verification evidence are recorded in
-  `goal-1/6-INCOMPATIBILITY.md`. Stage `7-NO-SIGNALLING` is the first
-  incomplete stage.
+  `goal-1/6-INCOMPATIBILITY.md`.
+- Stage `7-NO-SIGNALLING` is in progress; its source boundary, exact finite
+  operational claim, and verification plan are recorded in
+  `goal-1/7-NO-SIGNALLING.md`.
 - The pinned project has reusable finite-dimensional quantum-core, bipartite,
   checked projective-conditioning, generic steering, concrete Bell/Pauli
   example, and checked incompatibility layers. No philosophical premise or
@@ -193,6 +195,24 @@ vector example.
   checks an explicit Hermitian `Fin 3` counterexample to the invalid generic
   inference from noncommutation alone; its separate axiom leaf reports only
   the standard Lean/mathlib footprint for substantive declarations.
+- At Stage 7 start the worktree is clean. `lake build
+  EPR.Examples.PauliIncompatibility` and full `lake build` succeed with 3204
+  and 3206 jobs, and proof-hole/project-declaration scans have no matches.
+- The facsimile was reinspected directly at printed pages 779–780. The paper
+  identifies absence of interaction with “no real change” and later says a
+  remote measurement does not disturb system II “in any way.” These are ontic
+  premises, not calculations of an outcome-forgotten density matrix or its
+  marginal, and remain Stage 8 obligations.
+- `EPR.Quantum.Conditional` already supplies complete projective measurements
+  and their same-space nonselective Lüders state, while
+  `EPR.Quantum.Bipartite` supplies finite partial traces and normalized reduced
+  states. No checked theorem yet constructs the local A-side nonselective
+  update or proves its B marginal invariant.
+- A fresh pinned-source search found general C*-algebra completely positive
+  maps but no ready quantum-channel, Kraus-family, trace-preserving-channel,
+  partial-trace, or no-signalling abstraction. Stage 7 therefore targets the
+  complete local projective Lüders operation already supported by the project,
+  without claiming an arbitrary-channel theorem.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -267,8 +287,10 @@ modal or counterfactual steps. Tentative ingredients are:
 
 Operational no-signalling will be separately defined and proved for the
 finite-dimensional quantum model as invariance of B's unconditioned marginal
-under a trace-preserving local operation on A. It will neither imply nor be
-identified with item 4.
+under a complete local projective Lüders measurement on A when the outcome is
+discarded. This checked operation is trace preserving; the stage will not
+silently generalize it to arbitrary channels. The result will neither imply
+nor be identified with item 4.
 
 ## Tentative Formalization Direction
 
@@ -292,7 +314,8 @@ identified with item 4.
 - Mathematical layer: established `BipartiteState`, `ProjectiveMeasurement`,
   `conditionalState`, `localAConditionalBState`, `SharpValue`, and
   `JointlySharp`, plus established `PerfectConditionalPrediction` and
-  `SteeringScenario`; `OperationalNoSignalling` remains planned for Stage 7.
+  `SteeringScenario`; Stage 7 is checking `OperationalNoSignallingAtoB`, a
+  local A-side nonselective state, and its reduced-B/statistical invariance.
 - Interpretative layer: `PhysicalSituation`, `ElementOfReality`,
   `NoOnticDisturbance`, `SimultaneouslyReal`, `TheoryCounterpart`,
   `CompleteFor`, `RealityCriterion`, `CounterfactualStability`.
@@ -300,8 +323,9 @@ identified with item 4.
   `bellPhiPlus_perfectPrediction`, and `bellPhiPlusSteeringScenario`.
 - Established Stage 6 results: `pauliXZ_noncommutes`,
   `pauliXZ_noCommonEigenvector`, `pauliXZ_noJointSharpState`, and
-  `pauliXZ_not_jointlySharp`. `local_measurement_noSignalling` remains a
-  provisional Stage 7 name.
+  `pauliXZ_not_jointlySharp`. Candidate Stage 7 names are
+  `localANonselectiveState`, `localA_nonselective_noSignalling`, and a Bell
+  setting-independence specialization; compiled APIs remain authoritative.
 - Logic layer: `reality_of_perfect_prediction`,
   `simultaneous_reality_of_alternative_predictions`,
   `not_complete_of_no_joint_sharp_representation`, and a top-level
@@ -585,6 +609,10 @@ observables.
 
 ### 7-NO-SIGNALLING
 
+**Status:** In progress on 2026-07-17. See
+`goal-1/7-NO-SIGNALLING.md` for the source distinction, checked model scope,
+generic proof design, Bell obligations, and verification plan.
+
 #### Big Picture Objective
 
 Prove the operational no-signalling fact and formally separate it from EPR's
@@ -592,22 +620,30 @@ stronger locality/no-real-change premise.
 
 #### Detailed Implementation Plan
 
-- Define operational no-signalling as invariance of B's unconditioned outcome
-  statistics or marginal under allowed local nonselective operations on A.
-- Prove it for the selected measurement scenario, and generically if the chosen
-  infrastructure supports a clean theorem.
-- Define ontic no-disturbance only in the interpretative layer.
+- Define directional operational no-signalling by equality of B's
+  unconditioned reduced density before and after a complete A-side projective
+  Lüders measurement with its outcome discarded.
+- Prove the marginal equality generically, derive invariance of every B-side
+  projective statistic and equality between alternative A settings, and
+  specialize it to the checked Bell/Pauli scenario.
+- Leave ontic no-disturbance entirely to the Stage 8 interpretative layer.
 - Provide explicit non-implication documentation: the operational theorem is
   not used as a proof of the ontic premise.
 
 #### Completion Requirements
 
-- The theorem compares unconditioned marginals, not selected conditional states.
-- Conditional steering changes are demonstrated without contradicting the
-  no-signalling result.
+- The main theorem compares unconditioned B marginals, not a selected
+  conditional state or an unweighted sum of normalized branches.
+- All B-side projective Born statistics and both Bell A-settings inherit the
+  marginal equality, while selected Bell conditional states are checked to
+  differ by outcome or setting without contradiction.
+- The generic result is directional A→B and scoped to complete local
+  projective Lüders measurements; broader channels or bidirectional claims are
+  not asserted without separate checked constructions.
 - Dependency inspection confirms that ontic locality is not derived from the
   operational theorem.
-- Focused/adjacent builds, scans, and diff check pass.
+- Focused/adjacent/full builds, executable and axiom audits, no-cheating scans,
+  and diff check pass.
 
 ### 8-EPR-LOGIC
 
