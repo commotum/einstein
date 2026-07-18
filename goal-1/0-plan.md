@@ -322,6 +322,26 @@ traceability, correction record, and trust boundary; that stage has not begun.
   forbidden-declaration, proof-hole, finite-tree-regression, and whitespace
   checks pass. The detailed evidence and remaining analytic obligations are in
   `goal-1/9-CONTINUUM.md`.
+- At Stage 10 start the worktree is clean at autosave commit `6fb4051`.
+  Warning-as-error `lake build EPR EPR.Continuum.Idealized` succeeds with 3614
+  jobs, while default `lake build` succeeds with 3210 jobs because the current
+  `EPR` root still exports only the finite no-signalling and EPR branches.
+- The public leaf modules have module documentation and no audit imports, but
+  `EPR.lean` has no library overview and does not yet re-export the stable
+  continuum leaf. The top-level README still describes the theorem as
+  eventual work and does not document the completed public surface or a
+  whole-library audit command.
+- Eight stage-specific axiom leaves currently contain 245 `#check` commands
+  and 283 `#print axioms` commands. They cover the finite core, bipartite,
+  conditioning, steering, incompatibility, no-signalling, EPR logic, and
+  continuum layers separately; no single diagnostic target yet compiles the
+  entire audit surface and checks representative declarations through the
+  public root.
+- `EPR.Audit.EPRLogic` already gives checked examples that independently
+  decline the reality/value/counterfactual/representation bridges and that
+  combine operational no-signalling with ontic change. Stage 10 must add a
+  positive premise-instantiation witness and make both usage directions easy
+  to find without exposing diagnostics through the public root.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 

@@ -101,6 +101,8 @@ namespace EPR.Audit.EPRLogicAxioms
 /-! ## Separation and dependency sentinels -/
 
 #check EPR.Audit.EPRLogic.propositionInterpretation
+#check EPR.Audit.EPRLogic.acceptingInterpretation
+#check EPR.Audit.EPRLogic.allInterpretiveBridges_satisfiable
 #check EPR.Audit.EPRLogic.firstSituation
 #check EPR.Audit.EPRLogic.secondSituation
 #check EPR.Audit.EPRLogic.toy_alternative_contexts
@@ -121,6 +123,8 @@ namespace EPR.Audit.EPRLogicAxioms
 #check EPR.Audit.EPRLogic.bell_all_outcomes_no_joint_representation
 
 #print axioms EPR.Audit.EPRLogic.propositionInterpretation
+#print axioms EPR.Audit.EPRLogic.acceptingInterpretation
+#print axioms EPR.Audit.EPRLogic.allInterpretiveBridges_satisfiable
 #print axioms EPR.Audit.EPRLogic.firstSituation
 #print axioms EPR.Audit.EPRLogic.secondSituation
 #print axioms EPR.Audit.EPRLogic.toy_alternative_contexts

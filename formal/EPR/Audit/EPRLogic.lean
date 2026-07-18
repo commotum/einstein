@@ -41,6 +41,25 @@ def propositionInterpretation
   theoryCounterpart := fun _ _ ↦ counterpart
   jointlyRepresents := fun _ _ _ _ _ ↦ joint
 
+/-- A proposition-valued interpretation in which every semantic relation is
+available. This is a consistency/usage example, not a physical assertion. -/
+def acceptingInterpretation :
+    EPRInterpretation Bool Unit Unit Unit Unit :=
+  propositionInterpretation True True True True True True True
+
+/-- All four interpretative bridges can be supplied coherently in the toy
+accepting interpretation. The separate rejection witnesses below show that
+none is forced by the vocabulary. -/
+theorem allInterpretiveBridges_satisfiable :
+    RealityCriterion acceptingInterpretation ∧
+      RealityValueBridge acceptingInterpretation ∧
+      CounterfactualStability acceptingInterpretation ∧
+      CompletenessRepresentationBridge acceptingInterpretation := by
+  simp [RealityCriterion, RealityValueBridge, CounterfactualStability,
+    CompletenessRepresentationBridge, OutcomeObtained, CertainPrediction,
+    ElementOfReality, PossessesValue, SimultaneouslyReal, TheoryCounterpart,
+    JointlyRepresents, acceptingInterpretation, propositionInterpretation]
+
 /-- First toy context, with unchanged unit-valued reality. -/
 def firstSituation : PhysicalSituation Bool Unit where
   context := false
