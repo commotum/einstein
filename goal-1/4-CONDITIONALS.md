@@ -239,6 +239,40 @@ was not started here.
   `68218e876d2a38b1985b8590fff244a83c321783`; the manifest and Lake file still
   pin mathlib `fabf563a7c95a166b8d7b6efca11c8b4dc9d911f`.
 
+All final commands below were run from `formal/`:
+
+```bash
+lake build EPR.Quantum.Conditional
+lake build EPR.Audit.Conditional
+lake build EPR.Audit.ConditionalAxioms
+lake build EPR
+lake build
+lake build -KwarningAsError=true EPR EPR.Quantum.Conditional EPR.Audit.Conditional EPR.Audit.ConditionalAxioms
+lake env lean --version
+rg -n '\b(sorry|admit)\b' EPR EPR.lean
+rg -n '^[[:space:]]*(axiom|opaque|unsafe)[[:space:]]' EPR EPR.lean
+rg -n '(instance.*Coe|CoeTC|CoeFun|\bcoe\b)' EPR/Quantum/Conditional.lean
+rg -ni 'Fin[[:space:]]+[23]|qubit|bell|pauli|steer|perfect.?predict|ElementOfReality|NoOnticDisturbance|CompleteFor|SimultaneouslyReal|plane[ -]wave|Dirac|delta|L²' EPR/Quantum/Conditional.lean
+rg -ni 'no-signalling|ontic|reality|disturbance|separation|actual.*outcome|outcome.*occurred' EPR/Quantum/Conditional.lean
+rg -n '^(public )?import ' EPR.lean EPR/Quantum/Conditional.lean EPR/Quantum/Bipartite.lean EPR/Audit/Conditional.lean EPR/Audit/ConditionalAxioms.lean
+rg -n '[[:blank:]]+$' EPR.lean EPR/Quantum/Conditional.lean EPR/Audit/Conditional.lean EPR/Audit/ConditionalAxioms.lean ../goal-1/0-plan.md ../goal-1/4-CONDITIONALS.md ../docs/Dependencies.md ../docs/PaperMap.md
+rg -n --glob '!4-CONDITIONALS.md' '4-CONDITIONALS.*[Ii]n progress|No conditional state|selective reduction remains|remains a `4-CONDITIONALS`|selectiveBranchMatrix|conditionalBState|conditionalAState' ../goal-1 ../docs
+rg --files ../goal-1 | sort
+rg -n 'fabf563a7c95a166b8d7b6efca11c8b4dc9d911f|leanprover/lean4:v4.31.0' lake-manifest.json lakefile.toml lean-toolchain
+git diff --check
+```
+
+The five ordinary build invocations succeeded with the job counts recorded
+above; the combined warning-as-error build succeeded with 3204 jobs. The Lean
+version and pin search returned exactly the recorded toolchain and mathlib
+commits. The hole, declaration, coercion, generic-shortcut, trailing-whitespace,
+and stale-text scans returned exit status 1 with no matches. The boundary scan
+returned only lines 16, 18, and 19 of `Conditional.lean`, all within its
+negative module disclaimer. The import scan returned only the intended public
+chain plus the two diagnostic-leaf imports. The stage-file listing ended at
+`4-CONDITIONALS.md`, confirming no Stage 5 record was created. `git diff
+--check` returned status 0 with no output.
+
 ### Failures encountered and what changed
 
 - The first support proof did not close by simplification because matrix
@@ -264,6 +298,26 @@ was not started here.
 - Several dependent local-branch lemmas initially carried unused
   `DecidableEq` instances. Scoped `omit` declarations removed those accidental
   dependencies and made the compiled signatures match the actual proofs.
+
+### What was learned
+
+- Positivity of the Lüders sandwich plus positivity of the complementary
+  projection is enough to derive all projective Born probabilities in
+  `[0, 1]`; no probability-bound field is needed in the core definition.
+- A subnormalized remote branch accurately retains the coefficient weight in
+  the finite form of Eqs. (7)–(8). Linearity of the Stage 3 partial traces then
+  proves that normalization and remote reduction agree when probability is
+  positive.
+- A proper degenerate projection and an input with within-range coherence are
+  necessary diagnostics: rank-one-only examples would not expose an update
+  that silently collapses too far.
+- Global phase belongs at the ket-representative level, while physical
+  invariance is equality of density and conditional density states, not
+  literal equality of phase-different kets.
+- A selected remote conditional state can differ from the original
+  unconditioned marginal. That distinction is the substrate for later
+  steering, but it is not yet an operational no-signalling statement and says
+  nothing about ontic disturbance.
 
 ### Plan update
 

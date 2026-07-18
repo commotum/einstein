@@ -101,8 +101,9 @@ not an ordinary Hilbert-space-vector example.
   by its sharpness API; Stage 4 derives the general bounds from a positive
   Lüders branch and the complementary projection.
 - A pinned-source declaration search found no ready-made density-matrix,
-  quantum-measurement, POVM/Kraus, or partial-trace abstraction. Later stages
-  must provide narrow project-owned definitions and recheck before doing so.
+  quantum-measurement, POVM/Kraus, or partial-trace abstraction. This led
+  Stages 2–4 to provide narrow project-owned definitions; any future
+  generalization must recheck the pinned source before adding infrastructure.
 - The Stage 3 recheck again found no partial-trace or reduced-state definition
   in the pinned mathlib source. The checked ingredients for a narrow finite
   implementation are `Matrix.kronecker`, its multiplication/conjugate-
@@ -226,8 +227,8 @@ identified with item 4.
 - Measuring Pauli `Z` on A permits a probability-one prediction of Pauli `Z`
   on B; measuring Pauli `X` on A permits a probability-one prediction of Pauli
   `X` on B, with correlations/signs fixed by the selected Bell state.
-- Define selective conditional/relative states and distinguish them from the
-  unconditioned reduced state.
+- Use the checked selective conditional/relative states from Stage 4, kept
+  distinct from the unconditioned reduced state.
 - Prove that Pauli `X` and `Z` have no common nonzero eigenvector/common sharp
   density state and separately prove that they do not commute.
 - Instantiate an abstract EPR scenario with the verified steering results, then
@@ -236,9 +237,10 @@ identified with item 4.
 
 ### Candidate declarations (names provisional)
 
-- Mathematical layer: `BipartiteState`, `LocalObservable`,
-  `OutcomeProbability`, `ConditionalState`, `PerfectlyPredicts`,
-  `SharpValue`, `JointlySharp`, `OperationalNoSignalling`.
+- Mathematical layer: established `BipartiteState`, `ProjectiveMeasurement`,
+  `conditionalState`, `localAConditionalBState`, `SharpValue`, and
+  `JointlySharp`, followed by planned `PerfectlyPredicts` and
+  `OperationalNoSignalling` declarations.
 - Interpretative layer: `PhysicalSituation`, `ElementOfReality`,
   `NoOnticDisturbance`, `SimultaneouslyReal`, `TheoryCounterpart`,
   `CompleteFor`, `RealityCriterion`, `CounterfactualStability`.
@@ -250,8 +252,9 @@ identified with item 4.
   `not_complete_of_no_joint_sharp_representation`, and a top-level
   `epr_incompleteness` theorem whose hypotheses reveal the full dependency.
 
-Exact names and representations must follow the available mathlib APIs found
-in Stage 1 rather than forcing this sketch onto unsuitable infrastructure.
+Names already established in Stages 1–4 follow the checked pinned APIs. Later
+names and representations must continue to follow compiled infrastructure
+rather than forcing this sketch onto unsuitable abstractions.
 
 ### Proposed dependency direction
 
@@ -277,31 +280,33 @@ The interpretative interfaces may be algebraically lightweight and should not
 import heavy analytic modules. The final bridge module may import both the
 verified example and the abstract logic.
 
-## Dependency Notes and Open Design Choices
+## Dependency Decisions and Remaining Open Choices
 
-- **Mathlib API availability:** inspect current support for complex inner
-  product spaces, tensor products, finite matrices, positive operators,
-  density matrices, partial trace, spectral projectors, and quantum
-  measurement. Do not assume a polished quantum-information API exists.
-- **Representation choice:** matrices on `Fin n`, linear maps on finite
-  Hilbert spaces, or an existing density-operator API. Favor the smallest
-  representation that supports reusable conditional states and partial trace
-  without excessive coercion or fragile basis dependence.
-- **State representation:** pure vectors simplify the Bell steering proof;
-  density matrices simplify selective/nonselective measurement and
-  no-signalling. A layered API may use both with an explicit conversion.
-- **Tensor products:** choose between abstract Hilbert tensor products and a
-  finite basis-level equivalence. The latter may reduce analytic overhead but
-  should not hide subsystem structure.
-- **Measurement semantics:** projective measurements are sufficient for the
-  first example. General instruments/POVMs should be introduced only if they
-  improve reuse without blocking the core proof.
-- **Zero-probability outcomes:** conditional state must require a proof of
-  positive/nonzero outcome probability or return an option/subnormalized
-  state. Never divide silently by zero.
-- **Sharpness:** define probability-one spectral outcome directly for the
-  finite setting and relate it to eigenspaces. Avoid assuming all observables
-  have a preferred nondegenerate basis.
+- **Pinned mathlib surface (resolved for Stages 1–4):** repeated source searches
+  found no project-ready density-state, partial-trace, or quantum-measurement
+  layer. The project uses only checked finite matrix, positivity, trace, sum,
+  and Kronecker APIs and supplies narrow invariant-bearing definitions.
+- **Representation choice (resolved for the finite core):** states and
+  operators use generic finite basis index types and complex matrices, without
+  restricting the reusable API to `Fin n` or adding broad coercions.
+- **State representation (resolved):** normalized pure states and positive
+  trace-one density states coexist with an explicit pure-to-density bridge.
+  Measurement semantics are density-first, while projected-ket lemmas support
+  later pure-state calculations.
+- **Tensor products (resolved):** the finite core uses ordered product indices
+  and matrix Kronecker products, with tagged local operations and checked
+  partial traces preserving subsystem identity.
+- **Measurement semantics (resolved for the first example):** finite
+  projective measurements and the Lüders rule are sufficient. General
+  instruments/POVMs remain optional extensions and must not be added without a
+  later proof obligation.
+- **Zero-probability outcomes (resolved):** raw subnormalized branches include
+  zero, while every normalized conditional state requires a strictly positive
+  probability proof. The API never divides silently by zero.
+- **Sharpness (resolved for the finite setting):** probability-one spectral
+  outcomes are related to support/eigenstates without assuming preferred
+  nondegenerate bases. Stage 6 must still prove the chosen pair has no common
+  sharp state.
 - **Modal indexing:** determine whether worlds, preparations, measurement
   contexts, and times are explicit indices. The minimal abstraction must still
   make “same reality” and alternative choices well typed.
@@ -316,9 +321,9 @@ verified example and the abstract logic.
   approximants. An approximant proves high-probability rather than exact
   probability-one prediction, so it does not instantiate the unmodified EPR
   reality criterion without an additional limiting principle.
-- **Constructive/classical footprint:** finite-dimensional spectral arguments
-  may use classical choice or quotient soundness inherited from mathlib.
-  Record, do not conceal, the axiom footprint of main declarations.
+- **Constructive/classical footprint:** completed finite layers use the audited
+  standard footprint `propext`, `Classical.choice`, and `Quot.sound`. Continue
+  to record, not conceal, the footprint of later main declarations.
 
 ## Success Metrics and Final Verification Requirements
 
@@ -449,7 +454,7 @@ them distinct from nonselective post-measurement and reduced states.
 
 - Define projective measurement outcomes and branch probabilities.
 - Define subnormalized branches and normalized conditional states with explicit
-  nonzero-probability evidence.
+  strictly positive-probability evidence.
 - Prove normalization and probability formulas.
 - Relate vector-level and density-level descriptions if both are used.
 - Document degeneracy and phase invariance.
@@ -635,17 +640,11 @@ audit for the whole project.
 
 ## Major Uncertainties to Resolve During the Goal
 
-- Whether mathlib's current tensor-product and partial-trace APIs make an
-  abstract finite-Hilbert-space treatment economical, or whether matrices on
-  fixed finite indices should underpin the initial reusable layer.
-- Whether the main example should be pure-state-first or density-matrix-first.
 - The weakest precise formal definitions of completeness and theory
   counterpart that recover EPR's inference without building predictability
   into completeness by fiat.
 - The correct modal/context indexing for alternative measurements and “the
   same reality.”
-- How much general measurement theory belongs in the stable core versus a
-  projective-measurement specialization.
 - Whether a rigorous continuous-variable extension is proportionate to
   available mathlib infrastructure; this cannot be decided before checked API
   probes.
