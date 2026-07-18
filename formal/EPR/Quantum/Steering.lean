@@ -25,7 +25,7 @@ namespace EPR.Quantum
 outcome certain. Strict source positivity prevents vacuous claims about an
 impossible branch. -/
 structure PerfectConditionalPrediction {ι κ : Type*}
-    [Fintype ι] [Fintype κ] [DecidableEq ι] [DecidableEq κ]
+    [Fintype ι] [Fintype κ] [DecidableEq κ]
     (ρ : BipartiteState ι κ) (source : LocalProjectionA ι κ)
     {B : Observable κ} (target : ProjectiveOutcome B) : Prop where
   source_positive : 0 < localAOutcomeProbability ρ source

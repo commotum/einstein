@@ -180,6 +180,16 @@ state `|Φ⁺⟩ = (|00⟩ + |11⟩)/√2`. Its fixed conventions are outcome la
 - `bellPhiPlusSteeringScenario`, whose identity response packages the two
   same-label Pauli correlations across all four possible branches.
 
+`EPR.Audit.BellSteering` expands the quantified results into an explicit
+four-case table and checks the basis/value conventions, both Bell expansions,
+raw branch weights and matrices, normalized conditionals, matching and
+opposite probabilities, signed sharp values, X-minus off-diagonal signs, and
+an A-lift coordinate sentinel that detects a tensor-factor swap despite the
+Bell state's symmetry. `EPR.Audit.BellSteeringAxioms` is a separate diagnostic
+leaf that reviews the generic and concrete signatures and prints the axioms of
+the principal declarations. Neither audit is imported by the public `EPR`
+root, which ends at `EPR.Examples.BellSteering`.
+
 These are selected-branch mathematical facts. They assert no actual outcome,
 common sharp state, noncommutation result, unconditioned marginal invariance,
 operational no-signalling, ontic disturbance or locality, element of reality,

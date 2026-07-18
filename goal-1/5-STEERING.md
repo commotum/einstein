@@ -34,8 +34,8 @@
   eigenvalue `-1`. For `Z`, these are `|0⟩` and `|1⟩`; for `X`, they are
   `|+⟩ = (|0⟩ + |1⟩)/√2` and `|-⟩ = (|0⟩ - |1⟩)/√2`.
 - With `|Φ⁺⟩`, both settings have same-label correlations: every A-side
-  outcome has probability `1/2`, leaves B in the matching eigenstate density,
-  and gives probability one for the matching B projector.
+  outcome has probability `1/2`, has the associated conditional B eigenstate
+  density, and gives probability one for the matching B projector.
 - “Perfect prediction” in this stage is an operational conditional-state fact:
   a positive-probability A branch makes the matching B outcome have Born
   probability one, equivalently the conditional B density has the matching
@@ -58,8 +58,9 @@ conventions explicit.
 
 ## Detailed Implementation Plan
 
-- Add `EPR.Examples.BellSteering` over `EPR.Quantum.Conditional` and expose it
-  through the public root.
+- Add the generic `EPR.Quantum.Steering` package over
+  `EPR.Quantum.Conditional`, instantiate it in `EPR.Examples.BellSteering`,
+  and expose the example through the public root.
 - Define normalized computational and `X`-basis pure states, Pauli `Z` and
   Pauli `X` observables, their rank-one spectral projections/outcomes, and
   complete binary projective measurements.
@@ -70,6 +71,9 @@ conventions explicit.
   coercing or swapping subsystem roles.
 - Prove for both settings and both outcomes that the A-side probability is
   `1/2` and hence strictly positive.
+- Prove that each raw relative-B branch has trace weight `1/2` and matrix
+  `(1/2) • targetDensity`, retaining the selected coefficient's norm before
+  normalization.
 - Prove for all four branches that B's normalized conditional density is the
   matching eigenstate density. Derive matching B-projector probability one and
   matching Pauli sharp value.
@@ -84,9 +88,11 @@ conventions explicit.
 Expected files:
 
 - `formal/EPR.lean`
+- `formal/EPR/Quantum/Steering.lean`
 - `formal/EPR/Examples/BellSteering.lean`
 - `formal/EPR/Audit/BellSteering.lean`
 - `formal/EPR/Audit/BellSteeringAxioms.lean`
+- `docs/Corrections.md`
 - `docs/Dependencies.md`
 - `docs/PaperMap.md`
 - `goal-1/0-plan.md`
@@ -108,6 +114,11 @@ Expected files:
 - Derive probability-one prediction from the verified conditional state or
   projector support. Do not make it a constructor field supplied by the
   caller.
+- Inspect `PerfectConditionalPrediction.source_positive` and every packaged
+  branch, confirming certainty cannot be satisfied vacuously at probability
+  zero.
+- Because `|Φ⁺⟩` is swap-symmetric, include a lifted-projector coordinate
+  check that distinguishes an A-side action on `(0,1)` from `(1,0)`.
 - Keep noncommutation, joint-sharpness exclusion, nonselective marginal
   invariance, locality, disturbance, reality, completeness, and
   counterfactual aggregation out of the example's theorem dependencies.
@@ -128,7 +139,8 @@ Expected files:
 - A reusable certificate quantifies over both settings and both outcomes; an
   executable audit makes the four-case coverage and signs visible.
 - No Stage 6 incompatibility theorem, Stage 7 no-signalling theorem, or Stage 8
-  interpretative premise/conclusion appears in the Stage 5 public module.
+  interpretative premise/conclusion appears in the Stage 5 public module, and
+  no Stage 9 distributional claim is attributed to the finite example.
 - `lake build EPR.Examples.BellSteering`, both Stage 5 audit modules, the public
   `EPR` consumer, and required full `lake build` succeed.
 - Proof-hole/project-axiom, branch-coverage, convention/sign, dependency,
