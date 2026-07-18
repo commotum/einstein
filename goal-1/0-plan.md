@@ -276,6 +276,29 @@ argument.
   all 58 explicit Stage 8 declarations. The 26 abstract declarations use no
   axioms; all remaining declarations use at most the established standard
   `propext`, `Classical.choice`, and `Quot.sound` footprint.
+- At Stage 9 start the worktree is clean at autosave commit `087f622`.
+  `lake build EPR` and full `lake build` both succeed with 3210 jobs;
+  proof-hole and declaration-level project-axiom scans return no matches.
+- The four-page facsimile and its transcription were compared directly for
+  Eqs. (2), (6), and (9)--(18). No transcription, sign, variable, or Fourier-
+  convention error was found. With the paper's physical assumption `h > 0`,
+  Eq. (9) is exactly `h δ(x₁ - x₂ + x₀)` as a tempered distribution; for an
+  arbitrary nonzero real scale the delta-scaling factor would be `|h|`.
+- Pinned mathlib provides `SchwartzMap`, its derivative and polynomial-
+  multiplier maps, `TemperedDistribution.delta`, Fourier transforms of
+  tempered distributions, `fourier_delta_zero`, affine precomposition under
+  temperate-growth and antilipschitz hypotheses, and Schwartz integration.
+  Warning-as-error probes compile for the inverse-Fourier volume/delta
+  identity, the Schwartz-space position/momentum commutator, non-`L²` plane
+  waves, and an affine-line tempered distribution on `ℝ × ℝ` with its exact
+  relative-position eigenrelation.
+- The pinned tree has generic partially defined linear maps but no packaged
+  concrete self-adjoint position/momentum operators, spectral measures, PVM
+  calculus, or unbounded spectral theorem suitable for a literal Hilbert-space
+  reconstruction. The Stage 9 outcome is therefore a rigorous generalized-
+  state/domain audit plus precise remaining obligations, kept independent of
+  the finite core; it is not a normalized-state or exact-reality-criterion
+  instantiation.
 - Generated `.lake/` caches and dependency checkouts are ignored; the
   toolchain, Lake configuration, and manifest are the reproducible sources.
 
@@ -292,7 +315,7 @@ argument.
 | Modern finite operational result | Discarding the outcome of a complete projective Lüders measurement on A leaves B's unconditioned marginal and all projective Born statistics unchanged. | Stage 7 proves this directionally and generically, compares both Bell/Pauli settings, and separately checks that selected conditional states and the joint state can change. This is not attributed to the paper as an ontic theorem. |
 | Sec. 2 after Eq. (8) | Operations on I cause no real change in II once interaction ends. | `NoOnticDisturbance` represents the strong premise as equality of context-specific post and prior realities. It is a theorem hypothesis, not a consequence of interaction status or operational no-signalling. |
 | “two different wave functions … same reality” | Alternative measurements on I steer II to different relative states while II's underlying reality is fixed. | `PhysicalSituation`, `SamePriorReality`, and `samePostReality_of_noOnticDisturbance` keep the cross-context identity step explicit. `CounterfactualStability` is an additional premise before the context-tagged assignments become `SimultaneouslyReal`. |
-| Eqs. (9)–(18) | Perfect position/momentum correlations and noncommutation. | Eq. (9) is distributional (proportional to a delta constraint), not a normalizable bipartite `L²` vector; plane waves and deltas are generalized eigenvectors. A rigorous version needs a rigged Hilbert space, distributions/spectral measures, or normalized approximants plus limit/error bounds. |
+| Eqs. (9)–(18) | Perfect position/momentum correlations and noncommutation. | Eq. (9) is exactly `h δ(x₁ - x₂ + x₀)` for `h > 0` in the paper's Fourier convention, not a normalizable bipartite `L²` vector. Stage 9 uses tempered distributions and Schwartz-space operators for the checked generalized-state/domain fragment and records the still-missing spectral and conditional-probability semantics. |
 | Final paragraphs | Alternative local choices imply simultaneous reality of `P` and `Q`; completeness conflicts with the quantum description. | `epr_incompleteness` and the outcome-generic `bellPhiPlus_epr_incompleteness` expose actuality, ontic stability, reality/value, same-reality, aggregation, counterpart/readout, and exact no-joint-representation dependencies. They conclude only `¬ CompleteFor` for the supplied quantum description and reality; another complete theory remains open. |
 
 ### Preliminary calculation checks
@@ -308,8 +331,10 @@ argument.
   `h δ(x₁ - x₂ + x₀)` under the paper's Fourier convention. This supports the
   intended perfect relative-position correlation but also confirms that the
   state is distributional and non-normalizable.
-- These checks are documentary observations only; none has yet been encoded or
-  verified in Lean.
+- These identities have warning-as-error Lean probes in pinned mathlib. Stage 9
+  will move only the stable, evidence-backed fragment into the project and
+  will not treat the generalized objects as finite `PureState` or
+  `DensityState` values.
 
 ## Explicit Assumption and Argument Outline
 
@@ -486,11 +511,16 @@ verified example and the abstract logic.
 - **Axiom strategy:** put philosophical premises in theorem hypotheses or
   fields of a named assumption bundle. Reserve Lean's trusted axioms for those
   already inherited from Lean/mathlib and audit with `#print axioms`.
-- **Continuous variables:** later choose among Schwartz distributions, rigged
-  Hilbert spaces, spectral measures, or normalized Gaussian/two-mode-squeezed
-  approximants. An approximant proves high-probability rather than exact
-  probability-one prediction, so it does not instantiate the unmodified EPR
-  reality criterion without an additional limiting principle.
+- **Continuous variables (resolved for Stage 9):** use a separate Schwartz/
+  tempered-distribution leaf for the exact generalized identities supported by
+  the pinned library, together with checked nonnormalizability and domain
+  diagnostics. Do not add an approximant merely to recover normalization: an
+  approximant proves only finite-resolution, high-probability correlation and
+  cannot instantiate the unmodified exact reality criterion without a new
+  limiting or approximate-reality premise. Concrete self-adjoint operators,
+  spectral PVMs, both distributional correlation equations, and a rigorous
+  continuous conditional-measurement semantics remain explicit extension
+  obligations unless proved in this stage.
 - **Constructive/classical footprint:** completed finite layers use the audited
   standard footprint `propext`, `Classical.choice`, and `Quot.sound`. Continue
   to record, not conceal, the footprint of later main declarations.
@@ -778,6 +808,10 @@ Reconstruct the EPR inference as a transparent conditional logical theorem.
   `#print axioms` pass with recorded output.
 
 ### 9-CONTINUUM
+
+**Status:** In progress on 2026-07-17. The source audit and pinned warning-as-
+error probes support a separate tempered-distribution/Schwartz-space leaf; the
+finite EPR theorem remains independent.
 
 #### Big Picture Objective
 
