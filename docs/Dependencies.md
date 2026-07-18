@@ -146,6 +146,47 @@ define Stage 5's Bell/Pauli steering scenario. `EPR.Audit.ConditionalAxioms`
 records only `propext`, `Classical.choice`, and `Quot.sound` for the selected
 generic declarations and concrete checks.
 
+## Stage 5 finite steering layer
+
+`EPR.Quantum.Steering` adds two reusable operational structures over the
+checked conditioning API:
+
+- `PerfectConditionalPrediction` contains strict positivity of the selected
+  A-side branch and target-projector probability one in the normalized
+  conditional B state. Positivity is part of the structure, so an impossible
+  zero-probability branch cannot satisfy the declaration vacuously.
+- `SteeringScenario` records a bipartite density state, source and target
+  observable tags, a complete source PVM, checked spectral outcomes, an
+  explicit response map supporting correlation or anticorrelation conventions,
+  and a perfect conditional prediction for every setting and source outcome.
+
+`EPR.Examples.BellSteering` instantiates that layer with the ordered two-qubit
+state `|Φ⁺⟩ = (|00⟩ + |11⟩)/√2`. Its fixed conventions are outcome label
+`0 ↦ +1`, label `1 ↦ -1`, computational `Z` eigenstates `|0⟩` and `|1⟩`, and
+`X` eigenstates `|+⟩` and `|-⟩`. The example provides:
+
+- exact real and complex `√2/2` identities and a checked normalized Bell ket;
+- checked Pauli observables, eigenstates, rank-one spectral outcomes, and
+  complete binary projective measurements;
+- exact computational- and X-basis expansions and a proof that the Bell ket
+  has no raw tensor factorization;
+- a uniform probability theorem giving `1/2` for both settings and both
+  outcomes;
+- raw relative B branches equal to `(1/2)` times the matching pure-state
+  density, with trace weight `1/2` before normalization;
+- normalized matching conditional B states, target probability one,
+  opposite-outcome probability zero, and matching signed Pauli sharp values;
+  and
+- `bellPhiPlusSteeringScenario`, whose identity response packages the two
+  same-label Pauli correlations across all four possible branches.
+
+These are selected-branch mathematical facts. They assert no actual outcome,
+common sharp state, noncommutation result, unconditioned marginal invariance,
+operational no-signalling, ontic disturbance or locality, element of reality,
+counterfactual aggregation, completeness, or incompleteness. They are also not
+a discretization or normalized realization of the distributional state in
+Eq. (9).
+
 ## Checked representation choice
 
 - Use generic finite basis index types `ι`, `κ` with `[Fintype]` and
@@ -161,6 +202,8 @@ generic declarations and concrete checks.
   extensions unless later proof obligations require them.
 - Use checked subnormalized selective branches and normalize only with explicit
   strictly positive outcome-probability evidence.
+- Package conditional certainty with strict source-branch positivity and keep
+  each correlation/anticorrelation convention in an explicit response map.
 
 This basis-level choice is intentional for the finite core. It keeps Bell-state
 calculations executable and aligns subsystem order with matrix Kronecker
@@ -174,8 +217,11 @@ EPR.Foundations
   -> EPR.Quantum.Core
   -> EPR.Quantum.Bipartite
   -> EPR.Quantum.Conditional
+  -> EPR.Quantum.Steering
   -> EPR.Examples.BellSteering
-  -> EPR.Quantum.Incompatibility
+       -> EPR.Quantum.Incompatibility
+
+EPR.Quantum.Conditional + EPR.Examples.BellSteering
   -> EPR.Quantum.NoSignalling
 
 EPR.Interpretation.Core

@@ -83,3 +83,17 @@ yet been formalized.
   common invariant domain.
 - **Formal consequence:** Any continuous-variable theorem must state its domain.
 - **Status:** Documented; Stage 9 obligation.
+
+## C-009: Selected coefficient functions require normalization
+
+- **Paper:** After an outcome in either expansion (7) or (8), the selected
+  coefficient `ψₖ` or `φᵣ` is called the wave function of system II without an
+  explicit normalization factor.
+- **Correction:** For a normalized joint state expanded against an orthonormal
+  basis on system I, the squared norm of a selected coefficient is its outcome
+  probability and need not equal one.
+- **Formal consequence:** Retain the coefficient as a raw subnormalized
+  relative branch, require strictly positive branch probability, and only then
+  form the normalized conditional state.
+- **Status:** Checked generically in Stage 4 and concretely for all four
+  probability-`1/2` Bell/Pauli branches in Stage 5.

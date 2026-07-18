@@ -1,3 +1,3 @@
 module
 
-public import EPR.Quantum.Conditional
+public import EPR.Examples.BellSteering
