@@ -581,6 +581,8 @@ EPR.Examples.BellEPR + EPR.Examples.BellNoSignalling + Mathlib.Tactic
 
 EPR
   -> EPR.Audit.PublicAPI
+
+EPR
   -> EPR.Audit.PublicTheoremAxioms
 
 EPR.Audit.PublicAPI + EPR.Audit.PublicTheoremAxioms

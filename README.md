@@ -8,7 +8,8 @@ construction a rigorous generalized-state boundary.
 
 The library does **not** prove unconditionally that quantum mechanics is
 incomplete. Its EPR conclusion is conditional on separately supplied
-actuality, ontic no-disturbance, reality/value, counterfactual-stability, and
+actuality, a common prior reality across the alternatives, ontic
+no-disturbance, reality/value, counterfactual-stability, and
 completeness-to-representation premises.
 
 ## Checked results
@@ -63,13 +64,17 @@ Premise choice is compile-checked rather than hidden in definitions:
 - `EPR.Audit.EPRLogic.allInterpretiveBridges_satisfiable` gives a small
   proposition-valued model in which all four interpretative bridges can be
   supplied; it is not a claim about nature.
-- `toy_epr_incompleteness_via_explicit_premises` invokes the abstract theorem
-  with every premise supplied in a deliberately minimal proposition model.
-- `realityCriterion_rejectable`, `realityValueBridge_rejectable`,
-  `counterfactualStability_rejectable`, and
-  `completenessRepresentationBridge_rejectable` independently decline them.
-- `operational_noSignalling_with_ontic_change` combines the proved Bell
-  no-signalling result with denial of ontic no-disturbance in a toy ontology.
+- `EPR.Audit.EPRLogic.toy_epr_incompleteness_via_explicit_premises` invokes
+  the abstract theorem with every premise supplied in a deliberately minimal
+  proposition model.
+- `EPR.Audit.EPRLogic.realityCriterion_rejectable`,
+  `EPR.Audit.EPRLogic.realityValueBridge_rejectable`,
+  `EPR.Audit.EPRLogic.counterfactualStability_rejectable`, and
+  `EPR.Audit.EPRLogic.completenessRepresentationBridge_rejectable`
+  independently decline them.
+- `EPR.Audit.EPRLogic.operational_noSignalling_with_ontic_change` combines the
+  proved Bell no-signalling result with denial of ontic no-disturbance in a toy
+  ontology.
 
 Import `EPR.Audit.EPRLogic` explicitly to inspect those diagnostic examples.
 

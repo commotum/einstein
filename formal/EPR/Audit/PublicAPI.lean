@@ -58,10 +58,19 @@ namespace EPR.Audit.PublicAPI
 
 #check EPR.Logic.PhysicalSituation
 #check EPR.Logic.EPRInterpretation
+#check EPR.Logic.AlternativeContexts
+#check EPR.Logic.SamePriorReality
+#check EPR.Logic.SamePostReality
 #check EPR.Logic.OutcomeObtained
 #check EPR.Logic.CertainPrediction
 #check EPR.Logic.ElementOfReality
+#check EPR.Logic.PossessesValue
+#check EPR.Logic.SimultaneouslyReal
+#check EPR.Logic.TheoryCounterpart
+#check EPR.Logic.JointlyRepresents
 #check EPR.Logic.NoOnticDisturbance
+#check EPR.Logic.RealityCriterion
+#check EPR.Logic.RealityValueBridge
 #check EPR.Logic.CounterfactualStability
 #check EPR.Logic.CompleteFor
 #check EPR.Logic.CompletenessRepresentationBridge
