@@ -246,8 +246,9 @@ yet been formalized.
 
 ## C-013: The Bell/Pauli model is a finite role analogue
 
-- **Paper:** Eqs. (7)–(17) use continuous position and momentum eigenfunction
-  expansions and generalized coefficient wave functions.
+- **Paper:** Eqs. (7)–(8) use eigenfunction expansions; Eqs. (9)–(17)
+  specialize them to continuous position and momentum generalized modes and
+  coefficient wave functions.
 - **Correction:** The reusable Bell/Pauli example is not a discretization
   theorem for those equations. It supplies the same logical roles—alternative
   local settings, positive branches, probability-one remote predictions, and
