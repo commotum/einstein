@@ -434,6 +434,251 @@ theorem bellPhiPlus_relativeB_matrix (s : Setting) (w : Outcome) :
   | z => exact bellPhiPlus_z_relativeB_matrix w
   | x => exact bellPhiPlus_x_relativeB_matrix w
 
+/-- The trace weight of every raw relative-B branch is `1/2`. -/
+theorem bellPhiPlus_relativeB_weight (s : Setting) (w : Outcome) :
+    (localARelativeBBranch bellPhiPlus.toDensity
+      (localAProjection s w)).weight = 1 / 2 := by
+  rw [localARelativeBBranch_weight, bellPhiPlus_probability]
+
+/-! ## Normalized conditional states and operational predictions -/
+
+/-- Normalizing any of the four raw branches gives the matching target
+eigenstate density. The result is independent of the chosen proof of strict
+positivity. -/
+theorem bellPhiPlus_conditionalB (s : Setting) (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection s w)) :
+    localAConditionalBState bellPhiPlus.toDensity (localAProjection s w) h =
+      (settingState s w).toDensity := by
+  rw [← normalize_localARelativeBBranch]
+  apply DensityState.ext
+  rw [SubnormalizedState.normalize_matrix,
+    localARelativeBBranch_weight, bellPhiPlus_probability,
+    bellPhiPlus_relativeB_matrix]
+  norm_num [smul_smul]
+
+/-- Computational-basis specialization of the conditional-state formula. -/
+theorem bellPhiPlus_z_conditionalB (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection .z w)) :
+    localAConditionalBState bellPhiPlus.toDensity
+      (localAProjection .z w) h = (zState w).toDensity :=
+  bellPhiPlus_conditionalB .z w h
+
+/-- Pauli-X specialization of the conditional-state formula. -/
+theorem bellPhiPlus_x_conditionalB (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection .x w)) :
+    localAConditionalBState bellPhiPlus.toDensity
+      (localAProjection .x w) h = (xState w).toDensity :=
+  bellPhiPlus_conditionalB .x w h
+
+@[simp]
+theorem settingOutcome_projector (s : Setting) (w : Outcome) :
+    (settingOutcome s w).projector = stateProjection (settingState s w) := by
+  cases s <;> rfl
+
+@[simp]
+theorem settingOutcome_projector_eq_settingMeasurement
+    (s : Setting) (w : Outcome) :
+    (settingOutcome s w).projector = (settingMeasurement s).projector w := by
+  cases s <;> rfl
+
+@[simp]
+theorem settingState_density_matrix_eq_settingProjector
+    (s : Setting) (w : Outcome) :
+    (settingState s w).toDensity.matrix =
+      ((settingMeasurement s).projector w).matrix := by
+  cases s <;> rfl
+
+/-- A pure-state rank-one projection supports its density state. -/
+theorem stateProjection_supports (psi : PureState QubitIndex) :
+    (stateProjection psi).Supports psi.toDensity := by
+  unfold Projection.Supports
+  exact (stateProjection psi).idempotent
+
+/-- The matching target spectral projector supports every normalized
+conditional branch. -/
+theorem bellPhiPlus_conditional_support (s : Setting) (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection s w)) :
+    (settingOutcome s w).projector.Supports
+      (localAConditionalBState bellPhiPlus.toDensity
+        (localAProjection s w) h) := by
+  rw [bellPhiPlus_conditionalB, settingOutcome_projector]
+  exact stateProjection_supports _
+
+/-- In every selected branch, the matching B-side spectral outcome has Born
+probability one. -/
+theorem bellPhiPlus_target_probability_one (s : Setting) (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection s w)) :
+    outcomeProbability
+      (localAConditionalBState bellPhiPlus.toDensity
+        (localAProjection s w) h)
+      (settingOutcome s w).projector = 1 :=
+  outcomeProbability_eq_one_of_support _ _
+    (bellPhiPlus_conditional_support s w h)
+
+/-- Computational-basis specialization of the probability-one prediction. -/
+theorem bellPhiPlus_z_target_probability_one (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection .z w)) :
+    outcomeProbability
+      (localAConditionalBState bellPhiPlus.toDensity
+        (localAProjection .z w) h)
+      (pauliZOutcome w).projector = 1 :=
+  bellPhiPlus_target_probability_one .z w h
+
+/-- Pauli-X specialization of the probability-one prediction. -/
+theorem bellPhiPlus_x_target_probability_one (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection .x w)) :
+    outcomeProbability
+      (localAConditionalBState bellPhiPlus.toDensity
+        (localAProjection .x w) h)
+      (pauliXOutcome w).projector = 1 :=
+  bellPhiPlus_target_probability_one .x w h
+
+/-! The other binary target outcome is impossible in each conditional state. -/
+
+/-- The label opposite to a binary Pauli outcome. -/
+def oppositeOutcome (w : Outcome) : Outcome :=
+  if w = 0 then 1 else 0
+
+@[simp]
+theorem oppositeOutcome_zero : oppositeOutcome 0 = 1 := by
+  rfl
+
+@[simp]
+theorem oppositeOutcome_one : oppositeOutcome 1 = 0 := by
+  rfl
+
+theorem oppositeOutcome_ne (w : Outcome) : oppositeOutcome w ≠ w := by
+  fin_cases w <;> decide
+
+@[simp]
+theorem oppositeOutcome_involutive (w : Outcome) :
+    oppositeOutcome (oppositeOutcome w) = w := by
+  fin_cases w <;> rfl
+
+/-- The nonmatching target outcome has probability zero. -/
+theorem bellPhiPlus_opposite_probability_zero
+    (s : Setting) (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection s w)) :
+    outcomeProbability
+      (localAConditionalBState bellPhiPlus.toDensity
+        (localAProjection s w) h)
+      (settingOutcome s (oppositeOutcome w)).projector = 0 := by
+  rw [bellPhiPlus_conditionalB s w h]
+  unfold outcomeProbability bornWeight
+  rw [settingOutcome_projector_eq_settingMeasurement,
+    settingState_density_matrix_eq_settingProjector,
+    (settingMeasurement s).orthogonal (oppositeOutcome_ne w)]
+  simp
+
+/-- Computational-basis specialization of opposite-outcome exclusion. -/
+theorem bellPhiPlus_z_opposite_probability_zero
+    (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection .z w)) :
+    outcomeProbability
+      (localAConditionalBState bellPhiPlus.toDensity
+        (localAProjection .z w) h)
+      (pauliZOutcome (oppositeOutcome w)).projector = 0 :=
+  bellPhiPlus_opposite_probability_zero .z w h
+
+/-- Pauli-X specialization of opposite-outcome exclusion. -/
+theorem bellPhiPlus_x_opposite_probability_zero
+    (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection .x w)) :
+    outcomeProbability
+      (localAConditionalBState bellPhiPlus.toDensity
+        (localAProjection .x w) h)
+      (pauliXOutcome (oppositeOutcome w)).projector = 0 :=
+  bellPhiPlus_opposite_probability_zero .x w h
+
+@[simp]
+theorem settingOutcome_value (s : Setting) (w : Outcome) :
+    (settingOutcome s w).value = outcomeValue w := by
+  cases s <;> rfl
+
+/-- The same conditional density has the matching sharp Pauli value. -/
+theorem bellPhiPlus_conditional_sharpValue (s : Setting) (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection s w)) :
+    (localAConditionalBState bellPhiPlus.toDensity
+      (localAProjection s w) h).SharpValue
+        (settingObservable s) (outcomeValue w) := by
+  simpa only [settingOutcome_value] using
+    (settingOutcome s w).sharpValue_of_support _
+      (bellPhiPlus_conditional_support s w h)
+
+/-- Computational-basis specialization of the signed sharp-value result. -/
+theorem bellPhiPlus_z_conditional_sharpValue (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection .z w)) :
+    (localAConditionalBState bellPhiPlus.toDensity
+      (localAProjection .z w) h).SharpValue pauliZ (outcomeValue w) :=
+  bellPhiPlus_conditional_sharpValue .z w h
+
+/-- Pauli-X specialization of the signed sharp-value result. -/
+theorem bellPhiPlus_x_conditional_sharpValue (w : Outcome)
+    (h : 0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection .x w)) :
+    (localAConditionalBState bellPhiPlus.toDensity
+      (localAProjection .x w) h).SharpValue pauliX (outcomeValue w) :=
+  bellPhiPlus_conditional_sharpValue .x w h
+
+/-! ## Bundled prediction and setting-wide scenario -/
+
+/-- The nonvacuous perfect conditional prediction for one setting/outcome
+pair. -/
+def bellPhiPlus_perfectPrediction (s : Setting) (w : Outcome) :
+    PerfectConditionalPrediction bellPhiPlus.toDensity
+      (localAProjection s w) (settingOutcome s w) where
+  source_positive := bellPhiPlus_branchPositive s w
+  target_certain := bellPhiPlus_target_probability_one s w
+    (bellPhiPlus_branchPositive s w)
+
+/-- The chosen Pauli observable explicitly tagged as belonging to A. -/
+def settingLocalObservableA (s : Setting) :
+    LocalObservableA QubitIndex QubitIndex where
+  observable := settingObservable s
+
+/-- The chosen Pauli observable explicitly tagged as belonging to B. -/
+def settingLocalObservableB (s : Setting) :
+    LocalObservableB QubitIndex QubitIndex where
+  observable := settingObservable s
+
+/-- Source spectral data routed through the A-side observable tag. -/
+def settingSourceOutcome (s : Setting) (w : Outcome) :
+    ProjectiveOutcome (settingLocalObservableA s).observable :=
+  settingOutcome s w
+
+/-- Target spectral data routed through the B-side observable tag. -/
+def settingTargetOutcome (s : Setting) (w : Outcome) :
+    ProjectiveOutcome (settingLocalObservableB s).observable :=
+  settingOutcome s w
+
+/-- The complete four-branch operational steering certificate. Its identity
+response records same-label Pauli correlations for `|Φ⁺⟩`. -/
+def bellPhiPlusSteeringScenario :
+    SteeringScenario Setting Outcome Outcome QubitIndex QubitIndex where
+  state := bellPhiPlus.toDensity
+  sourceObservable := settingLocalObservableA
+  sourceOutcome := settingSourceOutcome
+  sourceMeasurement := settingMeasurement
+  sourceProjector_eq := by
+    intro s w
+    cases s <;> rfl
+  targetObservable := settingLocalObservableB
+  targetOutcome := settingTargetOutcome
+  response := fun _ w ↦ w
+  predicts := bellPhiPlus_perfectPrediction
+
 end
 
 end EPR.Examples.BellSteering
