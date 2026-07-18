@@ -187,8 +187,9 @@ opposite probabilities, signed sharp values, X-minus off-diagonal signs, and
 an A-lift coordinate sentinel that detects a tensor-factor swap despite the
 Bell state's symmetry. `EPR.Audit.BellSteeringAxioms` is a separate diagnostic
 leaf that reviews the generic and concrete signatures and prints the axioms of
-the principal declarations. Neither audit is imported by the public `EPR`
-root, which ends at `EPR.Examples.BellSteering`.
+the principal declarations. Neither Stage 5 audit is imported by the public
+`EPR` root; `EPR.Examples.BellSteering` is re-exported through the later
+`EPR.Examples.PauliIncompatibility` public layer.
 
 These are selected-branch mathematical facts. They assert no actual outcome,
 common sharp state, noncommutation result, unconditioned marginal invariance,

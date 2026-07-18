@@ -79,6 +79,7 @@ namespace EPR.Audit.IncompatibilityAxioms
 
 /-! ## `Fin 3` Hermitian counterexample sentinels -/
 
+#check EPR.Audit.Incompatibility.Three
 #check EPR.Audit.Incompatibility.fin3AMatrix
 #check EPR.Audit.Incompatibility.fin3BMatrix
 #check EPR.Audit.Incompatibility.fin3A
@@ -95,6 +96,7 @@ namespace EPR.Audit.IncompatibilityAxioms
 #check EPR.Audit.Incompatibility.fin3_hasJointSharpState
 #check EPR.Audit.Incompatibility.fin3_noncommuting_with_common_sharp_state
 
+#print axioms EPR.Audit.Incompatibility.Three
 #print axioms EPR.Audit.Incompatibility.fin3AMatrix
 #print axioms EPR.Audit.Incompatibility.fin3BMatrix
 #print axioms EPR.Audit.Incompatibility.fin3A
