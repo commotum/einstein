@@ -353,6 +353,87 @@ def localBProjection (s : Setting) (w : Outcome) :
     LocalProjectionB QubitIndex QubitIndex where
   projection := (settingOutcome s w).projector
 
+/-! ## Selected source probabilities and raw relative branches -/
+
+/-- Every computational-basis source outcome has probability `1/2`. -/
+theorem bellPhiPlus_z_probability (w : Outcome) :
+    localAOutcomeProbability bellPhiPlus.toDensity (localAProjection .z w) =
+      1 / 2 := by
+  fin_cases w <;>
+    norm_num [localAOutcomeProbability, outcomeProbability, bornWeight,
+      localAProjection, settingMeasurement, pauliZMeasurement, zProjection,
+      stateProjection, zState, zKet, LocalProjectionA.lift, bellPhiPlus,
+      bellPhiPlusKet, PureState.toDensity_matrix_apply, Matrix.trace,
+      Matrix.mul_apply, Matrix.vecMulVec_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, invSqrtTwo_sq]
+
+/-- Every Pauli-X source outcome has probability `1/2`. -/
+theorem bellPhiPlus_x_probability (w : Outcome) :
+    localAOutcomeProbability bellPhiPlus.toDensity (localAProjection .x w) =
+      1 / 2 := by
+  fin_cases w <;>
+    norm_num [localAOutcomeProbability, outcomeProbability, bornWeight,
+      localAProjection, settingMeasurement, pauliXMeasurement, xProjection,
+      stateProjection, xState, xKet, LocalProjectionA.lift, bellPhiPlus,
+      bellPhiPlusKet, PureState.toDensity_matrix_apply, Matrix.trace,
+      Matrix.mul_apply, Matrix.vecMulVec_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two, invSqrtTwo_sq]
+
+/-- Every setting/outcome pair is a nonzero-probability branch of weight
+`1/2`. -/
+theorem bellPhiPlus_probability (s : Setting) (w : Outcome) :
+    localAOutcomeProbability bellPhiPlus.toDensity (localAProjection s w) =
+      1 / 2 := by
+  cases s with
+  | z => exact bellPhiPlus_z_probability w
+  | x => exact bellPhiPlus_x_probability w
+
+/-- Canonical strict-positivity evidence for every selected source branch. -/
+def bellPhiPlus_branchPositive (s : Setting) (w : Outcome) :
+    0 < localAOutcomeProbability bellPhiPlus.toDensity
+      (localAProjection s w) := by
+  rw [bellPhiPlus_probability]
+  norm_num
+
+/-- Before normalization, a selected computational-basis branch is its
+matching target density with weight `1/2`. -/
+theorem bellPhiPlus_z_relativeB_matrix (w : Outcome) :
+    (localARelativeBBranch bellPhiPlus.toDensity
+      (localAProjection .z w)).matrix =
+        (1 / 2 : ℂ) • (zState w).toDensity.matrix := by
+  ext i j
+  fin_cases w <;> fin_cases i <;> fin_cases j <;>
+    norm_num [localARelativeBBranch, ludersBranchMatrix, traceOutA_apply,
+      localAProjection, settingMeasurement, pauliZMeasurement, zProjection,
+      stateProjection, zState, zKet, LocalProjectionA.lift, bellPhiPlus,
+      bellPhiPlusKet, PureState.toDensity_matrix_apply, Matrix.mul_apply,
+      Matrix.vecMulVec_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
+      invSqrtTwo_sq]
+
+/-- Before normalization, a selected Pauli-X branch is its matching target
+density with weight `1/2`. -/
+theorem bellPhiPlus_x_relativeB_matrix (w : Outcome) :
+    (localARelativeBBranch bellPhiPlus.toDensity
+      (localAProjection .x w)).matrix =
+        (1 / 2 : ℂ) • (xState w).toDensity.matrix := by
+  ext i j
+  fin_cases w <;> fin_cases i <;> fin_cases j <;>
+    norm_num [localARelativeBBranch, ludersBranchMatrix, traceOutA_apply,
+      localAProjection, settingMeasurement, pauliXMeasurement, xProjection,
+      stateProjection, xState, xKet, LocalProjectionA.lift, bellPhiPlus,
+      bellPhiPlusKet, PureState.toDensity_matrix_apply, Matrix.mul_apply,
+      Matrix.vecMulVec_apply, Fintype.sum_prod_type, Fin.sum_univ_two,
+      invSqrtTwo_sq]
+
+/-- The raw relative-B matrix formula, uniformly over both source settings. -/
+theorem bellPhiPlus_relativeB_matrix (s : Setting) (w : Outcome) :
+    (localARelativeBBranch bellPhiPlus.toDensity
+      (localAProjection s w)).matrix =
+        (1 / 2 : ℂ) • (settingState s w).toDensity.matrix := by
+  cases s with
+  | z => exact bellPhiPlus_z_relativeB_matrix w
+  | x => exact bellPhiPlus_x_relativeB_matrix w
+
 end
 
 end EPR.Examples.BellSteering

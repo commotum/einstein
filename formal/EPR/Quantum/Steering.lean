@@ -8,8 +8,9 @@ public import EPR.Quantum.Conditional
 This module packages finite conditional-state facts without interpretation.
 A `PerfectConditionalPrediction` includes strict positivity of the selected
 source branch and probability one for a target spectral outcome in the
-normalized conditional state. A `SteeringScenario` supplies such a prediction
-for every setting and source outcome.
+normalized conditional state. A `SteeringScenario` records tagged source and
+target observables, relates each source PVM projector to a spectral outcome,
+and supplies such a prediction for every setting and source outcome.
 
 These structures do not assert that any outcome occurred, that a target value
 was possessed before measurement, that an unconditioned marginal changed, or
@@ -32,17 +33,28 @@ structure PerfectConditionalPrediction {ι κ : Type*}
     (localAConditionalBState ρ source source_positive)
     target.projector = 1
 
-/-- Alternative source measurements with an explicit target response and a
-checked perfect conditional prediction for every setting/outcome pair. -/
+/-- Alternative source measurements and target observables, with subsystem
+tags, a checked spectral interpretation of every source projector, and a
+perfect conditional prediction for every setting/source-outcome pair.
+
+`response` permits either correlation or anticorrelation conventions by
+mapping each source label to the target label predicted in that branch. -/
 structure SteeringScenario (σ ω τ ι κ : Type*)
     [Fintype ω] [Fintype ι] [Fintype κ]
     [DecidableEq ι] [DecidableEq κ] where
   state : BipartiteState ι κ
-  measurement : σ → ProjectiveMeasurement ω ι
-  observable : σ → Observable κ
-  targetOutcome : (s : σ) → τ → ProjectiveOutcome (observable s)
+  sourceObservable : σ → LocalObservableA ι κ
+  sourceOutcome : (s : σ) → ω →
+    ProjectiveOutcome (sourceObservable s).observable
+  sourceMeasurement : σ → ProjectiveMeasurement ω ι
+  sourceProjector_eq : ∀ s w,
+    (sourceMeasurement s).projector w = (sourceOutcome s w).projector
+  targetObservable : σ → LocalObservableB ι κ
+  targetOutcome : (s : σ) → τ →
+    ProjectiveOutcome (targetObservable s).observable
   response : σ → ω → τ
   predicts : ∀ s w, PerfectConditionalPrediction state
-    ⟨(measurement s).projector w⟩ (targetOutcome s (response s w))
+    ⟨(sourceMeasurement s).projector w⟩
+    (targetOutcome s (response s w))
 
 end EPR.Quantum
