@@ -49,8 +49,8 @@ conditional EPR logic reconstruction, and generalized-state audit of the
 paper's original position-momentum construction are now complete. The
 continuum construction is an analytic/distributional extension, not an
 ordinary Hilbert-space-vector example and not a dependency of the completed
-finite argument. Stage 10 next audits the whole library's public API, source
-traceability, correction record, and trust boundary; that stage has not begun.
+finite argument. Stage 10 is auditing the whole library's public API, source
+traceability, correction record, and trust boundary.
 
 ## Non-Negotiable Constraints and No-Cheating Rules
 
@@ -374,7 +374,7 @@ traceability, correction record, and trust boundary; that stage has not begun.
   `h δ(x₁ - x₂ + x₀)` under the paper's Fourier convention. This supports the
   intended perfect relative-position correlation but also confirms that the
   state is distributional and non-normalizable.
-- These identities now have warning-as-error Lean implementations and private
+- These identities now have warning-as-error Lean implementations and opt-in
   diagnostics in the pinned project. Stage 9 moved only the stable, evidence-
   backed fragment into the independent continuum leaf and did not treat the
   generalized objects as finite `PureState` or `DensityState` values.
@@ -392,9 +392,10 @@ modal or counterfactual steps. Tentative ingredients are:
    one. `CertainPrediction` records that checked operational fact, while
    `OutcomeObtained` separately says the source result is actual in the modeled
    alternative situation.
-3. **Spacelike or post-interaction separation.** A relation specifying when
-   the systems are considered separated. Separation alone must not definitionally
-   imply ontic locality.
+3. **Spacelike or post-interaction separation.** The paper's claim that the
+   interaction has ceased is documented but not encoded: the project has no
+   time, interaction, or spacetime-separation relation. A future refinement may
+   add one, but it still must not definitionally imply ontic locality.
 4. **No-disturbance/locality premise.** The chosen action on A does not change
    the relevant physical reality of B. This is an explicit interpretative
    hypothesis.
@@ -498,7 +499,7 @@ Bell steering + Pauli incompatibility
                          |
                conditional Bell EPR theorem
                          |
-             traceability + private audits
+             traceability + opt-in audits
 
 continuous-variable audit/extension (separate leaf; never a dependency of core)
 ```
@@ -891,6 +892,9 @@ the strongest feasible formal reconstruction.
 
 ### 10-AUDIT
 
+**Status:** In progress on 2026-07-17. See `goal-1/10-AUDIT.md` for the baseline,
+implementation decisions, and accumulating verification evidence.
+
 #### Big Picture Objective
 
 Finish the reusable API, source traceability, correction record, and trust
@@ -933,9 +937,10 @@ audit for the whole project.
 - A future normalized-approximant treatment still must decide whether to use
   an explicitly approximate/limiting reality criterion; it may not silently
   reuse the completed exact probability-one premise.
-- Stage 10 must decide, as a public-API audit question, whether the independent
-  continuum leaf should be re-exported from `EPR`. No such decision has yet
-  been made.
+- Stage 10 decided to re-export the independent continuum leaf from the `EPR`
+  umbrella so the default target covers every stable public branch. Narrow
+  finite imports remain independent of continuum, and continuum imports no
+  finite or interpretative module.
 
 The remaining items are explicit future proof/design obligations, not licenses
 to silently choose the easiest formulation.

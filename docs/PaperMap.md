@@ -44,9 +44,10 @@ normalization correction is recorded as C-009 in `docs/Corrections.md`.
 ## Stage 9 continuous-variable boundary
 
 `EPR.Continuum.Idealized` is a separate analytic leaf importing only pinned
-mathlib's tempered-distribution infrastructure. It is deliberately absent from
-the finite quantum, Bell, operational no-signalling, and logical dependency
-chains. Its declarations divide the source calculations into three types:
+mathlib's tempered-distribution infrastructure. The `EPR` umbrella re-exports
+it, but it remains deliberately absent from the finite quantum, Bell,
+operational no-signalling, and logical dependency chains. Its declarations
+divide the source calculations into three types:
 
 1. `planeWave` is an ordinary complex function used only for pointwise norm
    and integration facts. `planeWave_not_memLp_two` and
@@ -153,7 +154,32 @@ prior supplied through `SamePriorReality`.
 `EPR.Examples.BellEPR` imports no no-signalling module. The operational Bell
 theorems remain in `EPR.Examples.BellNoSignalling`; importing both branches at
 the public `EPR` root does not create an implication between operational
-marginal invariance and ontic no-disturbance.
+marginal invariance and ontic no-disturbance. The same umbrella also re-exports
+the independent continuum leaf without connecting its generalized objects to
+finite conditional or interpretative APIs.
+
+## Stage 10 public surface and trust boundary
+
+The stable umbrella import is `EPR`. `EPR.Audit.PublicAPI` imports only that
+module and checks representative declarations from foundations, finite states,
+bipartite reduction, conditioning, steering, incompatibility, no-signalling,
+the Bell examples, the conditional EPR result, and the continuum leaf. No
+public source imports an `EPR.Audit` module; audits remain opt-in diagnostics.
+
+The eight stage-specific axiom leaves print 132 of the 203 theorem declarations
+in the 14 public source files. `EPR.Audit.PublicTheoremAxioms` prints the
+complementary 71, and `EPR.Audit.FinalAxioms` aggregates those audits together
+with the non-axiom API and concrete-state probes. Every printed result has only
+the standard Lean/mathlib trusted footprint, never a project-specific axiom.
+
+`allInterpretiveBridges_satisfiable` gives a proposition-valued positive model,
+while the existing diagnostics independently reject actuality, the reality
+criterion, the value bridge, counterfactual aggregation, and the completeness
+representation bridge. `toy_epr_incompleteness_via_explicit_premises` invokes
+`epr_incompleteness` with every premise supplied. These examples establish
+logical consistency or rejectability, not physical truth. The unresolved
+continuous obligations in the main table—especially Eqs. (5), (9), (15)–(16),
+spectral realization, and exact continuous conditioning—remain unresolved.
 
 ## Finite incompatibility correction
 

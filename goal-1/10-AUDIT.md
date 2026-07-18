@@ -48,7 +48,7 @@
   continuum module depend on finite/interpretative code.
 - Diagnostics remain opt-in `EPR.Audit.*` modules. A public-root surface probe
   may import only `EPR`, while a separate final axiom target may aggregate all
-  private stage audit leaves.
+  stage audit leaves.
 - Existing rejectability sentinels are genuine examples of declining premises.
   A small positive proposition-valued model can demonstrate instantiation
   without asserting that the premises describe nature.
@@ -69,10 +69,10 @@
 - Give `EPR.lean` a concise library overview and re-export the independent
   `EPR.Continuum.Idealized` leaf alongside the finite no-signalling and
   conditional-EPR branches.
-- Add a private public-surface audit importing only `EPR` and checking
+- Add an opt-in public-surface audit importing only `EPR` and checking
   representative reusable definitions and main theorems from every completed
   layer, including continuum.
-- Add a private final axiom leaf that aggregates every existing stage-specific
+- Add an opt-in final axiom leaf that aggregates every existing stage-specific
   axiom leaf and prints the axioms of the principal mathematical, operational,
   logical, diagnostic-boundary, and continuum results.
 - Extend `EPR.Audit.EPRLogic` with a proposition-valued model in which the

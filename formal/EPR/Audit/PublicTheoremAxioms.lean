@@ -6,7 +6,7 @@ import EPR
 # Complementary public-theorem axiom audit
 
 The stage-specific axiom leaves already print 132 of the 203 theorem
-declarations in public modules. This private leaf prints the remaining 71, so
+declarations in public modules. This opt-in leaf prints the remaining 71, so
 the aggregate Stage 10 target has declaration-complete public theorem
 coverage. It also prints the two generic steering structures whose fields
 carry the nonvacuous prediction interface.
