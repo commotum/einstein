@@ -1,6 +1,7 @@
 module
 
 import EPR.Audit.PublicAPI
+import EPR.Audit.PublicTheoremAxioms
 import EPR.Audit.QuantumCoreAxioms
 import EPR.Audit.BipartiteAxioms
 import EPR.Audit.ConditionalAxioms
